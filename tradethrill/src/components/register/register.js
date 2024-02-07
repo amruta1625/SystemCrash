@@ -6,6 +6,8 @@ import logotradethrill from '../../logotradethrill.svg';
 import { Navigate, useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
+import { Link } from 'react-router-dom'; 
+
 const Register = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -147,7 +149,7 @@ const Register = () => {
                   Create new <br/> Account
                 </h1>
                 <h1 className="loginpage">
-                  Already registered ? Login
+                  Already registered ? <Link to="/login">Login</Link>
                 </h1>
                 <h3 className="NameStatement">
                   Please enter your name
