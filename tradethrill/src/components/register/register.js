@@ -158,15 +158,15 @@ const Register = () => {
                 <h3 className="NameStatement">
                   Please enter Email
                 </h3>
-                <input type="text" className="inputName" placeholder="Enter Your Name" />
+                <input type="text" className="inputName" placeholder="Enter Your Email" />
                 <h3 className="NameStatement">
                   Please enter password
                 </h3>
-                <input type="text" className="inputName" placeholder="Enter Your Name" />
+                <input type="text" className="inputName" placeholder="Enter Your Password" />
                 <h3 className="NameStatement">
                   Confirm Password
                 </h3>
-                <input type="text" className="inputName" placeholder="Enter Your Name" />
+                <input type="text" className="inputName" placeholder="Confirm Password" />
                 <form onSubmit={handleSubmit}>
           {/* <div className="text-box-container">
             <input type="text" name="name" value={user.name} onChange={handleChange} placeholder="Enter your Name" className="text-box" />

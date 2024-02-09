@@ -87,6 +87,17 @@ body, h1, h2, h3, p, div {
   font-size: 20px;
   background-color: #38b6ff;
   cursor: pointer;
+  
+}
+
+.button:hover {
+  background-color: #268cff; /* Change background color on hover */
+  color: #fff; /* Change text color on hover */
+}
+
+.button:active {
+  background-color: #1a6eb6; /* Change background color when clicked */
+  color: #fff; /* Change text color when clicked */
 }
 
 .text-box {

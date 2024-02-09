@@ -22,7 +22,7 @@ const ForgotPassword = () => {
               <img className='logo' src={logotradethrill} alt='TradeThrill'/>
               <h1 className='logoname'>Trade Thrill</h1>
             </div>
-            <div className='pagecontent'>
+            <div className='forgotpasswordcontent'>
               <h1>Forgot Password</h1>
               
               <form>
@@ -42,6 +42,7 @@ const ForgotPassword = () => {
                 
               </form>
             </div>
+            
           </div>
         
     
