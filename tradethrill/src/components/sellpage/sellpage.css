@@ -1,0 +1,68 @@
+.container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .curved-box {
+    width: 150px;
+    height: 30px;
+    background-color: #f0f0f0;
+    border: 2px solid #333;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    color: brown;
+  }
+  
+  .outside-text {
+    font-size: 15px;
+    color: red;
+    margin-left: 90px;
+  }
+  
+  .box1 {
+    background-color: #f0f0f0;
+  }
+  
+  .box2 {
+    width: 200px;
+    height: 10px;
+    background-color: #d88613dd;
+    font-size: 15px;
+    color: brown;
+  }
+  
+  .box3 {
+    width: 600px;
+    height: 150px;
+    background-color: #e1ccff;
+  }
+  
+  .box4 {
+    width: 200px;
+    height: 15px;
+    background-color: #ccccff;
+  }
+  
+  .box5 {
+    width: 200px;
+    height: 10px;
+    background-color: #d88613dd;
+    font-size: 15px;
+    color: brown;
+    cursor: pointer;
+  }
+  
+  .sub-options {
+    display: none;
+    margin-top: 10px;
+  }
+  
+  .sub-options.visible {
+    display: block
+  }  
+

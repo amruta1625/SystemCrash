@@ -19,7 +19,7 @@ body, h1, h2, h3, p, div {
 .logotradethrill {
   width: 135px;
   height: auto;
-  display: block;
+  display: flex;
 }
 
 .logo-name {

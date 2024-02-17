@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './components/login/login';
 import Home from './components/homepage/homepage';
 import ForgotPassword from './components/forgotpassword/forgotpassword';
+import SellPage from './components/sellpage/sellpage';
 
 
 
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/register" element={<Register/>} />
         <Route path="/home" element={<Home />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/sellpage" element={<SellPage />} />
 
         {/* Add other routes as needed */}
       </Routes>

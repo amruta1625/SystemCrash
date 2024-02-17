@@ -1,0 +1,56 @@
+.logo-container {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+.logo-name {
+  color: #8f6842;
+  font-family: cursive;
+  
+}
+
+.searchbar {
+  width: 90%;
+  border-radius: 20px;
+  border: 2px solid #7c4b0c; 
+  margin-bottom: 10px;
+
+  
+}
+
+.searchbar,
+.sellicon,
+.notificationsicon,
+.chaticon,
+.profileicon {
+  margin-left: 10px;
+  margin-right: 10px; /* Adjust as needed */
+}
+
+.sellicon,
+.chaticon {
+  background-color: #15b0f8;
+  font-weight: bold;
+  border-radius: 20px;
+  width: 60px; /* Adjust as needed */
+  height: 30px;
+}
+
+.notificationsicon {
+  width: 40px !important; /* Adjust as needed */
+  height: 40px !important;
+}
+
+.profileicon {
+  width: 50px !important; /* Adjust as needed */
+  height: 50px !important; /* Adjust as needed */
+  border-radius: 50%; /* Optional: Makes the icon circular */
+  color: #bc7e2d; /* Optional: Set icon color */
+}
+
+.recomendation {
+  font-family: Alice;
+  font-size: 40px;
+  font-variant: inherit;
+  color: #56351e;
+}
