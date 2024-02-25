@@ -76,7 +76,7 @@ const SellPage = () => {
           <div className="curved-box box5" style={{ marginLeft: '230px' }}>
             Select Category
           </div>
-          <div className="arrow" onClick={() => toggleSubOptions('.arrow')}>▼</div>
+          <div className="arrow" onClick={() => toggleSubOptions(document.querySelector('.arrow'))}>▼</div>
           <div className="sub-options">
             <div className="sub-option" onClick={() => selectSubOption('.sub-option')}>
               Electronics

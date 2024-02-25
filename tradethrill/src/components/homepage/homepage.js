@@ -6,6 +6,8 @@ import ProfileIcon from '@mui/icons-material/AccountCircleRounded';
 import Input from '@mui/material/Input';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
+import SellPage from '../sellpage/sellpage';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const backgroundStyle = {
@@ -18,11 +20,18 @@ const Home = () => {
     left: 0
   };
 
+  const navigate = useNavigate(); 
+
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearch = (event) =>{
     setSearchTerm(event.target.value);
     //add logic
+  };
+
+  const goToSellPage = () => {
+    // Use navigate function to navigate to the SellPage component
+    navigate('/sellpage');  // Replace '/sell' with the actual path to your SellPage
   };
 
   
@@ -46,7 +55,7 @@ const Home = () => {
               }
             />
           </div>
-            <button className="sellicon" >
+            <button className="sellicon" onClick={goToSellPage} >
               +SELL
             </button>
           
