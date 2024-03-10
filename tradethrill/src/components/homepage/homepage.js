@@ -6,7 +6,6 @@ import ProfileIcon from '@mui/icons-material/AccountCircleRounded';
 import Input from '@mui/material/Input';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
-import SellPage from '../sellpage/sellpage';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {

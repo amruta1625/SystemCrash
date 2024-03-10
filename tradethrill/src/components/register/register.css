@@ -50,6 +50,7 @@ body, h1, h2, h3, p, div {
   color: white;
   display: flex;
   margin-top: 20px;
+  font-size: 15px;
 }
 
 .inputName {

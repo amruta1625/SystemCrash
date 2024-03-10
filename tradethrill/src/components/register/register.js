@@ -9,15 +9,11 @@ import useAuth from "../../hooks/useAuth";
 import { Link } from 'react-router-dom'; 
 
 const Register = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const {auth} = useAuth();
   const userEmailRegex = /^$|^[a-z0-9.]+@[a-z0-9]+\.iitk\.ac\.in$|^[a-z0-9.]+@iitk\.ac\.in$/;
-  const userRollRegex = /^$|^[0-9]{5,}|(INT|EXY|K|M|S|Y)[0-9]{4,}$/;
+
     const [user, setUser] =  useState ({
       name: "",
       email:"",
-      rollno: "",
       username:"",
       password:"",
       reEnterPassword:"",
@@ -27,12 +23,10 @@ const Register = () => {
     const [error, setError] = useState({
       nameEmpty:false,
       emailEmpty:false,
-      rollnoEmpty: false,
       usernameEmpty:false,
       passwordEmpty: false,
       emailInvalid: false,
       emailUsed: false,
-      rollnoInvalid: false,
       passwordDoesntMatch: false
     });
 
@@ -40,12 +34,10 @@ const Register = () => {
   
       
     useEffect(() => {
-      //   	console.log("Checking for errors...");
-      //   	console.log(error);
+      
           setError({
             ...error,
             emailInvalid:!userEmailRegex.test(user.email),
-            rollInvalid:!userRollRegex.test(user.rollno),
             passDoesntMatch: !(user.password === user.reEnterPassword)
           });
     }, [user]);
@@ -59,7 +51,6 @@ const Register = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Logic for handling form submission
     };
     const ChangeBG = (e) => {
       const { value } = e.target;
@@ -76,12 +67,10 @@ const Register = () => {
       let emptyKeys = {};
       for (const key of Object.keys(user)) {
         if (user[key] === "") {
-  //     		console.log(key + "Empty");
-  //     		console.log(Object.keys(error).indexOf(key+"Empty"));
           emptyKeys[key+"Empty"] = true;
         }
       }
-  //     console.log(error);
+
       setError({...error, ...emptyKeys});
       if (Object.keys(emptyKeys).length > 0) return;
       
@@ -97,7 +86,6 @@ const Register = () => {
         name &&
         email &&
         password &&
-        rollno &&
         bg &&
         identity &&
         password === reEnterPassword
@@ -110,10 +98,9 @@ const Register = () => {
             return;
           } else if (res.data.message === "Successfully Registered, Please login now.") {
             setStage("completed");
-            // setTimeout(() => {navigate("/login");}, 3000);
           }
           
-  //         navigate("/login");
+
         });
       } else {
   //       alert("invlid input");
@@ -134,11 +121,7 @@ const Register = () => {
     return (
 
       <>
-      {auth?.user ? (
-        <Navigate to={`/${auth.user.identity}`} state={{ from: location }} replace />
-      ) : (
         <div className="register">
-          {/* ... rest of your code */}
             <div className="background-container" style={backgroundStyle}>
               <div className="logo-container">
                 <img src={logotradethrill} alt="logo" className="logotradethrill"/>
@@ -157,6 +140,10 @@ const Register = () => {
                 <input type="text" className="inputName" placeholder="Enter Your Name" />
                 <h3 className="NameStatement">
                   Please enter Email
+                </h3>
+                <input type="text" className="inputName" placeholder="Enter Your UserName" />
+                <h3 className="NameStatement">
+                  Please enter UserName
                 </h3>
                 <input type="text" className="inputName" placeholder="Enter Your Email" />
                 <h3 className="NameStatement">
@@ -186,7 +173,6 @@ const Register = () => {
                   {registrationStage === "pending" ? "Loading" : "Register"}
                 </button>
             </div>
-      )}
     </>
       
     );

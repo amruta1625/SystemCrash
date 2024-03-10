@@ -1,0 +1,47 @@
+*{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+  }
+  body{
+    font-family: sans-serif;
+    /* background-image: url(/public/images/backgrd.png); */
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+.heading {
+    margin: 5vh;
+    margin-bottom: 3vh;
+    font-size: 30px;
+   }
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+   .rm{
+    display: flex;
+    width: 70%;
+    height: auto;
+    /* background-color: grey; */
+    justify-content: space-around;
+   }
+   .kd {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+   
+    background-color: pink;
+   }
+   .lib {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    background-color: white;
+    border-radius: 5vw;
+    padding: 2vw;
+   }
