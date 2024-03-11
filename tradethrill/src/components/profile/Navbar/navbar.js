@@ -13,9 +13,9 @@ export default function Navbar(props) {
    <div className='logopic'></div>
     <label className="logo">Trade Thrill</label>
     <ul>
-      <li><Link  className= {props.vp}  to = "/">View Profile</Link></li>
+      <li><Link  className= {props.vp}  to = "/profilepage">View Profile</Link></li>
       <li><Link  className= {props.trans} to = "/transactions">Transactions</Link></li>
-      <li><Link to ="/">Change Password</Link></li>
+      <li><Link to ="/changepassword">Change Password</Link></li>
       <li><Link to ="/">Logout</Link></li>
     </ul>
   </nav>

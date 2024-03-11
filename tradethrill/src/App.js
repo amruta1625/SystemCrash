@@ -10,6 +10,7 @@ import SellPage from './components/sellpage/sellpage';
 import ProfilePage from './components/profile/profilepage/profilepage';
 import Transactions from './components/profile/transactions/transactions';
 import Notifications from './components/notifications/notifications';
+import ChangePassword from './components/profile/changepassword/changepassword';
 
 
 
@@ -26,6 +27,7 @@ const App = () => {
 
         <Route path='/profilepage' element= {<ProfilePage/>}/>
         <Route path='/transactions' element= {<Transactions />}/> 
+        <Route path='/changepassword' element= {<ChangePassword />}/> 
 
         <Route path='/notify' element= {<Notifications />}/> 
 

@@ -1,116 +1,141 @@
-body, h1, h2, h3, p, div {
+body, h1, h4, p, div {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
 .background-container {
-  background-size: cover;
-  height: 100vh;
-  /* Other background-related styles */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  background-attachment: fixed;
+}
+
+
+
+.registerimg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1;
 }
 
 .logo-container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
   display: flex;
   align-items: center;
-  gap: 0px;
+  gap: 10px;
+  color: #8f6842;
+  z-index: 1;
 }
 
 .logotradethrill {
-  width: 135px;
+  width: 120px;
   height: auto;
-  display: flex;
 }
 
 .logo-name {
-  font-family: Arial, Helvetica, sans-serif;
-  color: #F4E9E1;
+  font-family: cursive;
+  color: #8f6842;
   font-size: 35px;
   margin-top: 10px;
-  /* Other styles */
 }
 
 .create {
-  color: white;
-  font-size: 20px;
-  margin-right: 30%; /* Use percentages for better responsiveness */
-  margin-left:30%;
+  position: relative;
+  z-index: 1;
+  background-color: rgba(216, 214, 214, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  width: 300px;
+  text-align: center;
+  /* margin: auto;  */
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .createstatement {
-  color: white;
-  font-size: 40px;
-  text-align: center;
-  font-family: 'Roboto Mono', monospace;
-}
-
-.NameStatement {
-  margin-left: 24%; /* Use percentages */
-  margin-right: 22%;
-  color: white;
-  display: flex;
-  margin-top: 20px;
-  font-size: 15px;
-}
-
-.inputName {
-  margin-left: 24%; /* Use percentages */
-  margin-right: 22%;
-  width: 50%; /* Use percentages */
-  max-width: 60%; /* Limit maximum width */
-  height: 30px;
-  border: none;
-  border-radius: 5px;
-  font-size: 15px;
+  color: #333333;
+  font-size: 30px;
+  margin-bottom: 10px;
 }
 
 .loginpage {
-  color: white;
-  font-size: 20px;
-  text-align: center;
+  color: #333333;
+  font-size: 14px;
 }
 
-.Logintext {
-  color: white;
-  font-size: 20px;
-  text-align: center;
-  margin-right: 5%; /* Use percentages */
+.input-container {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.inputName {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.error {
+  border-color: #ff0000;
+}
+
+.error-message {
+  color: #ff0000;
+  font-size: 12px;
+  margin-top: 5px;
 }
 
 .button {
-  margin-left: 24%; /* Use percentages */
-  width: 50%; /* Use percentages */
-  max-width: 400px; /* Limit maximum width */
-  height: 30px;
-  border: none;
-  border-radius: 5px;
-  margin-top: 40px;
-  font-size: 20px;
   background-color: #38b6ff;
-  cursor: pointer;
-  
-}
-
-.button:hover {
-  background-color: #268cff; /* Change background color on hover */
-  color: #fff; /* Change text color on hover */
-}
-
-.button:active {
-  background-color: #1a6eb6; /* Change background color when clicked */
-  color: #fff; /* Change text color when clicked */
-}
-
-.text-box {
-  width: 50%; /* Use percentages */
-  max-width: 354px; /* Limit maximum width */
-  height: 30px;
-  margin-right: 5%; /* Use percentages */
+  color: #ffffff;
   border: none;
   border-radius: 5px;
   padding: 10px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #268cff;
 }
 
 .text-box:focus {
   outline: none;
+}
+
+.text-box-container {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+p {
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+a {
+  color: #38b6ff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }

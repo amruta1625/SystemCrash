@@ -1,68 +1,78 @@
-.container {
-    display: flex;
-    align-items: center;
-  }
-  
-  .curved-box {
-    width: 150px;
-    height: 30px;
-    background-color: #f0f0f0;
-    border: 2px solid #333;
-    border-radius: 20px;
-    padding: 20px;
-    margin: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 30px;
-    color: brown;
-  }
-  
-  .outside-text {
-    font-size: 15px;
-    color: red;
-    margin-left: 90px;
-  }
-  
-  .box1 {
-    background-color: #f0f0f0;
-  }
-  
-  .box2 {
-    width: 200px;
-    height: 10px;
-    background-color: #d88613dd;
-    font-size: 15px;
-    color: brown;
-  }
-  
-  .box3 {
-    width: 600px;
-    height: 150px;
-    background-color: #e1ccff;
-  }
-  
-  .box4 {
-    width: 200px;
-    height: 15px;
-    background-color: #ccccff;
-  }
-  
-  .box5 {
-    width: 200px;
-    height: 10px;
-    background-color: #d88613dd;
-    font-size: 15px;
-    color: brown;
-    cursor: pointer;
-  }
-  
-  .sub-options {
-    display: none;
-    margin-top: 10px;
-  }
-  
-  .sub-options.visible {
-    display: block
-  }  
 
+/* SellPage.css */
+
+body, html {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+body{
+  
+  opacity: 1;
+  background-image: radial-gradient(circle at center center, #e5bf7e, #e5e5f7), repeating-radial-gradient(circle at center center, #ece1ce, #d6bc76, 10px, transparent 20px, transparent 10px);
+
+  background-blend-mode: multiply;
+}
+
+.sell-container {
+  max-width: 800px; /* Adjust the max-width as needed */
+  margin: 20px auto;
+  opacity: 1;
+  padding: 30px; /* Adjust the padding as needed */
+  border: 1px solid #ccc;
+  border-radius: 10px; /* Adjust the border-radius as needed */
+  background-color: #fff;
+}
+
+.sell-section {
+  margin-bottom: 20px;
+}
+
+h1 {
+  text-align: center; /* Center the heading */
+  margin-bottom: 20px; /* Add some margin at the bottom for spacing */
+} 
+h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.upload-photo {
+  display: flex;
+  flex-direction: column;
+}
+
+.upload-photo input {
+  display: none;
+}
+
+.upload-photo label {
+  cursor: pointer;
+  background-color: #15b0f8;
+  color: #fff;
+  padding: 15px; /* Adjust the padding as needed */
+  text-align: center;
+  border-radius: 5px; /* Adjust the border-radius as needed */
+}
+
+textarea,
+input[type="text"],
+select {
+  width: 100%;
+  padding: 15px; /* Adjust the padding as needed */
+  margin-top: 10px; /* Adjust the margin as needed */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.submit-button {
+  background-color: #15b0f8;
+  color: #fff;
+  padding: 15px; /* Adjust the padding as needed */
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+}
