@@ -7,7 +7,7 @@ export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [userData, setUserData] = useState({
     name: '',
-    email: '',
+    rollno: '',
     username: '',
     profilePic: '',
   });
@@ -113,14 +113,14 @@ useEffect(() => {
                   </div>
                   <div>
                     <span className="ar">
-                      <pre style={{ display: 'inline-block' }}>IITK-Email ID :</pre>
+                      <pre style={{ display: 'inline-block' }}>IITK-Roll Number :</pre>
                     </span>
                     <input
                       type="text"
-                      id="email-id"
+                      id="rollno-id"
                       className="br"
-                      name="email"
-                      value={userData.email}
+                      name="rollno"
+                      value={userData.rollno}
                       readOnly
                     />
                   </div>
@@ -159,10 +159,10 @@ useEffect(() => {
                 </div>
                 <div>
                   <span className="ar">
-                    <pre style={{ display: 'inline-block' }}>IITK-Email ID :</pre>
+                    <pre style={{ display: 'inline-block' }}>IITK-Roll Number :</pre>
                   </span>
-                  <span id="email-id" className="br">
-                    {userData.email}
+                  <span id="rollno-id" className="br">
+                    {userData.rollno}
                   </span>
                 </div>
                 <div>

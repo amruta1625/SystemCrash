@@ -5,20 +5,20 @@ import './forgotpassword.css';
 
 const ForgotPassword = () => {
   const [user, setUser] = useState({
-    email: '',
+    rollno: '',
     otp: '',
     newPassword: '',
     confirmPassword: '',
   });
 
   const [error, setError] = useState({
-    emailEmpty: false,
+    rollnoEmpty: false,
     otpEmpty: false,
     newPasswordEmpty: false,
     confirmPasswordEmpty: false,
   });
 
-  const [step, setStep] = useState(1); // 1: Email, 2: OTP, 3: New Password
+  const [step, setStep] = useState(1); // 1: Roll Number, 2: OTP, 3: New Password
 
   const backgroundStyle = {
     backgroundImage: `url(${forgotpasswordpage})`,
@@ -50,7 +50,7 @@ const ForgotPassword = () => {
       // If the current step is New Password, update the password
       updatePassword();
     } else {
-      // If the current step is Email, move to the next step (OTP input)
+      // If the current step is Roll Number, move to the next step (OTP input)
       handleSendOTP();
     }
   };
@@ -93,7 +93,7 @@ const ForgotPassword = () => {
 
     // Reset state after password change
     setUser({
-      email: '',
+      rollno: '',
       otp: '',
       newPassword: '',
       confirmPassword: '',
@@ -117,16 +117,16 @@ const ForgotPassword = () => {
         <form onSubmit={handleSubmit}>
           {step === 1 && (
             <div className="form-group">
-              <p>Enter Email:</p>
+              <p>Enter Roll Number:</p>
               <input
-                type="email"
-                name="email"
-                value={user.email}
+                type="int"
+                name="rollno"
+                value={user.rollno}
                 onChange={handleChange}
-                className={`form-control ${error.emailEmpty ? 'error' : ''}`}
-                placeholder="Enter Email"
+                className={`form-control ${error.rollnoEmpty ? 'error' : ''}`}
+                placeholder="Enter Roll Number"
               />
-              {error.emailEmpty && <p className="error-message">Email is required</p>}
+              {error.rollnoEmpty && <p className="error-message">Roll Number is required</p>}
             </div>
           )}
 

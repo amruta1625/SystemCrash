@@ -6,12 +6,11 @@ import logotradethrill from '../../logotradethrill.svg';
 import { Link } from 'react-router-dom';
 
 const Register = () => {
-  const userEmailRegex = /^$|^[a-z0-9.]+@[a-z0-9]+\.iitk\.ac\.in$|^[a-z0-9.]+@iitk\.ac\.in$/;
-
+  
   
   const [user, setUser] = useState({
     name: "",
-    email: "",
+    rollno: "",
     username: "",
     password: "",
     reEnterPassword: "",
@@ -19,11 +18,11 @@ const Register = () => {
 
   const [error, setError] = useState({
     nameEmpty: false,
-    emailEmpty: false,
+    rollnoEmpty: false,
     usernameEmpty: false,
     passwordEmpty: false,
-    emailInvalid: false,
-    emailUsed: false,
+    rollnoInvalid: false,
+    rollnoUsed: false,
     passwordDoesntMatch: false
   });
 
@@ -43,7 +42,7 @@ const Register = () => {
   };
 
   const register = () => {
-    const { name, email, password, reEnterPassword } = user;
+    const { name, rollno, password, reEnterPassword } = user;
 
     let emptyKeys = {};
     for (const key of Object.keys(user)) {
@@ -60,16 +59,13 @@ const Register = () => {
       return;
     }
 
-    if (!userEmailRegex.test(email)) {
-      setError({ ...error, emailInvalid: true });
-      return;
-    }
+    
 
     if (password === reEnterPassword) {
       setStage("pending");
       axios.post("http://127.0.0.1:8000/register", user).then((res) => {
-        if (res.data.message === "A user already registered with the same Email") {
-          setError({ ...error, emailUsed: true });
+        if (res.data.message === "A user already registered with the same Roll Number") {
+          setError({ ...error, rollnoUsed: true });
           setStage("not yet submitted");
           return;
         } else if (res.data.message === "Successfully Registered, Please login now.") {
@@ -113,18 +109,18 @@ const Register = () => {
                 />
               </div>
               <div className="input-container">
-                <h3 className="NameStatement">Please enter Email</h3>
+                <h3 className="NameStatement">Please enter Roll Number</h3>
                 <input
                   type="text"
-                  name="email"
-                  value={user.email}
+                  name="rollno"
+                  value={user.rollno}
                   onChange={handleChange}
                   placeholder="Enter Your Roll Number"
-                  className={`inputName ${error.emailEmpty || error.emailInvalid || error.emailUsed ? "error" : ""}`}
+                  className={`inputName ${error.rollnoEmpty || error.rollnoInvalid || error.rollnoUsed ? "error" : ""}`}
                 />
-                {error.emailEmpty && <p className="error-message">Email is required</p>}
-                {error.emailInvalid && <p className="error-message">Invalid Email format</p>}
-                {error.emailUsed && <p className="error-message">Email is already registered</p>}
+                {error.rollnoEmpty && <p className="error-message">Roll Number is required</p>}
+                {error.rollnoInvalid && <p className="error-message">Invalid Roll Number format</p>}
+                {error.rollnoUsed && <p className="error-message">Roll Number is already registered</p>}
               </div>
               {/* Add other input fields for username, password, etc. */}
               <div className="input-container">

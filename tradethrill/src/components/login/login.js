@@ -53,7 +53,7 @@ const Login = () => {
 
     // Implement Axios login request
     axios.post('http://127.0.0.1:8000/login', {
-      email: email,
+      rollno: rollno,
       password: password
     })
     .then(response => {
@@ -85,7 +85,7 @@ const Login = () => {
           <div className="form-group">
             <p>Enter Roll Number:</p>
             <input
-              type="int" // Change to email type
+              type="int" // Change to roll number type
               name="rollno"
               value={user.rollno}
               onChange={handleChange}
