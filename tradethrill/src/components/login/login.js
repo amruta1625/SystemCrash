@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 import login from './login.png';
 import logotradethrill from '../../logotradethrill.svg';
 import './login.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState({
-    email: '',
+    rollno: '',
     password: '',
   });
 
   const [error, setError] = useState({
-    emailEmpty: false,
+    rollnoEmpty: false,
     passwordEmpty: false,
   });
 
@@ -36,7 +39,7 @@ const Login = () => {
   };
 
   const loginAction = () => {
-    const { email, password } = user;
+    const { rollno, password } = user;
 
     let emptyKeys = {};
     for (const key of Object.keys(user)) {
@@ -48,9 +51,20 @@ const Login = () => {
     setError({ ...error, ...emptyKeys });
     if (Object.keys(emptyKeys).length > 0) return;
 
-    // Implement your login logic here, e.g., make an API call
-
-    console.log('Logging in:', user);
+    // Implement Axios login request
+    axios.post('http://127.0.0.1:8000/login', {
+      email: email,
+      password: password
+    })
+    .then(response => {
+      console.log('Login successful:', response.data);
+      // Redirect to home page or any other desired route upon successful login
+      navigate.push('/home');
+    })
+    .catch(error => {
+      console.error('Login error:', error);
+      // Handle login error, such as displaying error message to the user
+    });
   };
 
   return (
@@ -69,16 +83,16 @@ const Login = () => {
         </h4>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <p>Enter Email:</p>
+            <p>Enter Roll Number:</p>
             <input
-              type="email"
-              name="email"
-              value={user.email}
+              type="int" // Change to email type
+              name="rollno"
+              value={user.rollno}
               onChange={handleChange}
-              className={`form-control ${error.emailEmpty ? 'error' : ''}`}
-              placeholder="Enter email"
+              className={`form-control ${error.rollnoEmpty ? 'error' : ''}`}
+              placeholder="Enter Roll Number"
             />
-            {error.emailEmpty && <p className="error-message">Email is required</p>}
+            {error.rollnoEmpty && <p className="error-message">Roll Number is required</p>}
           </div>
           <div className="form-group">
             <p>Password:</p>

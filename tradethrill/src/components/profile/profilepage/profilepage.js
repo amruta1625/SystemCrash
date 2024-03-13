@@ -113,7 +113,7 @@ useEffect(() => {
                   </div>
                   <div>
                     <span className="ar">
-                      <pre style={{ display: 'inline-block' }}>IITK-EMAIL ID :</pre>
+                      <pre style={{ display: 'inline-block' }}>IITK-Email ID :</pre>
                     </span>
                     <input
                       type="text"
@@ -159,7 +159,7 @@ useEffect(() => {
                 </div>
                 <div>
                   <span className="ar">
-                    <pre style={{ display: 'inline-block' }}>IITK-EMAIL ID :</pre>
+                    <pre style={{ display: 'inline-block' }}>IITK-Email ID :</pre>
                   </span>
                   <span id="email-id" className="br">
                     {userData.email}

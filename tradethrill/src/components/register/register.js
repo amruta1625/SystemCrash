@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 const Register = () => {
   const userEmailRegex = /^$|^[a-z0-9.]+@[a-z0-9]+\.iitk\.ac\.in$|^[a-z0-9.]+@iitk\.ac\.in$/;
 
+  
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -66,8 +67,8 @@ const Register = () => {
 
     if (password === reEnterPassword) {
       setStage("pending");
-      axios.post("http://localhost:9002/register", user).then((res) => {
-        if (res.data.message === "A user already registered with the same email") {
+      axios.post("http://127.0.0.1:8000/register", user).then((res) => {
+        if (res.data.message === "A user already registered with the same Email") {
           setError({ ...error, emailUsed: true });
           setStage("not yet submitted");
           return;
@@ -118,7 +119,7 @@ const Register = () => {
                   name="email"
                   value={user.email}
                   onChange={handleChange}
-                  placeholder="Enter Your Email"
+                  placeholder="Enter Your Roll Number"
                   className={`inputName ${error.emailEmpty || error.emailInvalid || error.emailUsed ? "error" : ""}`}
                 />
                 {error.emailEmpty && <p className="error-message">Email is required</p>}

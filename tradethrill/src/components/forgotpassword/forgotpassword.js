@@ -99,7 +99,7 @@ const ForgotPassword = () => {
       confirmPassword: '',
     });
 
-    setStep(1); // Move back to the first step (Email input)
+    setStep(1); // Move back to the first step (roll no input)
   };
 
   return (
@@ -124,7 +124,7 @@ const ForgotPassword = () => {
                 value={user.email}
                 onChange={handleChange}
                 className={`form-control ${error.emailEmpty ? 'error' : ''}`}
-                placeholder="Enter email"
+                placeholder="Enter Email"
               />
               {error.emailEmpty && <p className="error-message">Email is required</p>}
             </div>
