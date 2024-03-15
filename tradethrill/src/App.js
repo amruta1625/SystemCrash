@@ -13,6 +13,7 @@ import Notifications from './components/notifications/notifications';
 import ChangePassword from './components/profile/changepassword/changepassword';
 import ChatPage from './components/chatpage/chatpage';
 import ProductViewPage from './components/homepage/productview';
+import Wishlist from './components/wishlist/Wishlist';
 
 
 import Otp from './components/otp/Otp';
@@ -42,8 +43,8 @@ const App = () => {
           <Route path='/notify' element= {<Notifications />}/> 
           <Route path='/chatpage' element = {<ChatPage/>} />
           <Route path='/productview' element = {<ProductViewPage/>}/>
+          <Route path="/wishlist" element={<Wishlist />} />
 
-          {/* Add other routes as needed */}
         </Routes>
       </Router>
     </AuthProvider>
