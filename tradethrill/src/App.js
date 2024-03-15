@@ -11,6 +11,9 @@ import ProfilePage from './components/profile/profilepage/profilepage';
 import Transactions from './components/profile/transactions/transactions';
 import Notifications from './components/notifications/notifications';
 import ChangePassword from './components/profile/changepassword/changepassword';
+
+import Otp from './components/otp/Otp';
+
 import { AuthProvider } from './context/AuthProvider';
 
 
@@ -26,6 +29,8 @@ const App = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/sellpage" element={<SellPage />} />
+
+          <Route path="/otp" element={<Otp/>} />
 
           <Route path='/profilepage' element= {<ProfilePage/>}/>
           <Route path='/transactions' element= {<Transactions />}/> 

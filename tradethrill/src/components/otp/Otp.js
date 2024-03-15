@@ -3,7 +3,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
+import AuthContext from "../../context/AuthProvider";
 
 const Otp = () => {
   const {authCreds, setAuthCreds} = useContext(AuthContext);
@@ -33,10 +33,10 @@ const Otp = () => {
             active: 1,
           });
           alert("OTP verified");
-          navigate("/home");
+          navigate("/login");
         } else {
           alert("Invalid OTP");
-          navigate("/login")
+          navigate("/register")
         }
       })
       .catch((err) => {
