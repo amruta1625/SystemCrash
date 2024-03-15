@@ -6,26 +6,20 @@ import './forgotpassword.css';
 const ForgotPassword = () => {
   const [user, setUser] = useState({
     rollno: '',
-    otp: '',
     newPassword: '',
     confirmPassword: '',
+    otp: '',
   });
 
   const [error, setError] = useState({
     rollnoEmpty: false,
-    otpEmpty: false,
     newPasswordEmpty: false,
     confirmPasswordEmpty: false,
+    otpEmpty: false,
+    passwordsMatch: true, // New state for passwords match error
   });
 
-  const [step, setStep] = useState(1); // 1: Roll Number, 2: OTP, 3: New Password
-
-  const backgroundStyle = {
-    backgroundImage: `url(${forgotpasswordpage})`,
-    backgroundSize: 'cover', // Adjust this based on your preference
-    height: '100vh', // Set the desired height
-    // Add other background-related styles as needed
-  };
+  const [step, setStep] = useState(1); // 1: Roll Number, 2: New Password, 3: OTP
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,73 +27,77 @@ const ForgotPassword = () => {
       ...prevUser,
       [name]: value,
     }));
-  };
 
-  const handleSendOTP = () => {
-    // Implement your logic to send OTP (e.g., make an API call)
-    setStep(2); // Move to the next step (OTP input)
+    // Reset passwords match error when user types in new password or confirm password
+    setError((prevError) => ({
+      ...prevError,
+      passwordsMatch: true,
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (step === 2) {
-      // If the current step is OTP, verify the OTP
-      verifyAction();
-    } else if (step === 3) {
-      // If the current step is New Password, update the password
-      updatePassword();
+    if (step === 1) {
+      handleRollNumberStep();
+    } else if (step === 2) {
+      handleNewPasswordStep();
     } else {
-      // If the current step is Roll Number, move to the next step (OTP input)
-      handleSendOTP();
+      handleVerifyOTPStep();
     }
   };
 
-  const verifyAction = () => {
-    const { otp } = user;
+  const handleRollNumberStep = () => {
+    const { rollno } = user;
 
-    let emptyKeys = {};
-    for (const key of Object.keys(user)) {
-      if (user[key] === '' && key !== 'newPassword' && key !== 'confirmPassword') {
-        emptyKeys[`${key}Empty`] = true;
-      }
+    if (rollno === '') {
+      setError({ ...error, rollnoEmpty: true });
+      return;
     }
 
-    setError({ ...error, ...emptyKeys });
-    if (Object.keys(emptyKeys).length > 0) return;
-
-    // Implement your verification logic here, e.g., make an API call
-    console.log('Verifying:', user);
-
-    // Assume verification is successful for demonstration purposes
-    setStep(3); // Move to the next step (New Password input)
+    setStep(2); // Move to New Password input step
   };
 
-  const updatePassword = () => {
+  const handleNewPasswordStep = () => {
     const { newPassword, confirmPassword } = user;
 
-    let emptyKeys = {};
-    for (const key of Object.keys(user)) {
-      if (user[key] === '' && key !== 'otp') {
-        emptyKeys[`${key}Empty`] = true;
-      }
+    if (newPassword === '' || confirmPassword === '') {
+      setError({
+        ...error,
+        newPasswordEmpty: newPassword === '',
+        confirmPasswordEmpty: confirmPassword === '',
+      });
+      return;
     }
 
-    setError({ ...error, ...emptyKeys });
-    if (Object.keys(emptyKeys).length > 0) return;
+    if (newPassword !== confirmPassword) {
+      setError({ ...error, passwordsMatch: false });
+      return;
+    }
 
-    // Implement your logic to update the password (e.g., make an API call)
-    console.log('Updating password:', user);
+    setStep(3); // Move to OTP input step
+  };
 
-    // Reset state after password change
+  const handleVerifyOTPStep = () => {
+    const { otp } = user;
+
+    if (otp === '') {
+      setError({ ...error, otpEmpty: true });
+      return;
+    }
+
+    // Implement your verification logic here, e.g., make an API call
+    console.log('Verifying OTP:', user);
+
+    // Reset state after OTP verification
     setUser({
       rollno: '',
-      otp: '',
       newPassword: '',
       confirmPassword: '',
+      otp: '',
     });
 
-    setStep(1); // Move back to the first step (roll no input)
+    setStep(1); // Move back to Roll Number input step
   };
 
   return (
@@ -119,7 +117,7 @@ const ForgotPassword = () => {
             <div className="form-group">
               <p>Enter Roll Number:</p>
               <input
-                type="int"
+                type="text"
                 name="rollno"
                 value={user.rollno}
                 onChange={handleChange}
@@ -131,6 +129,36 @@ const ForgotPassword = () => {
           )}
 
           {step === 2 && (
+            <>
+              <div className="form-group">
+                <p>New Password:</p>
+                <input
+                  type="password"
+                  name="newPassword"
+                  value={user.newPassword}
+                  onChange={handleChange}
+                  className={`form-control ${error.newPasswordEmpty ? 'error' : ''}`}
+                  placeholder="Enter new password"
+                />
+                {error.newPasswordEmpty && <p className="error-message">New Password is required</p>}
+              </div>
+              <div className="form-group">
+                <p>Confirm Password:</p>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  value={user.confirmPassword}
+                  onChange={handleChange}
+                  className={`form-control ${error.confirmPasswordEmpty || !error.passwordsMatch ? 'error' : ''}`}
+                  placeholder="Confirm new password"
+                />
+                {error.confirmPasswordEmpty && <p className="error-message">Confirm Password is required</p>}
+                {!error.confirmPasswordEmpty && !error.passwordsMatch && <p className="error-message">Passwords don't match</p>}
+              </div>
+            </>
+          )}
+
+          {step === 3 && (
             <div className="form-group">
               <p>Enter OTP:</p>
               <input
@@ -140,51 +168,20 @@ const ForgotPassword = () => {
                 onChange={handleChange}
                 className={`form-control ${error.otpEmpty ? 'error' : ''}`}
                 placeholder="Enter OTP"
-                />
-                {error.otpEmpty && <p className="error-message">OTP is required</p>}
-              </div>
-            )}
-  
-            {step === 3 && (
-              <>
-                <div className="form-group">
-                  <p>New Password:</p>
-                  <input
-                    type="password"
-                    name="newPassword"
-                    value={user.newPassword}
-                    onChange={handleChange}
-                    className={`form-control ${error.newPasswordEmpty ? 'error' : ''}`}
-                    placeholder="Enter new password"
-                  />
-                  {error.newPasswordEmpty && <p className="error-message">New Password is required</p>}
-                </div>
-                <div className="form-group">
-                  <p>Confirm Password:</p>
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    value={user.confirmPassword}
-                    onChange={handleChange}
-                    className={`form-control ${error.confirmPasswordEmpty ? 'error' : ''}`}
-                    placeholder="Confirm new password"
-                  />
-                  {error.confirmPasswordEmpty && (
-                    <p className="error-message">Confirm Password is required</p>
-                  )}
-                </div>
-              </>
-            )}
-  
-            <div>
-              <button type="submit" className="submit">
-                {step === 1 ? 'Send OTP' : step === 2 ? 'Verify OTP' : 'Reset Password'}
-              </button>
+              />
+              {error.otpEmpty && <p className="error-message">OTP is required</p>}
             </div>
-          </form>
-        </div>
+          )}
+
+          <div>
+            <button type="submit" className="submit">
+              {step === 1 ? 'Next' : 'Verify OTP'}
+            </button>
+          </div>
+        </form>
       </div>
-    );
-  };
-  
-  export default ForgotPassword;  
+    </div>
+  );
+};
+
+export default ForgotPassword;

@@ -15,7 +15,7 @@ import ChatPage from './components/chatpage/chatpage';
 import ProductViewPage from './components/homepage/productview';
 
 
-import Otp from './components/otp/otp';
+import Otp from './components/otp/Otp';
 
 import { AuthProvider } from './context/AuthProvider';
 
