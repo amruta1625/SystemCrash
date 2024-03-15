@@ -12,21 +12,12 @@ const Notifications = () => {
   }, []);
 
   const fetchNotificationsFromBackend = async () => {
-    // const response = await fetch('https://your-backend-api/notifications');
-    // const data = await response.json();
-    // return data;
-    try {
-        const response = await fetch('https://your-backend-api/notifications');
-        if (!response.ok) {
-          throw new Error(`Failed to fetch notifications. Status: ${response.status}`);
-        }
-        const data = await response.json();
-        return data;
-      } catch (error) {
-        console.error('Error fetching notifications:', error);
-        throw error;
-      }
-    
+    // Simulate fetching notifications data from the backend
+    return [
+      { id: 1, user: 'User 1', action: 'has accepted to sell the product', status: 'Accepted' },
+      { id: 2, user: 'User 2', action: 'has declined to sell the product', status: 'Declined' },
+      { id: 3, user: 'User 3', action: 'has requested the product' },
+    ];
   };
 
   const handleAccept = (id) => {
@@ -49,23 +40,26 @@ const Notifications = () => {
   };
 
   return (
-    <div className="notifications-container">
-      {notifications.map((notification) => (
-        <div key={notification.id} className="notification">
-          <div className="user">{notification.user}</div>
-          <div className="action">{notification.action}</div>
-          {notification.status ? (
-            <div className={`status ${notification.status.toLowerCase()}`}>
-              {notification.status}
-            </div>
-          ) : (
-            <div className="btns">
-              <button onClick={() => handleAccept(notification.id)}>ACCEPT</button>
-              <button onClick={() => handleDecline(notification.id)}>DECLINE</button>
-            </div>
-          )}
-        </div>
-      ))}
+    <div className="notifications">
+      <h1 className="notifications-heading">Notifications</h1> 
+      <div className="notifications-container">
+        {notifications.map((notification) => (
+          <div key={notification.id} className="notification">
+            <div className="user">{notification.user}</div>
+            <div className="action">{notification.action}</div>
+            {notification.status ? (
+              <div className={`status ${notification.status.toLowerCase()}`}>
+                {notification.status}
+              </div>
+            ) : (
+              <div className="btns">
+                <button onClick={() => handleAccept(notification.id)}>ACCEPT</button>
+                <button onClick={() => handleDecline(notification.id)}>DECLINE</button>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

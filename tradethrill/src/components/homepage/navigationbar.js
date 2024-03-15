@@ -1,30 +1,32 @@
-// Navbar.js
 import React from 'react';
 import logotradethrill from '../../logotradethrill.svg';
 import NotificationsIcon from '@mui/icons-material/NotificationsNoneRounded';
 import ProfileIcon from '@mui/icons-material/AccountCircleRounded';
-import Input from '@mui/material/Input';
+import InputBase from '@mui/material/InputBase'; // Change import to InputBase
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
-import './navigationbar.css'; // Import the navbar.css file
+import './navigationbar.css'; 
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 const Navbar = () => {
   const navigate = useNavigate();
 
+  
   const goToSellPage = () => {
-    // Use navigate function to navigate to the SellPage component
-    navigate('/sellpage');  // Replace '/sell' with the actual path to your SellPage
+    navigate('/sellpage');  
+  };
+
+  const goToChatPage = () => {
+    navigate('/chatpage'); 
   };
 
   const goToNotificationPage = () => {
-    // Use navigate function to navigate to the SellPage component
-    navigate('/notifications');  // Replace '/sell' with the actual path to your SellPage
+    navigate('/notify'); 
   };
 
   const goToProfilePage = () => {
-    // Use navigate function to navigate to the SellPage component
-    navigate('/profilepage');  // Replace '/sell' with the actual path to your SellPage
+    navigate('/profilepage');  
   };
 
   return (
@@ -32,9 +34,8 @@ const Navbar = () => {
       <img src={logotradethrill} alt="logo" className="navbar-logo" />
       <div className="navbar-logo-name">TradeThrill</div>
       <div className="search-container">
-        <Input
+        <InputBase // Change Input to InputBase
           className="searchbar"
-          type="text"
           placeholder="Search for items"
           endAdornment={
             <InputAdornment position="end">
@@ -43,12 +44,13 @@ const Navbar = () => {
           }
         />
       </div>
+      <FavoriteBorderIcon className="favoriteicon" />
       <button className="navbar-button" onClick={goToSellPage}>
         +SELL
       </button>
-      <button className="navbar-button">+CHAT</button>
-      <NotificationsIcon className="navbar-icon" onClick={goToNotificationPage}/>
-      <ProfileIcon className="navbar-icon"  onClick={goToProfilePage}/>
+      <button className="navbar-button" onClick={goToChatPage}>+CHAT</button>
+      <NotificationsIcon className="notificationicon" onClick={goToNotificationPage}/>
+      <ProfileIcon className="profileicon"  onClick={goToProfilePage}/>
     </div>
   );
 };

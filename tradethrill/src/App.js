@@ -11,8 +11,11 @@ import ProfilePage from './components/profile/profilepage/profilepage';
 import Transactions from './components/profile/transactions/transactions';
 import Notifications from './components/notifications/notifications';
 import ChangePassword from './components/profile/changepassword/changepassword';
+import ChatPage from './components/chatpage/chatpage';
+import ProductViewPage from './components/homepage/productview';
 
-import Otp from './components/otp/Otp';
+
+import Otp from './components/otp/otp';
 
 import { AuthProvider } from './context/AuthProvider';
 
@@ -37,6 +40,8 @@ const App = () => {
           <Route path='/changepassword' element= {<ChangePassword />}/> 
 
           <Route path='/notify' element= {<Notifications />}/> 
+          <Route path='/chatpage' element = {<ChatPage/>} />
+          <Route path='/productview' element = {<ProductViewPage/>}/>
 
           {/* Add other routes as needed */}
         </Routes>

@@ -1,38 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from '../Navbar/navbar';
+import "./changepassword.css"; 
 
 const ChangePassword = () => {
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [otpSent, setOtpSent] = useState(false);
+  const [otp, setOtp] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
-  const handleChangePassword = async () => {
+  useEffect(() => {
+    const fetchUserEmail = async () => {
+      try {
+        const response = await axios.get('your-api-endpoint-to-fetch-user-email');
+        setEmail(response.data.email);
+      } catch (error) {
+        console.error('Error fetching user email:', error);
+        setError('Error fetching user email. Please try again.');
+      }
+    };
+
+    fetchUserEmail();
+  }, []);
+
+  const handleSendOTP = async () => {
     try {
-      // Basic validation
-      if (!currentPassword || !newPassword || !confirmPassword) {
-        setError('All fields are required');
+      if (!email) {
+        setError('Email is required');
         return;
       }
 
-      if (newPassword !== confirmPassword) {
-        setError('New password and confirm password do not match');
-        return;
-      }
+      const response = await axios.post('your-send-otp-api-endpoint', { email });
+      setMessage(response.data.message);
+      setOtpSent(true);
+      setError('');
+    } catch (error) {
+      setMessage('');
+      setError('Error sending OTP. Please try again.');
+    }
+  };
 
-      // Make an API request to change the password
-      const response = await axios.post('your-change-password-api-endpoint', {
-        currentPassword,
-        newPassword,
-      });
-
+  const handleVerifyOTP = async () => {
+    try {
+      const response = await axios.post('your-verify-otp-api-endpoint', { email, otp });
       setMessage(response.data.message);
       setError('');
     } catch (error) {
       setMessage('');
-      setError('Error changing password. Please try again.');
+      setError('Invalid OTP. Please try again.');
     }
   };
 
@@ -40,37 +56,32 @@ const ChangePassword = () => {
     <>
       <Navbar />
       <div className="container">
-        <div className="xyz change-password-container">
-          <h2>Change Password</h2>
+        <div className="xyz forgot-password-container">
+          <h2>Forgot Password</h2>
           {message && <p className="message">{message}</p>}
           {error && <p className="error">{error}</p>}
-          <div>
+          {!otpSent ? (
             <div>
-              <label>Current Password:</label>
+              <label>Email:</label>
               <input
-                type="password"
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                readOnly // Make the email field read-only if you want to prevent users from changing it
               />
+              <button onClick={handleSendOTP}>Send OTP</button>
             </div>
+          ) : (
             <div>
-              <label>New Password:</label>
+              <label>OTP:</label>
               <input
-                type="password"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
+                type="text"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
               />
+              <button onClick={handleVerifyOTP}>Verify OTP</button>
             </div>
-            <div>
-              <label>Confirm Password:</label>
-              <input
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-            </div>
-            <button onClick={handleChangePassword}>Change Password</button>
-          </div>
+          )}
         </div>
       </div>
     </>

@@ -58,6 +58,7 @@ const SellPage = () => {
   };
 
   return (
+    <div className="sellpage">
     <div className="sell-container">
       <form onSubmit={(e) => handleSubmit(e)}>
         <div class="sell-container">
@@ -158,6 +159,9 @@ const SellPage = () => {
         </div>
       </form>
     </div>
+
+    </div>
+    
   );
 };
 

@@ -68,8 +68,9 @@ export default function ProfilePage() {
   return (
     <>
       <Navbar />
-      <section>
-        <div className="xyz">
+      <div className="container">
+      <section className="profile-section">
+      <div className="xyz">
           <div className="abc">
             <div
               id="profile-pic"
@@ -136,7 +137,7 @@ export default function ProfilePage() {
                   </div>
                 </div>
                 <div className="btn">
-                  <button type="submit" onClick={(e) => handleSaveClick(e)}>
+                <button type="submit" onClick={(e) => handleSaveClick(e)}>
                     Save
                   </button>
                 </div>
@@ -166,6 +167,14 @@ export default function ProfilePage() {
                     <pre style={{ display: "inline-block" }}>USERNAME :</pre>
                   </span>
                   <span id="userName" className="br">
+                  {authCreds.user_id}
+                  </span>
+                </div>
+                <div>
+                  <span className="ar">
+                    <pre style={{ display: "inline-block" }}>USERNAME :</pre>
+                  </span>
+                  <span id="userName" className="br">
                     {authCreds.user_id}
                   </span>
                 </div>
@@ -179,8 +188,11 @@ export default function ProfilePage() {
               )}
             </div>
           </div>
-        </div>
-      </section>
+                </div>
+        </section>
+      </div>
+      
+      
     </>
   );
 }

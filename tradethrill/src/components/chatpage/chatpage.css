@@ -1,0 +1,116 @@
+/* chatpage.css */
+
+/* Style for sidebar menu */
+.menu {
+    width: 30%;
+    background-color: #f0f0f0;
+    position:fixed;
+    left:0;
+    top: 0;
+    bottom:0;
+  
+  }
+  
+  .menu .items {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .menu .item {
+    padding: 20px;
+    cursor: pointer;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .menu .item:hover {
+    background-color: #ddd;
+  }
+  
+  /* Style for chat window */
+  .chat {
+    width: 70%;
+    position:fixed;
+    top:0;
+    right:0;
+    bottom:0;
+    background-color: #ffffff;
+  
+  }
+  
+  .header-chat {
+    background-color: #ccc;
+    padding: 10px;
+  }
+  
+  .messages-chat {
+    height: 80%;
+    overflow-y: auto;
+  }
+  
+  .message {
+    margin-bottom: 10px;
+  }
+  
+  /* .message-box {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+  } */
+  
+  .sender {
+    font-weight: bold;
+  }
+  
+  .text {
+    margin-top: 5px;
+  }
+  
+  .footer-chat {
+    background-color: #f0f0f0;
+    padding: 10px;
+    display: flex;
+  }
+  
+  .write-message {
+    flex: 1;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .send {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  /* Style for chat window */
+  .message-box {
+    background-color: #ae4444;
+    padding: 10px;  
+    border-radius: 10px;
+    
+    margin-bottom: 10px;
+    max-width: 70%;
+    display: inline-block;
+  }
+  
+  /* Sender (user's own messages) */
+  .message.sent .message-box {
+    text-align: left;
+    margin-left: auto;
+    color: black;
+    background-color: #DCF8C6; /* Example background color for sender messages */
+  }
+  
+  /* Receiver (messages from other user) */
+  .message.received .message-box {
+    text-align: left;
+    color:black;
+    margin-right: auto;
+    background-color: #E6E6E6; /* Example background color for receiver messages */
+  }

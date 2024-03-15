@@ -1,56 +1,73 @@
-/* Notifications.css */
+.notifications {
+  margin: 20px;
 
-.notifications-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-image: linear-gradient( 86.3deg,  rgba(0,119,182,1) 3.6%, rgba(8,24,68,1) 87.6% );
   
-  .notification {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin: 10px;
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .user {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .action {
-    margin-bottom: 10px;
-  }
-  
-  .status {
-    font-weight: bold;
-    padding: 5px;
-    border-radius: 3px;
-    margin-top: 5px;
-  }
-  
-  .status.accepted {
-    background-color: #8fde8c; /* Green for accepted status */
-  }
-  
-  .status.declined {
-    background-color: #f48989; /* Red for declined status */
-  }
-  
-  .btns {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    margin-top: 10px;
-  }
-  
-  button {
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-  
-  /* Add more styling as needed */
-  
+}
+
+.notification {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+}
+
+.notifications-heading {
+  color: beige;
+  padding: 10px; /* Adjust padding as needed */
+  border-radius: 5px; /* Add border-radius for a rounded look */
+}
+
+
+.notification .user {
+  font-weight: bold;
+}
+
+.notification .action {
+  margin-bottom: 5px;
+}
+
+.notification .status {
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.notification .status.accepted {
+  background-color: #4caf50;
+  color: white;
+}
+
+.notification .status.declined {
+  background-color: #f44336;
+  color: white;
+}
+
+.notification .btns button {
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.notification .btns button.accept {
+  background-color: #4caf50;
+  color: white;
+}
+
+.notification .btns button.decline {
+  background-color: #f44336;
+  color: white;
+}
