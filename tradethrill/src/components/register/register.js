@@ -3,23 +3,24 @@ import createaccount from './createaccount.png';
 import axios from "axios";
 import './register.css';
 import logotradethrill from '../../logotradethrill.svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Register = () => {
+
+  const navigate = useNavigate()
   
   
   const [user, setUser] = useState({
     name: "",
-    rollno: "",
-    username: "",
-    password: "",
-    reEnterPassword: "",
+    user_id: "",
+    confirm_password: "",
+    hashed_password: "",
   });
 
   const [error, setError] = useState({
     nameEmpty: false,
     rollnoEmpty: false,
-    usernameEmpty: false,
+    // usernameEmpty: false,
     passwordEmpty: false,
     rollnoInvalid: false,
     rollnoUsed: false,
@@ -42,7 +43,7 @@ const Register = () => {
   };
 
   const register = () => {
-    const { name, rollno, password, reEnterPassword } = user;
+    const { name, user_id, hashed_password, confirm_password } = user;
 
     let emptyKeys = {};
     for (const key of Object.keys(user)) {
@@ -54,25 +55,46 @@ const Register = () => {
     setError({ ...error, ...emptyKeys });
     if (Object.keys(emptyKeys).length > 0) return;
 
-    if (password !== reEnterPassword) {
+    if (hashed_password !== confirm_password) {
       setError({ ...error, passwordDoesntMatch: true });
       return;
     }
 
     
 
-    if (password === reEnterPassword) {
-      setStage("pending");
-      axios.post("http://127.0.0.1:8000/register", user).then((res) => {
-        if (res.data.message === "A user already registered with the same Roll Number") {
-          setError({ ...error, rollnoUsed: true });
-          setStage("not yet submitted");
-          return;
-        } else if (res.data.message === "Successfully Registered, Please login now.") {
-          setStage("completed");
-        }
-      });
-    }
+    // if (password === reEnterPassword) {
+    //   setStage("pending");
+    //   axios.post("http://127.0.0.1:8000/register", user).then((res) => {
+    //     if (res.data.message === "A user already registered with the same Roll Number") {
+    //       setError({ ...error, rollnoUsed: true });
+    //       setStage("not yet submitted");
+    //       return;
+    //     } else if (res.data.message === "Successfully Registered, Please login now.") {
+    //       setStage("completed");
+    //     }
+    //   });
+    // }
+    setStage("pending");
+    axios.post("http://127.0.0.1:8000/register", {
+      name,
+      user_id,
+      hashed_password,
+      confirm_password
+    })
+    .then((res) => {
+      if (res.data.message === "A user already registered with the same Roll Number") {
+        setError({ ...error, rollnoUsed: true });
+        setStage("not yet submitted");
+      } else if (res.data.message === "Successfully Registered, Please login now.") {
+        setStage("completed")
+        navigate("/otp")
+      }
+    })
+    .catch((error) => {
+      console.error("Error registering user:", error);
+      setStage("not yet submitted");
+    });
+
   };
 
   const backgroundStyle = {
@@ -111,9 +133,9 @@ const Register = () => {
               <div className="input-container">
                 <h3 className="NameStatement">Please enter Roll Number</h3>
                 <input
-                  type="text"
-                  name="rollno"
-                  value={user.rollno}
+                  type="number"
+                  name="user_id"
+                  value={user.user_id}
                   onChange={handleChange}
                   placeholder="Enter Your Roll Number"
                   className={`inputName ${error.rollnoEmpty || error.rollnoInvalid || error.rollnoUsed ? "error" : ""}`}
@@ -127,8 +149,8 @@ const Register = () => {
                 <h3 className="NameStatement">Please enter password</h3>
                 <input
                   type="password"
-                  name="password"
-                  value={user.password}
+                  name="hashed_password"
+                  value={user.hashed_password}
                   onChange={handleChange}
                   placeholder="Enter Your Password"
                   className={`inputName ${error.passwordEmpty ? "error" : ""}`}
@@ -139,8 +161,8 @@ const Register = () => {
                 <h3 className="NameStatement">Confirm Password</h3>
                 <input
                   type="password"
-                  name="reEnterPassword"
-                  value={user.reEnterPassword}
+                  name="confirm_password"
+                  value={user.confirm_password}
                   onChange={handleChange}
                   placeholder="Confirm Password"
                   className={`inputName ${error.passwordDoesntMatch ? "error" : ""}`}

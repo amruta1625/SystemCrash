@@ -1,29 +1,25 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import login from './login.png';
 import logotradethrill from '../../logotradethrill.svg';
 import './login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import AuthContext from '../../context/AuthProvider';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { authCreds, setAuthCreds, setIsLoggedIn } =
+    useContext(AuthContext);
 
   const [user, setUser] = useState({
-    rollno: '',
-    password: '',
+    user_id: "",
+    hashed_password: "",
   });
 
   const [error, setError] = useState({
     rollnoEmpty: false,
     passwordEmpty: false,
   });
-
-  const backgroundStyle = {
-    backgroundImage: `url(${login})`,
-    backgroundSize: 'cover', // Adjust this based on your preference
-    height: '100vh', // Set the desired height
-    // Add other background-related styles as needed
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,34 +34,95 @@ const Login = () => {
     loginAction();
   };
 
+  // const loginAction = () => {
+  //   if (user.user_id && user.hashed_password) {
+  //     axios
+  //       .post("http://127.0.0.1:8000/login", user)
+  //       .then((res) => {
+  //         if (res.data.message === "success") {
+  //           setAuthCreds({
+  //             ...authCreds,
+  //             "user_id": res.data.user_id,
+  //             "name": res.data.name,
+  //             "email": res.data.email,
+  //             "active": res.data.verified,
+  //             "notification": res.data.notifications,
+  //           });
+  //           console.log(authCreds);
+  //           // console.log("hello");
+  //           setIsLoggedIn(true);
+  //           authCreds.active ? navigate("/home") : navigate("/otp");
+  //         } 
+  //         else {
+  //           alert("Invalid Credentials");
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   }
+  // };
+
+  // const loginAction = () => {
+  //   if (user.user_id && user.hashed_password) {
+  //     axios
+  //       .post("http://127.0.0.1:8000/login", user)
+  //       .then((res) => {
+  //         console.log("Response data:", res.data);
+  //         if (res.data.message === "success") {
+  //           setAuthCreds(prevAuthCreds => ({
+  //             ...prevAuthCreds,
+  //             user_id: res.data.user_id,
+  //             name: res.data.name,
+  //             email: res.data.email,
+  //             active: res.data.verified,
+  //             notification: res.data.notifications,
+  //           }));
+  //           console.log("Updated authCreds:", authCreds);
+  //           setIsLoggedIn(true);
+  //           authCreds.active ? navigate("/home") : navigate("/otp");
+  //         } else {
+  //           alert("Invalid Credentials");
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.log("Error:", err);
+  //       });
+  //   }
+  // };
+  
+
   const loginAction = () => {
-    const { rollno, password } = user;
-
-    let emptyKeys = {};
-    for (const key of Object.keys(user)) {
-      if (user[key] === '') {
-        emptyKeys[`${key}Empty`] = true;
-      }
+    if (user.user_id && user.hashed_password) {
+      axios
+        .post("http://127.0.0.1:8000/login", user)
+        .then((res) => {
+          // console.log("Response data:", res.data);
+          if (res.data.message === "success") {
+            setAuthCreds(prevAuthCreds => ({
+              ...prevAuthCreds,
+              user_id: res.data.user_id,
+              name: res.data.name,
+              email: res.data.email,
+              active: res.data.verified,
+              notification: res.data.notifications,
+            }));
+            setIsLoggedIn(true);
+            if (res.data.verified) {
+              navigate("/home");
+            } else {
+              navigate("/otp");
+            }
+          } else {
+            alert("Invalid Credentials");
+          }
+        })
+        .catch((err) => {
+          console.log("Error:", err);
+        });
     }
-
-    setError({ ...error, ...emptyKeys });
-    if (Object.keys(emptyKeys).length > 0) return;
-
-    // Implement Axios login request
-    axios.post('http://127.0.0.1:8000/login', {
-      rollno: rollno,
-      password: password
-    })
-    .then(response => {
-      console.log('Login successful:', response.data);
-      // Redirect to home page or any other desired route upon successful login
-      navigate.push('/home');
-    })
-    .catch(error => {
-      console.error('Login error:', error);
-      // Handle login error, such as displaying error message to the user
-    });
   };
+  
 
   return (
     <div className="login">
@@ -85,26 +142,30 @@ const Login = () => {
           <div className="form-group">
             <p>Enter Roll Number:</p>
             <input
-              type="int" // Change to roll number type
-              name="rollno"
-              value={user.rollno}
+              type="number" // Change to roll number type
+              name="user_id"
+              value={user.user_id}
               onChange={handleChange}
-              className={`form-control ${error.rollnoEmpty ? 'error' : ''}`}
+              className={`form-control ${error.rollnoEmpty ? "error" : ""}`}
               placeholder="Enter Roll Number"
             />
-            {error.rollnoEmpty && <p className="error-message">Roll Number is required</p>}
+            {error.rollnoEmpty && (
+              <p className="error-message">Roll Number is required</p>
+            )}
           </div>
           <div className="form-group">
             <p>Password:</p>
             <input
               type="password"
-              name="password"
-              value={user.password}
+              name="hashed_password"
+              value={user.hashed_password}
               onChange={handleChange}
-              className={`form-control ${error.passwordEmpty ? 'error' : ''}`}
+              className={`form-control ${error.passwordEmpty ? "error" : ""}`}
               placeholder="Enter Password"
             />
-            {error.passwordEmpty && <p className="error-message">Password is required</p>}
+            {error.passwordEmpty && (
+              <p className="error-message">Password is required</p>
+            )}
           </div>
           <div>
             <button type="submit" className="submit">

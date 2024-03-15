@@ -1,74 +1,66 @@
-import React, { useState, useEffect } from 'react';
-import './profilepage.css';
-import Navbar from '../Navbar/navbar';
-import axios from 'axios';
+import React, { useState, useEffect, useContext } from "react";
+import "./profilepage.css";
+import Navbar from "../Navbar/navbar";
+import axios from "axios";
+import AuthContext from "../../../context/AuthProvider";
 
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
-  const [userData, setUserData] = useState({
-    name: '',
-    rollno: '',
-    username: '',
-    profilePic: '',
+  const { authCreds, setAuthCreds } = useContext(AuthContext);
+
+  const [newUserData, setNewUserData] = useState({
+    name: "",
+    user_id: "",
+    email: "",
+    profile_pic: "",
   });
   const [newProfilePic, setNewProfilePic] = useState(null);
-  
-  const [isLoading, setIsLoading] = useState(true);
 
-useEffect(() => {
-  const fetchUserData = async () => {
-    try {
-      const response = await axios.get('your-api-endpoint');
-      setUserData(response.data);
-      setIsLoading(false); // Set loading to false on successful data fetch
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-    }
-  };
 
-  fetchUserData();
-}, []);
-  
   const handleEditClick = () => {
     setIsEditing(true);
   };
 
-  const handleSaveClick = async () => {
+  const handleSaveClick = async (e) => {
     try {
-      if (newProfilePic) {
-        const formData = new FormData();
-        formData.append('profilePic', newProfilePic);
-  
-        const uploadResponse = await axios.post('upload-profile-pic-endpoint', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+      // add code for profile pic update
+      e.preventDefault();
+      axios
+        .post("http://127.0.0.1:8000/edit_profile", newUserData)
+        .then((response) => {
+          console.log(response);
+          if (response.data.message === "success") {
+            setAuthCreds({
+              ...authCreds,
+              name: newUserData.name,
+              email: newUserData.email,
+              user_id: newUserData.user_id,
+            });
+          } else {
+            alert(
+              "There was an error in updation of the Profile Information. Please try again."
+            );
+          }
+        })
+        .catch((error) => {
+          console.log(error);
         });
-  
-        setUserData((prevUserData) => ({
-          ...prevUserData,
-          profilePic: uploadResponse.data.profilePicUrl,
-        }));
-      }
-  
-      // Implement logic here to save other form data if needed
-  
       setIsEditing(false);
     } catch (error) {
-      console.error('Error saving data:', error);
+      console.error("Error saving data:", error);
     }
   };
-  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUserData({
-      ...userData,
+    setNewUserData({
+      ...newUserData,
       [name]: value,
     });
   };
 
   const handleProfilePicChange = (e) => {
+    e.preventDefault();
     const file = e.target.files[0];
     setNewProfilePic(file);
   };
@@ -79,7 +71,10 @@ useEffect(() => {
       <section>
         <div className="xyz">
           <div className="abc">
-            <div id="profile-pic" style={{ backgroundImage: `url(${userData.profilePic})` }}>
+            <div
+              id="profile-pic"
+              style={{ backgroundImage: `url(${authCreds.profile_pic})` }}
+            >
               {isEditing && (
                 <div>
                   <label htmlFor="newProfilePic">Change Profile Picture:</label>
@@ -88,7 +83,7 @@ useEffect(() => {
                     id="newProfilePic"
                     name="newProfilePic"
                     accept="image/*"
-                    onChange={handleProfilePicChange}
+                    onChange={(e) => handleProfilePicChange(e)}
                   />
                 </div>
               )}
@@ -100,50 +95,49 @@ useEffect(() => {
                 <div className="text">
                   <div>
                     <span className="ar">
-                      <pre style={{ display: 'inline-block' }}>NAME :</pre>
+                      <pre style={{ display: "inline-block" }}>NAME :</pre>
                     </span>
                     <input
                       type="text"
                       id="name"
                       className="br"
                       name="name"
-                      value={userData.name}
+                      value={newUserData.name}
                       onChange={handleInputChange}
                     />
                   </div>
                   <div>
                     <span className="ar">
-                      <pre style={{ display: 'inline-block' }}>IITK-Roll Number :</pre>
+                      <pre style={{ display: "inline-block" }}>
+                        IITK-Roll Number :
+                      </pre>
                     </span>
                     <input
                       type="text"
                       id="rollno-id"
                       className="br"
                       name="rollno"
-                      value={userData.rollno}
+                      value={newUserData.user_id}
                       readOnly
                     />
                   </div>
                   <div>
                     <span className="ar">
-                      <pre style={{ display: 'inline-block' }}>USERNAME :</pre>
+                      <pre style={{ display: "inline-block" }}>USERNAME :</pre>
                     </span>
                     <input
                       type="text"
                       id="userName"
                       className="br"
                       name="username"
-                      value={userData.username}
+                      value={newUserData.user_id}
                       onChange={handleInputChange}
                     />
                   </div>
                 </div>
                 <div className="btn">
-                  <button type="button" onClick={handleSaveClick}>
+                  <button type="submit" onClick={(e) => handleSaveClick(e)}>
                     Save
-                  </button>
-                  <button type="button" onClick={() => setNewProfilePic(null)}>
-                    Cancel
                   </button>
                 </div>
               </form>
@@ -151,26 +145,28 @@ useEffect(() => {
               <div className="text">
                 <div>
                   <span className="ar">
-                    <pre style={{ display: 'inline-block' }}>NAME :</pre>
+                    <pre style={{ display: "inline-block" }}>NAME :</pre>
                   </span>
                   <span id="name" className="br">
-                    {userData.name}
+                    {authCreds.name}
                   </span>
                 </div>
                 <div>
                   <span className="ar">
-                    <pre style={{ display: 'inline-block' }}>IITK-Roll Number :</pre>
+                    <pre style={{ display: "inline-block" }}>
+                      IITK-Roll Number :
+                    </pre>
                   </span>
                   <span id="rollno-id" className="br">
-                    {userData.rollno}
+                    {authCreds.user_id}
                   </span>
                 </div>
                 <div>
                   <span className="ar">
-                    <pre style={{ display: 'inline-block' }}>USERNAME :</pre>
+                    <pre style={{ display: "inline-block" }}>USERNAME :</pre>
                   </span>
                   <span id="userName" className="br">
-                    {userData.username}
+                    {authCreds.user_id}
                   </span>
                 </div>
               </div>

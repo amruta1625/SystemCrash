@@ -11,29 +11,32 @@ import ProfilePage from './components/profile/profilepage/profilepage';
 import Transactions from './components/profile/transactions/transactions';
 import Notifications from './components/notifications/notifications';
 import ChangePassword from './components/profile/changepassword/changepassword';
+import { AuthProvider } from './context/AuthProvider';
 
 
 
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register/>} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/forgotpassword" element={<ForgotPassword />} />
-        <Route path="/sellpage" element={<SellPage />} />
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register/>} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/sellpage" element={<SellPage />} />
 
-        <Route path='/profilepage' element= {<ProfilePage/>}/>
-        <Route path='/transactions' element= {<Transactions />}/> 
-        <Route path='/changepassword' element= {<ChangePassword />}/> 
+          <Route path='/profilepage' element= {<ProfilePage/>}/>
+          <Route path='/transactions' element= {<Transactions />}/> 
+          <Route path='/changepassword' element= {<ChangePassword />}/> 
 
-        <Route path='/notify' element= {<Notifications />}/> 
+          <Route path='/notify' element= {<Notifications />}/> 
 
-        {/* Add other routes as needed */}
-      </Routes>
-    </Router>
+          {/* Add other routes as needed */}
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 };
 
