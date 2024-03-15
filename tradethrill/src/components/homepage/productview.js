@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import  { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import "./productview.css"
+import './productview.css';
 
 const ProductViewPage = () => {
   const { productId } = useParams(); // Get the productId from the URL params
 
   const products = [
     {
-      id: "1",
+      id: '1',
       name: 'Product Name 1',
       description: 'Product Description 1',
       price: 19.99,
@@ -20,7 +20,7 @@ const ProductViewPage = () => {
       },
     },
     {
-      id: "2",
+      id: '2',
       name: 'Product Name 2',
       description: 'Product Description 2',
       price: 24.99,
@@ -34,8 +34,8 @@ const ProductViewPage = () => {
   ];
 
   // Sample product and seller data (replace with actual data fetched from backend)
-  const [product, setProduct] = useState( {
-    id: "1",
+  const [product, setProduct] = useState({
+    id: '1',
     name: 'Product Name 1',
     description: 'Product Description 1',
     price: 19.99,
@@ -86,25 +86,22 @@ const ProductViewPage = () => {
     }
   }, []);
 
-
   // State for wishlist
   const [isWishlist, setIsWishlist] = useState(false);
+  // State for report button text and disabled status
+  const [reportButtonText, setReportButtonText] = useState('Report User');
+  const [isReportDisabled, setIsReportDisabled] = useState(false);
 
   // Function to toggle wishlist
   const toggleWishlist = () => {
-    setIsWishlist(prevState => !prevState);
+    setIsWishlist((prevState) => !prevState);
   };
 
-  // Function to handle request
-  const handleRequest = () => {
-    // Logic to handle request
-    // For example, redirect to a request form
-  };
-
-  // Function to handle chat
-  const handleChat = () => {
-    // Logic to start chat with seller
-    // For example, redirect to a chat room
+  // Function to handle reporting user
+  const reportUser = () => {
+    // Change button text to "Reported" and disable the button
+    setReportButtonText('Reported');
+    setIsReportDisabled(true);
   };
 
   return (
@@ -124,8 +121,11 @@ const ProductViewPage = () => {
         <button onClick={toggleWishlist}>
           {isWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
         </button>
-        <button onClick={handleRequest}>Request</button>
-        <button onClick={handleChat}>Chat with Seller</button>
+        <button onClick={reportUser} disabled={isReportDisabled}>
+          {reportButtonText}
+        </button>
+        <button>Request</button>
+        <button>Chat with Seller</button>
       </div>
     </div>
   );
