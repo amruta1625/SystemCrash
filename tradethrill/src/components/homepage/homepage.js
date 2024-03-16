@@ -30,7 +30,7 @@ const Home = () => {
   return (
     <div className="homepage">
       <div className="background">
-        <Navbar />
+        <Navbar search_stuff= {{products, setProducts}}/>
         <div className="recommendations-section">
           <h1 className="recommendation">Recent Recommendations</h1>
         </div>
@@ -39,7 +39,7 @@ const Home = () => {
           <h2 className="products-heading">Featured Products</h2>
           <div className="products-container">
             {products.map((product) => (
-              <div key={product.id} className="product">
+              <div key={product} className="product">
                 <img
                   src={product.product_image} // modify the image url
                   alt={product.product_title}

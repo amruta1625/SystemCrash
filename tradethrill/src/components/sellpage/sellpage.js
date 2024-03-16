@@ -97,7 +97,7 @@ const SellPage = () => {
           <div class="sell-section">
             <h2>CATEGORY</h2>
             <div class="category-selection">
-              <select name="category">
+              <select name="tags">
                 <option value="">Select Category</option>
                 <option value="Electronics">Electronics</option>
                 <option value="Cycle">Cycle</option>
@@ -122,7 +122,7 @@ const SellPage = () => {
           <div class="sell-section">
             <h2>SELL PRICE</h2>
             <input
-              type="text"
+              type="number"
               name="sell_price"
               id="sell_price"
               placeholder="Enter the price"
@@ -133,7 +133,7 @@ const SellPage = () => {
           <div class="sell-section">
             <h2>COST PRICE</h2>
             <input
-              type="text"
+              type="number"
               name="cost_price"
               id="cost_price"
               placeholder="Enter the price"
@@ -144,10 +144,11 @@ const SellPage = () => {
           <div class="sell-section">
             <h2>USING SINCE</h2>
             <input
-              type="text"
+              type="number"
               name="usage"
               id="usage"
-              placeholder="Enter the age"
+              placeholder="Enter number of months"
+              onChange={(e) => handleChange(e)}
             />
           </div>
 
