@@ -16,10 +16,10 @@ const ForgotPassword = () => {
     newPasswordEmpty: false,
     confirmPasswordEmpty: false,
     otpEmpty: false,
-    passwordsMatch: true, // New state for passwords match error
+    passwordsMatch: true,
   });
 
-  const [step, setStep] = useState(1); // 1: Roll Number, 2: New Password, 3: OTP
+  const [step, setStep] = useState(1);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,42 +28,20 @@ const ForgotPassword = () => {
       [name]: value,
     }));
 
-    // Reset passwords match error when user types in new password or confirm password
     setError((prevError) => ({
       ...prevError,
       passwordsMatch: true,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSendOTP = (e) => {
     e.preventDefault();
 
-    if (step === 1) {
-      handleRollNumberStep();
-    } else if (step === 2) {
-      handleNewPasswordStep();
-    } else {
-      handleVerifyOTPStep();
-    }
-  };
+    const { rollno, newPassword, confirmPassword } = user;
 
-  const handleRollNumberStep = () => {
-    const { rollno } = user;
-
-    if (rollno === '') {
-      setError({ ...error, rollnoEmpty: true });
-      return;
-    }
-
-    setStep(2); // Move to New Password input step
-  };
-
-  const handleNewPasswordStep = () => {
-    const { newPassword, confirmPassword } = user;
-
-    if (newPassword === '' || confirmPassword === '') {
+    if (rollno === '' || newPassword === '' || confirmPassword === '') {
       setError({
-        ...error,
+        rollnoEmpty: rollno === '',
         newPasswordEmpty: newPassword === '',
         confirmPasswordEmpty: confirmPassword === '',
       });
@@ -75,10 +53,14 @@ const ForgotPassword = () => {
       return;
     }
 
-    setStep(3); // Move to OTP input step
+    console.log('Sending OTP:', user);
+
+    setStep(2);
   };
 
-  const handleVerifyOTPStep = () => {
+  const handleVerifyOTP = (e) => {
+    e.preventDefault();
+
     const { otp } = user;
 
     if (otp === '') {
@@ -86,10 +68,8 @@ const ForgotPassword = () => {
       return;
     }
 
-    // Implement your verification logic here, e.g., make an API call
     console.log('Verifying OTP:', user);
 
-    // Reset state after OTP verification
     setUser({
       rollno: '',
       newPassword: '',
@@ -97,7 +77,7 @@ const ForgotPassword = () => {
       otp: '',
     });
 
-    setStep(1); // Move back to Roll Number input step
+    // Redirect or display success message after OTP verification
   };
 
   return (
@@ -112,8 +92,8 @@ const ForgotPassword = () => {
       <div className="forgotpasswordcontent">
         <h1>Forgot Password</h1>
 
-        <form onSubmit={handleSubmit}>
-          {step === 1 && (
+        {step === 1 && (
+          <form onSubmit={handleSendOTP}>
             <div className="form-group">
               <p>Enter Roll Number:</p>
               <input
@@ -126,39 +106,42 @@ const ForgotPassword = () => {
               />
               {error.rollnoEmpty && <p className="error-message">Roll Number is required</p>}
             </div>
-          )}
 
-          {step === 2 && (
-            <>
-              <div className="form-group">
-                <p>New Password:</p>
-                <input
-                  type="password"
-                  name="newPassword"
-                  value={user.newPassword}
-                  onChange={handleChange}
-                  className={`form-control ${error.newPasswordEmpty ? 'error' : ''}`}
-                  placeholder="Enter new password"
-                />
-                {error.newPasswordEmpty && <p className="error-message">New Password is required</p>}
-              </div>
-              <div className="form-group">
-                <p>Confirm Password:</p>
-                <input
-                  type="password"
-                  name="confirmPassword"
-                  value={user.confirmPassword}
-                  onChange={handleChange}
-                  className={`form-control ${error.confirmPasswordEmpty || !error.passwordsMatch ? 'error' : ''}`}
-                  placeholder="Confirm new password"
-                />
-                {error.confirmPasswordEmpty && <p className="error-message">Confirm Password is required</p>}
-                {!error.confirmPasswordEmpty && !error.passwordsMatch && <p className="error-message">Passwords don't match</p>}
-              </div>
-            </>
-          )}
+            <div className="form-group">
+              <p>New Password:</p>
+              <input
+                type="password"
+                name="newPassword"
+                value={user.newPassword}
+                onChange={handleChange}
+                className={`form-control ${error.newPasswordEmpty || !error.passwordsMatch ? 'error' : ''}`}
+                placeholder="Enter new password"
+              />
+              {error.newPasswordEmpty && <p className="error-message">New Password is required</p>}
+            </div>
 
-          {step === 3 && (
+            <div className="form-group">
+              <p>Confirm Password:</p>
+              <input
+                type="password"
+                name="confirmPassword"
+                value={user.confirmPassword}
+                onChange={handleChange}
+                className={`form-control ${error.confirmPasswordEmpty || !error.passwordsMatch ? 'error' : ''}`}
+                placeholder="Confirm new password"
+              />
+              {error.confirmPasswordEmpty && <p className="error-message">Confirm Password is required</p>}
+              {!error.confirmPasswordEmpty && !error.passwordsMatch && <p className="error-message">Passwords don't match</p>}
+            </div>
+
+            <div className="button-container">
+              <button type="submit" className="submit">Send OTP</button>
+            </div>
+          </form>
+        )}
+
+        {step === 2 && (
+          <form onSubmit={handleVerifyOTP}>
             <div className="form-group">
               <p>Enter OTP:</p>
               <input
@@ -171,14 +154,12 @@ const ForgotPassword = () => {
               />
               {error.otpEmpty && <p className="error-message">OTP is required</p>}
             </div>
-          )}
 
-          <div>
-            <button type="submit" className="submit">
-              {step === 1 ? 'Next' : 'Verify OTP'}
-            </button>
-          </div>
-        </form>
+            <div className="button-container">
+              <button type="submit" className="submit">Verify OTP</button>
+            </div>
+          </form>
+        )}
       </div>
     </div>
   );
