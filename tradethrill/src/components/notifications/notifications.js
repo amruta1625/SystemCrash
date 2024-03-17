@@ -23,7 +23,7 @@ const Notifications = () => {
   const {authCreds, setAuthCreds} = useContext(AuthContext);
   useEffect(() => {
     axios
-      .get("http://localhost:8000/get_notifications")
+      .get(`http://localhost:8000/get_notifications/${authCreds.user_id}`)
       .then((response) => {
         setNotifications(response.data);
       })
@@ -95,3 +95,23 @@ const Notifications = () => {
 };
 
 export default Notifications;
+
+
+
+//add the matter of the notification
+//now its displaying type of notification 0,1,2,3
+//0 request to buy.... matter is buyer_name(buyer_id = ...) requested to buy your product_title
+// 1 accepted to sell... matter is seller_name(seller_id = ...) sold product_title to you
+// 2 rejected to sell... matter is seller_name(seller_id = ...) rejected to sell product_title
+// 3 someone messaged... matter is user_name(user_id) messaged you
+
+//also we need to fetch the product title from pid and show that in matter
+
+
+//also make accept, decline functions to work 
+//and when you click on accept, the product should go into transactions and the notification of type 1 goes to buyer
+//when you click on decline, notification disappears for seller and notification of type 2 goes to buyer
+
+
+
+//and make decline button red
