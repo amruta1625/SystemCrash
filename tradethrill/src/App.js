@@ -14,6 +14,7 @@ import ChangePassword from './components/profile/changepassword/changepassword';
 import ChatPage from './components/chatpage/chatpage';
 import ProductViewPage from './components/homepage/productview';
 import Wishlist from './components/wishlist/Wishlist';
+import UploadedItems from './components/uploadeditems/uploadeditems';
 
 
 import Otp from './components/otp/Otp';
@@ -44,6 +45,9 @@ const App = () => {
           <Route path='/chatpage' element = {<ChatPage/>} />
           <Route path='/productview' element = {<ProductViewPage/>}/>
           <Route path="/wishlist" element={<Wishlist />} />
+
+          <Route path="/uploadeditems" element={<UploadedItems />} />
+
 
         </Routes>
       </Router>

@@ -38,6 +38,12 @@
   cursor: pointer;
 }
 
+.uploadedicon {
+  color: #fff;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
 .searchbar {
   width: 100%;
   height:70%;

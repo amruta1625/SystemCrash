@@ -1,12 +1,11 @@
 import React, { useContext, useState } from "react";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Radio from "@mui/material/Radio";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthProvider";
+import "./Otp.css"; // Import CSS file
 
 const Otp = () => {
-  const {authCreds, setAuthCreds} = useContext(AuthContext);
+  const { authCreds, setAuthCreds } = useContext(AuthContext);
   const [packet, setPacket] = useState({
     user_id: "",
     otp: "",
@@ -36,7 +35,7 @@ const Otp = () => {
           navigate("/login");
         } else {
           alert("Invalid OTP");
-          navigate("/register")
+          navigate("/register");
         }
       })
       .catch((err) => {
@@ -45,26 +44,39 @@ const Otp = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <label htmlFor="user_id">User ID : </label>
-        <input
-          type="text"
-          placeholder="Enter OTP"
-          name="user_id"
-          id="user_id"
-          onChange={(e) => handleChange(e)}
-        />
-        <label htmlFor="otp">OTP : </label>
-        <input
-          type="text"
-          placeholder="Enter OTP"
-          name="otp"
-          id="otp"
-          onChange={(e) => handleChange(e)}
-        />
-        <button type="submit">Submit</button>
-      </form>
+    <div className="otp-container">
+      <div className="otp-box">
+        <h2>Enter OTP</h2>
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <div className="input-field">
+            <label htmlFor="user_id" className="label">
+              User ID :
+            </label>
+            <input
+              type="text"
+              placeholder="Enter User ID"
+              name="user_id"
+              id="user_id"
+              onChange={(e) => handleChange(e)}
+            />
+          </div>
+          <div className="input-field">
+            <label htmlFor="otp" className="label">
+              OTP :
+            </label>
+            <input
+              type="text"
+              placeholder="Enter OTP"
+              name="otp"
+              id="otp"
+              onChange={(e) => handleChange(e)}
+            />
+          </div>
+          <button type="submit" className="submit-btn">
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
