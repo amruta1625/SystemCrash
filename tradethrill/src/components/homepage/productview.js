@@ -1,105 +1,109 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import './productview.css';
+// import AuthContext from "../../context/AuthProvider";
+import axios from "axios";
 
 const ProductViewPage = () => {
-  const { productId } = useParams(); // Get the productId from the URL params
+  const { product_id } = useParams(); // Get the product_id from the URL params
 
-  const products = [
-    {
-      id: '1',
-      name: 'Product Name 1',
-      description: 'Product Description 1',
-      price: 19.99,
-      imageUrl: 'https://example.com/product1.jpg',
-      seller: {
-        id: 'seller1',
-        name: 'Seller Name 1',
-        email: 'seller1@example.com',
-      },
-    },
-    {
-      id: '2',
-      name: 'Product Name 2',
-      description: 'Product Description 2',
-      price: 24.99,
-      imageUrl: 'https://example.com/product2.jpg',
-      seller: {
-        id: 'seller2',
-        name: 'Seller Name 2',
-        email: 'seller2@example.com',
-      },
-    },
-  ];
+  // const products = [
+  //   {
+  //     id: '1',
+  //     name: 'Product Name 1',
+  //     description: 'Product Description 1',
+  //     price: 19.99,
+  //     imageUrl: 'https://example.com/product1.jpg',
+  //     seller: {
+  //       id: 'seller1',
+  //       name: 'Seller Name 1',
+  //       email: 'seller1@example.com',
+  //     },
+  //   },
+  //   {
+  //     id: '2',
+  //     name: 'Product Name 2',
+  //     description: 'Product Description 2',
+  //     price: 24.99,
+  //     imageUrl: 'https://example.com/product2.jpg',
+  //     seller: {
+  //       id: 'seller2',
+  //       name: 'Seller Name 2',
+  //       email: 'seller2@example.com',
+  //     },
+  //   },
+  // ];
 
   // Sample product and seller data (replace with actual data fetched from backend)
-  const [product, setProduct] = useState({
-    id: '1',
-    name: 'Product Name 1',
-    description: 'Product Description 1',
-    price: 19.99,
-    imageUrl: 'https://example.com/product1.jpg',
-    seller: {
-      id: 'seller1',
-      name: 'Seller Name 1',
-      email: 'seller1@example.com',
-    },
-  });
+
+  // const [product, setProduct] = useState({
+  //   id: '1',
+  //   name: 'Product Name 1',
+  //   description: 'Product Description 1',
+  //   price: 19.99,
+  //   imageUrl: 'https://example.com/product1.jpg',
+  //   seller: {
+  //     id: 'seller1',
+  //     name: 'Seller Name 1',
+  //     email: 'seller1@example.com',
+  //   },
+  // });
+
+  const [product, setProduct] = useState([]);
+  // const { authCreds } = useContext(AuthContext);
 
   useEffect(() => {
-    // Set the initial product state based on productId when the component mounts
-    const initialProduct = {
-      // Define the default product properties here
-      id: 'default-id', // Replace with a default value if no product is found
-      name: 'Default Product Name',
-      description: 'This is a default product description.',
-      price: 19.99,
-      imageUrl: 'https://example.com/default-product.jpg',
-      seller: {
-        id: 'default-seller-id',
-        name: 'Default Seller Name',
-        email: 'seller@example.com',
-      },
-    };
+    axios
+      .get(`http://localhost:8000/get_specific_product/${product_id}`)
+      .then((res) => {
+        setProduct(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching product:", error);
+      });
+  }, [product_id]);
+  // useEffect(() => {
+  //   const initialProduct = {
+  //     id: 'default-id', // Replace with a default value if no product is found
+  //     name: 'Default Product Name',
+  //     description: 'This is a default product description.',
+  //     price: 19.99,
+  //     imageUrl: 'https://example.com/default-product.jpg',
+  //     seller: {
+  //       id: 'default-seller-id',
+  //       name: 'Default Seller Name',
+  //       email: 'seller@example.com',
+  //     },
+  //   };
 
-    // Logic to update product based on productId (fetch from API or backend, if applicable)
-    // Replace this example with your actual data fetching or logic
-    if (productId) {
-      // Example: Simulate fetching product details (replace with actual API call)
-      const simulatedProduct = {
-        id: productId,
-        name: `Product Name ${productId}`,
-        description: `Description for product ${productId}`,
-        price: 24.99,
-        imageUrl: 'https://example.com/product.jpg',
-        seller: {
-          id: 'seller123',
-          name: 'Seller Name',
-          email: 'seller@example.com',
-        },
-      };
-      setProduct(simulatedProduct);
-    } else {
-      // Set the default product if no productId is found
-      setProduct(initialProduct);
-    }
-  }, []);
+  //   if (product_id) {
+  //     const simulatedProduct = {
+  //       id: product_id,
+  //       name: `Product Name ${product_id}`,
+  //       description: `Description for product ${product_id}`,
+  //       price: 24.99,
+  //       imageUrl: 'https://example.com/product.jpg',
+  //       seller: {
+  //         id: 'seller123',
+  //         name: 'Seller Name',
+  //         email: 'seller@example.com',
+  //       },
+  //     };
+  //     setProduct(simulatedProduct);
+  //   } else {
+  //     setProduct(initialProduct);
+  //   }
+  // }, []);
 
-  // State for wishlist
   const [isWishlist, setIsWishlist] = useState(false);
-  // State for report button text and disabled status
   const [reportButtonText, setReportButtonText] = useState('Report User');
   const [isReportDisabled, setIsReportDisabled] = useState(false);
 
-  // Function to toggle wishlist
   const toggleWishlist = () => {
     setIsWishlist((prevState) => !prevState);
   };
 
-  // Function to handle reporting user
   const reportUser = () => {
-    // Change button text to "Reported" and disable the button
     setReportButtonText('Reported');
     setIsReportDisabled(true);
   };

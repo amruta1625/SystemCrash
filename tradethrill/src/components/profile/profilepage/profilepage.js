@@ -13,6 +13,7 @@ export default function ProfilePage() {
     user_id: authCreds.user_id,
     email: authCreds.email,
     profile_pic: authCreds.profile_pic,
+    // ...authCreds,
   });
   const [newProfilePic, setNewProfilePic] = useState(null);
 
@@ -43,7 +44,7 @@ export default function ProfilePage() {
         setAuthCreds({
           ...authCreds,
           name: newUserData.name,
-          email: newUserData.email,
+          // email: newUserData.email,
           profile_pic: newUserData.profile_pic,
         });
         setIsEditing(false);

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "./navigationbar"; // Adjust the path accordingly
 import "./homepage.css";
 import axios from "axios";
@@ -39,7 +40,8 @@ const Home = () => {
           <h2 className="products-heading">Featured Products</h2>
           <div className="products-container">
             {products.map((product) => (
-              <div key={product} className="product">
+              <div key={product.product_id} className="product">
+                <Link to={`/productview/${product.product_id}`}></Link>
                 <img
                   src={product.product_image} // modify the image url
                   alt={product.product_title}

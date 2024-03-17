@@ -1,48 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import './Wishlist.css'
-//import Navbar from '../Navbar/navbar';
-
-// Sample data for wishlist items
-const sampleWishlist = [
-  {
-    id: 1,
-    itemName: 'Sample Wishlist Item 1',
-    itemImage: 'sample-wishlist-item-1.jpg',
-    description: 'This is a sample description for wishlist item 1.',
-  },
-  {
-    id: 2,
-    itemName: 'Sample Wishlist Item 2',
-    itemImage: 'sample-wishlist-item-2.jpg',
-    description: 'This is a sample description for wishlist item 2.',
-  },
-  {
-    id: 3,
-    itemName: 'Sample Wishlist Item 3',
-    itemImage: 'sample-wishlist-item-3.jpg',
-    description: 'This is a sample description for wishlist item 3.',
-  },
-  {
-    id: 4,
-    itemName: 'Sample Wishlist Item 4',
-    itemImage: 'sample-wishlist-item-4.jpg',
-    description: 'This is a sample description for wishlist item 4.',
-  },
-  // Add more sample wishlist items as needed
-];
+import React, { useState, useEffect, useContext} from 'react';
+import './Wishlist.css';
+// import Navbar from '../profile/Navbar/navbar';
+import axios from "axios";
+import AuthContext from "../../context/AuthProvider";
 
 const Wishlist = () => {
+
   const [wishlist, setWishlist] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { authCreds } = useContext(AuthContext);
 
   useEffect(() => {
-    // Simulate fetching wishlist items from an API
-    setTimeout(() => {
-      setWishlist(sampleWishlist);
-      setLoading(false);
-    }, 1000); // Simulate loading time of 1 second
-  }, []);
+    axios
+      .get(`http://localhost:8000/get_wishlist/${authCreds.user_id}`)
+      .then((res) => {
+        setWishlist(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching wishlist:", error);
+      });
+  }, [authCreds.user_id]);
+
 
   return (
     <>
@@ -51,15 +28,19 @@ const Wishlist = () => {
         <h1 className="heading">Your Wishlist</h1>
         <section className="wishlist-section">
           <div className="wishlist-container">
-            <div className="wishlist-items">
-              {wishlist.map((item) => (
-                <div key={item.id} className="wishlist-item">
+            <div className="wishlist-products">
+              {wishlist.map((product) => (
+                <div key={product.product_id} className="wishlist-product">
                   <div className="wishlist-photo">
-                    <img src={item.itemImage} alt={item.itemName} />
+                    <img src={product.productImage} alt={product.title} />
                   </div>
                   <div className="wishlist-details">
-                    <p className="item-name">{item.itemName}</p>
-                    <p className="item-description">Description: {item.description}</p>
+                    <p className="product-name">{product.title}</p>
+                    <p className="seller-name">{product.name}</p>
+                    <p className="sell-price">Sell Price:{product.sell_price}</p>
+                    <p className="cost-price">Cost Price:{product.cost_price}</p>
+                    <p className="usage">Usage:{product.usage} months</p>
+                    <p className="product-description">Description: {product.description}</p>
                   </div>
                 </div>
               ))}

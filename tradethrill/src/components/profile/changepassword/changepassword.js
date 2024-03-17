@@ -11,7 +11,7 @@ const ChangePassword = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const fetchUserEmail = async () => {
+    const fetchUserID = async () => {
       try {
         const response = await axios.get('your-api-endpoint-to-fetch-user-email');
         setEmail(response.data.email);
@@ -21,7 +21,7 @@ const ChangePassword = () => {
       }
     };
 
-    fetchUserEmail();
+    fetchUserID();
   }, []);
 
   const handleSendOTP = async () => {

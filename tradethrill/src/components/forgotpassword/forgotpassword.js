@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import forgotpasswordpage from './forgotpasswordpage.png';
 import logotradethrill from '../../logotradethrill.svg';
 import './forgotpassword.css';
+import axios from 'axios'; // Import Axios for making HTTP requests
 
 const ForgotPassword = () => {
   const [user, setUser] = useState({
-    rollno: '',
-    newPassword: '',
-    confirmPassword: '',
+    user_id: '',
+    new_password: '',
+    confirm_password: '',
     otp: '',
   });
 
@@ -34,50 +35,28 @@ const ForgotPassword = () => {
     }));
   };
 
-  const handleSendOTP = (e) => {
+  const handleSendOTP = async (e) => {
     e.preventDefault();
-
-    const { rollno, newPassword, confirmPassword } = user;
-
-    if (rollno === '' || newPassword === '' || confirmPassword === '') {
-      setError({
-        rollnoEmpty: rollno === '',
-        newPasswordEmpty: newPassword === '',
-        confirmPasswordEmpty: confirmPassword === '',
-      });
-      return;
+    try {
+      // const response = await axios.post('http://127.0.0.1:8000/forgotpassword', { user_id: user.user_id, new_password: user.new_password, confirm_password: user.confirm_password });
+      const response = await axios.post('http://127.0.0.1:8000/forgotpassword', user);
+      console.log(response.data); // Log response from backend
+      setStep(2); // Move to OTP verification step upon successful response
+    } catch (error) {
+      console.error(error); // Handle error
     }
-
-    if (newPassword !== confirmPassword) {
-      setError({ ...error, passwordsMatch: false });
-      return;
-    }
-
-    console.log('Sending OTP:', user);
-
-    setStep(2);
   };
 
-  const handleVerifyOTP = (e) => {
+  const handleVerifyOTP = async (e) => {
     e.preventDefault();
-
-    const { otp } = user;
-
-    if (otp === '') {
-      setError({ ...error, otpEmpty: true });
-      return;
+    try {
+      // const response = await axios.post('http://127.0.0.1:8000/newotp', { user_id: user.user_id, otp: user.otp });
+      const response = await axios.post('http://127.0.0.1:8000/newotp', user);
+      console.log(response.data); // Log response from backend
+      // Update UI accordingly, maybe redirect to login page or show success message
+    } catch (error) {
+      console.error(error); // Handle error
     }
-
-    console.log('Verifying OTP:', user);
-
-    setUser({
-      rollno: '',
-      newPassword: '',
-      confirmPassword: '',
-      otp: '',
-    });
-
-    // Redirect or display success message after OTP verification
   };
 
   return (
@@ -98,8 +77,8 @@ const ForgotPassword = () => {
               <p>Enter Roll Number:</p>
               <input
                 type="text"
-                name="rollno"
-                value={user.rollno}
+                name="user_id"
+                value={user.user_id}
                 onChange={handleChange}
                 className={`form-control ${error.rollnoEmpty ? 'error' : ''}`}
                 placeholder="Enter Roll Number"
@@ -111,8 +90,8 @@ const ForgotPassword = () => {
               <p>New Password:</p>
               <input
                 type="password"
-                name="newPassword"
-                value={user.newPassword}
+                name="new_password"
+                value={user.new_password}
                 onChange={handleChange}
                 className={`form-control ${error.newPasswordEmpty || !error.passwordsMatch ? 'error' : ''}`}
                 placeholder="Enter new password"
@@ -124,8 +103,8 @@ const ForgotPassword = () => {
               <p>Confirm Password:</p>
               <input
                 type="password"
-                name="confirmPassword"
-                value={user.confirmPassword}
+                name="confirm_password"
+                value={user.confirm_password}
                 onChange={handleChange}
                 className={`form-control ${error.confirmPasswordEmpty || !error.passwordsMatch ? 'error' : ''}`}
                 placeholder="Confirm new password"

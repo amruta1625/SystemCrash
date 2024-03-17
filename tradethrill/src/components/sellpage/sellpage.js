@@ -105,6 +105,7 @@ const SellPage = () => {
                 <option value="Lab Stuff">Lab Stuff</option>
                 <option value="Books">Books</option>
                 <option value="Sports Essentials">Sports Essentials</option>
+                <option value="Others">Others</option>
               </select>
             </div>
           </div>

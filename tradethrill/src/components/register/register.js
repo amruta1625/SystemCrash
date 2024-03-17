@@ -59,21 +59,7 @@ const Register = () => {
       setError({ ...error, passwordDoesntMatch: true });
       return;
     }
-
     
-
-    // if (password === reEnterPassword) {
-    //   setStage("pending");
-    //   axios.post("http://127.0.0.1:8000/register", user).then((res) => {
-    //     if (res.data.message === "A user already registered with the same Roll Number") {
-    //       setError({ ...error, rollnoUsed: true });
-    //       setStage("not yet submitted");
-    //       return;
-    //     } else if (res.data.message === "Successfully Registered, Please login now.") {
-    //       setStage("completed");
-    //     }
-    //   });
-    // }
     setStage("pending");
     axios.post("http://127.0.0.1:8000/register", {
       name,
