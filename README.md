@@ -18,4 +18,4 @@ This project is made as part of our course project - CS253 - Software Developmen
 ### To run the project for the frontend.
 * Navigate to the main directory "tradethrill"
 * Now run the command `npm start` inorder to run the frontend server
-
+* The frontend server would run in the  http://localhost:3000.
