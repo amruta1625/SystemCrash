@@ -81,15 +81,20 @@ const Register = () => {
       hashed_password,
       confirm_password
     })
-    .then((res) => {
-      if (res.data.message === "A user already registered with the same Roll Number") {
-        setError({ ...error, rollnoUsed: true });
-        setStage("not yet submitted");
-      } else if (res.data.message === "Successfully Registered, Please login now.") {
-        setStage("completed")
-        navigate("/otp")
-      }
+    // .then((res) => {
+    //   if (res.data.message === "A user already registered with the same Roll Number") {
+    //     setError({ ...error, rollnoUsed: true });
+    //     setStage("not yet submitted");
+    //   } else if (res.data.message === "Successfully Registered, Please login now.") {
+    //     setStage("completed")
+    //     navigate("/otp")
+    //   }
+    // })
+    .then(() => {
+      // Navigate to the OTP page using user ID as state
+      navigate("/otp", { state: { user_id: user_id } });
     })
+
     .catch((error) => {
       console.error("Error registering user:", error);
       setStage("not yet submitted");

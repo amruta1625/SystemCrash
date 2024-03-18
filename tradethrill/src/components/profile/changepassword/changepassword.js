@@ -46,10 +46,10 @@ const ChangePassword = () => {
           {error && <p className="error">{error}</p>}
           {!otpSent ? (
             <div>
-              <label>Email:</label>
+              <label>User ID:</label>
               <input
-                type="email"
-                value={`${authCreds.user_id}@iitk.ac.in`}
+                type="number"
+                value= {authCreds.user_id}
                 readOnly // Make the email field read-only if you want to prevent users from changing it
               />
               <button onClick={handleSendOTP}>Send OTP</button>
@@ -58,7 +58,7 @@ const ChangePassword = () => {
             <div>
               <label>OTP:</label>
               <input
-                type="text"
+                type="number"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
               />

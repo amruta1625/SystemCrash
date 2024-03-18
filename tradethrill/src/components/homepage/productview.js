@@ -56,6 +56,25 @@ const ProductViewPage = () => {
     setIsReportDisabled(true);
   };
 
+  const report = () => {
+    let data  = {
+      product_id: 0,
+      reporter_id: 0,
+    }
+    data = {
+      product_id: parseInt(product_id),
+      reporter_id: parseInt(authCreds.user_id),
+    }
+    console.log(data)
+    axios.post("http://localhost:8000/report", data)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   return (
     <div className="product-view-page">
       <div className="product-details">
@@ -75,9 +94,12 @@ const ProductViewPage = () => {
         <button onClick={() => addToWishlist()}>
           Add to Wishlist
         </button>
-        <button onClick={reportUser} disabled={isReportDisabled}>
-          {reportButtonText}
+        <button onClick={() => report()}>
+          Report User
         </button>
+        {/* <button onClick={reportUser} disabled={isReportDisabled}>
+          {reportButtonText}
+        </button> */}
         <button>Request</button>
         <button>Chat with Seller</button>
       </div>
