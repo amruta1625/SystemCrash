@@ -6,10 +6,10 @@ import axios from 'axios'; // Import Axios for making HTTP requests
 
 const ForgotPassword = () => {
   const [user, setUser] = useState({
-    user_id: '',
+    user_id: 0,
     new_password: '',
     confirm_password: '',
-    otp: '',
+    // otp: '',
   });
 
   const [error, setError] = useState({
@@ -38,11 +38,11 @@ const ForgotPassword = () => {
   const handleSendOTP = async (e) => {
     e.preventDefault();
     try {
-      // const response = await axios.post('http://127.0.0.1:8000/forgotpassword', { user_id: user.user_id, new_password: user.new_password, confirm_password: user.confirm_password });
       const response = await axios.post('http://127.0.0.1:8000/forgotpassword', user);
-      console.log(response.data); // Log response from backend
-      setStep(2); // Move to OTP verification step upon successful response
-    } catch (error) {
+      console.log(response.data); 
+      setStep(2); 
+    } 
+    catch (error) {
       console.error(error); // Handle error
     }
   };
@@ -50,12 +50,10 @@ const ForgotPassword = () => {
   const handleVerifyOTP = async (e) => {
     e.preventDefault();
     try {
-      // const response = await axios.post('http://127.0.0.1:8000/newotp', { user_id: user.user_id, otp: user.otp });
       const response = await axios.post('http://127.0.0.1:8000/newotp', user);
-      console.log(response.data); // Log response from backend
-      // Update UI accordingly, maybe redirect to login page or show success message
+      console.log(response.data); 
     } catch (error) {
-      console.error(error); // Handle error
+      console.error(error); 
     }
   };
 

@@ -1,37 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Navbar from '../Navbar/navbar';
 import "./changepassword.css"; 
+import AuthContext from '../../../context/AuthProvider';
 
 const ChangePassword = () => {
-  const [email, setEmail] = useState('');
+  const {authCreds, setAuthCreds} = useContext(AuthContext);
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    const fetchUserID = async () => {
-      try {
-        const response = await axios.get('your-api-endpoint-to-fetch-user-email');
-        setEmail(response.data.email);
-      } catch (error) {
-        console.error('Error fetching user email:', error);
-        setError('Error fetching user email. Please try again.');
-      }
-    };
-
-    fetchUserID();
-  }, []);
 
   const handleSendOTP = async () => {
     try {
-      if (!email) {
-        setError('Email is required');
-        return;
-      }
 
-      const response = await axios.post('your-send-otp-api-endpoint', { email });
+      const response = await axios.post('your-send-otp-api-endpoint', {  });
       setMessage(response.data.message);
       setOtpSent(true);
       setError('');
@@ -43,7 +27,7 @@ const ChangePassword = () => {
 
   const handleVerifyOTP = async () => {
     try {
-      const response = await axios.post('your-verify-otp-api-endpoint', { email, otp });
+      const response = await axios.post('your-verify-otp-api-endpoint', {  otp });
       setMessage(response.data.message);
       setError('');
     } catch (error) {
@@ -65,8 +49,7 @@ const ChangePassword = () => {
               <label>Email:</label>
               <input
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={`${authCreds.user_id}@iitk.ac.in`}
                 readOnly // Make the email field read-only if you want to prevent users from changing it
               />
               <button onClick={handleSendOTP}>Send OTP</button>

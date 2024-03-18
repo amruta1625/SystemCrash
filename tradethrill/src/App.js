@@ -43,7 +43,7 @@ const App = () => {
 
           <Route path='/notify' element= {<Notifications />}/> 
           <Route path='/chatpage' element = {<ChatPage/>} />
-          <Route path='/productview' element = {<ProductViewPage/>}/>
+          <Route path='/productview/:product_id' element = {<ProductViewPage/>}/>
           <Route path="/wishlist" element={<Wishlist />} />
 
           <Route path="/uploadeditems" element={<UploadedItems />} />

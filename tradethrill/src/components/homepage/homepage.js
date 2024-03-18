@@ -41,12 +41,13 @@ const Home = () => {
           <div className="products-container">
             {products.map((product) => (
               <div key={product.product_id} className="product">
-                <Link to={`/productview/${product.product_id}`}></Link>
+                <Link to={`/productview/${product.product_id}`}>
                 <img
                   src={product.product_image} // modify the image url
                   alt={product.product_title}
                   className="product-image"
                 />
+                </Link>
                 <h3>{product.product_title}</h3>
                 {/* <p>{product.description}</p> */}
                 <p>Price: Rs.{product.sell_price}</p>

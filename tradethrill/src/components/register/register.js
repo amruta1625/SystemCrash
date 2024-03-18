@@ -13,6 +13,7 @@ const Register = () => {
   const [user, setUser] = useState({
     name: "",
     user_id: "",
+    email:"",
     confirm_password: "",
     hashed_password: "",
   });
@@ -21,6 +22,7 @@ const Register = () => {
     nameEmpty: false,
     rollnoEmpty: false,
     // usernameEmpty: false,
+    emailEmpty: false,
     passwordEmpty: false,
     rollnoInvalid: false,
     rollnoUsed: false,
@@ -35,6 +37,17 @@ const Register = () => {
       ...prevUser,
       [name]: value,
     }));
+
+
+    // if (name === "email") {
+    //   // const emailRegex = /^\S+@\S+\.\S+$/;
+    //   const emailRegex = /^$|^[a-z0-9.]+@[a-z0-9]+\.iitk\.ac\.in$|^[a-z0-9.]+@iitk\.ac\.in$/;
+    //   setError((prevError) => ({
+    //     ...prevError,
+    //     emailEmpty: false,
+    //     emailInvalid: !emailRegex.test(value)
+    //   }));
+    // }
   };
 
   const handleSubmit = (e) => {
@@ -43,7 +56,7 @@ const Register = () => {
   };
 
   const register = () => {
-    const { name, user_id, hashed_password, confirm_password } = user;
+    const { name, user_id, email, hashed_password, confirm_password } = user;
 
     let emptyKeys = {};
     for (const key of Object.keys(user)) {
@@ -64,6 +77,7 @@ const Register = () => {
     axios.post("http://127.0.0.1:8000/register", {
       name,
       user_id,
+      email,
       hashed_password,
       confirm_password
     })
@@ -106,7 +120,7 @@ const Register = () => {
             </h1>
             <form onSubmit={handleSubmit}>
               <div className="input-container">
-                <h3 className="NameStatement">Please enter your name</h3>
+                <h5 className="NameStatement">Please enter your name</h5>
                 <input
                   type="text"
                   name="name"
@@ -117,7 +131,7 @@ const Register = () => {
                 />
               </div>
               <div className="input-container">
-                <h3 className="NameStatement">Please enter Roll Number</h3>
+                <h5 className="NameStatement">Please enter Roll Number</h5>
                 <input
                   type="number"
                   name="user_id"
@@ -130,9 +144,23 @@ const Register = () => {
                 {error.rollnoInvalid && <p className="error-message">Invalid Roll Number format</p>}
                 {error.rollnoUsed && <p className="error-message">Roll Number is already registered</p>}
               </div>
+              <div className="input-container">
+                <h5 className="NameStatement">Please enter your email</h5>
+                <input
+                  type="email"
+                  name="email"
+                  value={user.email}
+                  onChange={handleChange}
+                  placeholder="Enter Your Email"
+                  className={`inputName ${error.emailEmpty || error.emailInvalid ? "error" : ""}`}
+                />
+                {error.emailEmpty && <p className="error-message">Email is required</p>}
+                {error.emailInvalid && <p className="error-message">Invalid email format</p>}
+              </div> 
+
               {/* Add other input fields for username, password, etc. */}
               <div className="input-container">
-                <h3 className="NameStatement">Please enter password</h3>
+                <h5 className="NameStatement">Please enter password</h5>
                 <input
                   type="password"
                   name="hashed_password"
@@ -144,7 +172,7 @@ const Register = () => {
                 {error.passwordEmpty && <p className="error-message">Password is required</p>}
               </div>
               <div className="input-container">
-                <h3 className="NameStatement">Confirm Password</h3>
+                <h5 className="NameStatement">Confirm Password</h5>
                 <input
                   type="password"
                   name="confirm_password"

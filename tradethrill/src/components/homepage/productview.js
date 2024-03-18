@@ -1,56 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import './productview.css';
-// import AuthContext from "../../context/AuthProvider";
+import AuthContext from "../../context/AuthProvider";
 import axios from "axios";
 
 const ProductViewPage = () => {
   const { product_id } = useParams(); // Get the product_id from the URL params
 
-  // const products = [
-  //   {
-  //     id: '1',
-  //     name: 'Product Name 1',
-  //     description: 'Product Description 1',
-  //     price: 19.99,
-  //     imageUrl: 'https://example.com/product1.jpg',
-  //     seller: {
-  //       id: 'seller1',
-  //       name: 'Seller Name 1',
-  //       email: 'seller1@example.com',
-  //     },
-  //   },
-  //   {
-  //     id: '2',
-  //     name: 'Product Name 2',
-  //     description: 'Product Description 2',
-  //     price: 24.99,
-  //     imageUrl: 'https://example.com/product2.jpg',
-  //     seller: {
-  //       id: 'seller2',
-  //       name: 'Seller Name 2',
-  //       email: 'seller2@example.com',
-  //     },
-  //   },
-  // ];
-
-  // Sample product and seller data (replace with actual data fetched from backend)
-
-  // const [product, setProduct] = useState({
-  //   id: '1',
-  //   name: 'Product Name 1',
-  //   description: 'Product Description 1',
-  //   price: 19.99,
-  //   imageUrl: 'https://example.com/product1.jpg',
-  //   seller: {
-  //     id: 'seller1',
-  //     name: 'Seller Name 1',
-  //     email: 'seller1@example.com',
-  //   },
-  // });
 
   const [product, setProduct] = useState([]);
-  // const { authCreds } = useContext(AuthContext);
+  const { authCreds } = useContext(AuthContext);
 
   useEffect(() => {
     axios
@@ -62,45 +21,34 @@ const ProductViewPage = () => {
         console.error("Error fetching product:", error);
       });
   }, [product_id]);
-  // useEffect(() => {
-  //   const initialProduct = {
-  //     id: 'default-id', // Replace with a default value if no product is found
-  //     name: 'Default Product Name',
-  //     description: 'This is a default product description.',
-  //     price: 19.99,
-  //     imageUrl: 'https://example.com/default-product.jpg',
-  //     seller: {
-  //       id: 'default-seller-id',
-  //       name: 'Default Seller Name',
-  //       email: 'seller@example.com',
-  //     },
-  //   };
-
-  //   if (product_id) {
-  //     const simulatedProduct = {
-  //       id: product_id,
-  //       name: `Product Name ${product_id}`,
-  //       description: `Description for product ${product_id}`,
-  //       price: 24.99,
-  //       imageUrl: 'https://example.com/product.jpg',
-  //       seller: {
-  //         id: 'seller123',
-  //         name: 'Seller Name',
-  //         email: 'seller@example.com',
-  //       },
-  //     };
-  //     setProduct(simulatedProduct);
-  //   } else {
-  //     setProduct(initialProduct);
-  //   }
-  // }, []);
-
+  
   const [isWishlist, setIsWishlist] = useState(false);
   const [reportButtonText, setReportButtonText] = useState('Report User');
   const [isReportDisabled, setIsReportDisabled] = useState(false);
 
   const toggleWishlist = () => {
     setIsWishlist((prevState) => !prevState);
+  };
+
+
+
+  const addToWishlist = () => {
+    let data  = {
+      product_id: 0,
+      buyer_id: 0,
+    }
+    data = {
+      product_id: parseInt(product_id),
+      buyer_id: parseInt(authCreds.user_id),
+    }
+    console.log(data)
+    axios.post("http://localhost:8000/wishlist", data)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const reportUser = () => {
@@ -111,19 +59,21 @@ const ProductViewPage = () => {
   return (
     <div className="product-view-page">
       <div className="product-details">
-        <img src={product.imageUrl} alt={product.name} />
-        <h1>{product.name}</h1>
+        <img src={product.imageUrl} alt={product.title} />
+        <h1>{product.title}</h1>
         <p>{product.description}</p>
-        <p>Price: ${product.price}</p>
+        <p>Sell Price: Rs.{product.sell_price}</p>
+        <p>Cost Price: Rs.{product.cost_price}</p>
+        <p>Usage: {product.usage} months</p>
       </div>
       <div className="seller-details">
         <h2>Seller Information</h2>
-        <p>Name: {product.seller.name}</p>
-        <p>Email: {product.seller.email}</p>
+        <p>Seller Name: {product.seller_name}</p>
+        <p>Seller Email: {product.seller_email}</p>
       </div>
       <div className="actions">
-        <button onClick={toggleWishlist}>
-          {isWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
+        <button onClick={() => addToWishlist()}>
+          Add to Wishlist
         </button>
         <button onClick={reportUser} disabled={isReportDisabled}>
           {reportButtonText}
