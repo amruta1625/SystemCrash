@@ -42,7 +42,7 @@ const Navbar = ({search_stuff}) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    axios.post("http://127.0.0.1:8000/search", { query: searchString }).then((res) => {
+    axios.post("https://elan.iith-ac.in:8082/search", { query: searchString }).then((res) => {
       setProducts(res.data);
     })
     .catch((err) => {

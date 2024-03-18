@@ -23,7 +23,7 @@ const Otp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://127.0.0.1:8000/otp", packet)
+      .post("https://elan.iith-ac.in:8082/otp", packet)
       .then((res) => {
         console.log(res.data);
         if (res.data.message === "success") {

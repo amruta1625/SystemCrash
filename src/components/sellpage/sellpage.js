@@ -40,7 +40,7 @@ const SellPage = () => {
 
     // send the preliminary data
     axios
-      .post("http://127.0.0.1:8000/sellproduct", data)
+      .post("https://elan.iith-ac.in:8082/sellproduct", data)
       .then((response) => {
         console.log(response.data);
         setPid(response.data.pid);
@@ -58,7 +58,7 @@ const SellPage = () => {
     try {
       console.log("Data to send:", dataToSend);
       const imageResponse = await axios.post(
-        "http://127.0.0.1:8000/upload_product_images",
+        "https://elan.iith-ac.in:8082/upload_product_images",
         dataToSend,
         {
           headers: {

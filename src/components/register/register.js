@@ -74,7 +74,7 @@ const Register = () => {
     }
     
     setStage("pending");
-    axios.post("http://127.0.0.1:8000/register", {
+    axios.post("https://elan.iith-ac.in:8082/register", {
       name,
       user_id,
       email,
