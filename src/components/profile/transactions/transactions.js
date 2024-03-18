@@ -10,7 +10,7 @@ const Transactions = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/get_transactions/${authCreds.user_id}`)
+      .get(`https://elan.iith-ac.in:8082/get_transactions/${authCreds.user_id}`)
       .then((res) => {
         setTransactions(res.data);
       })

@@ -38,7 +38,7 @@ const ForgotPassword = () => {
   const handleSendOTP = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:8000/forgotpassword', user);
+      const response = await axios.post('https://elan.iith-ac.in:8082/forgotpassword', user);
       console.log(response.data); 
       setStep(2); 
     } 

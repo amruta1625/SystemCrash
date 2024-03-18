@@ -23,7 +23,7 @@ const Notifications = () => {
   const {authCreds, setAuthCreds} = useContext(AuthContext);
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/get_notifications/${authCreds.user_id}`)
+      .get(`https://elan.iith-ac.in:8082/get_notifications/${authCreds.user_id}`)
       .then((response) => {
         setNotifications(response.data);
       })
@@ -39,7 +39,7 @@ const Notifications = () => {
         seller_id: authCreds.user_id,
         buyer_id: notification.from_id,
       }
-      axios.post("http://localhost:8000/notify_request", data)
+      axios.post("https://elan.iith-ac.in:8082/notify_request", data)
       .then((response) => {
         console.log(response);
       })
@@ -57,7 +57,7 @@ const Notifications = () => {
         seller_id: authCreds.user_id,
         buyer_id: notification.from_id,
       }
-      axios.post("http://localhost:8000/notify_decline", data)
+      axios.post("https://elan.iith-ac.in:8082/notify_decline", data)
       .then((response) => {
         console.log(response);
       })
