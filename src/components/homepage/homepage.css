@@ -1,0 +1,64 @@
+/* homepage.css */
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* General styling for the homepage */
+.homepage {
+  width: 100%;
+  height: 100%;
+}
+
+/* Styling for the background */
+.background {
+  background-color: white;
+  /* Your existing background styles */
+}
+
+/* Styling for the recommendations section */
+.recommendations-section {
+  padding: 20px;
+}
+
+/* Styling for the products section */
+.products-section {
+  margin-top: 20px;
+}
+
+.products-heading {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.products-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.product {
+  width: 30%;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: rgb(248, 248, 252);
+}
+
+.product img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.product h3 {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.product p {
+  font-size: 14px;
+  margin-top: 5px;
+}
