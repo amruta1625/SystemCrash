@@ -11,8 +11,8 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import axios from "axios";
 import StorefrontIcon from '@mui/icons-material/Storefront';
 
-const Navbar = ({search_stuff}) => {
-  const {products, setProducts} = search_stuff;
+const Navbar = ({ search_stuff }) => {
+  const { products, setProducts } = search_stuff;
   const navigate = useNavigate();
   const [searchString, setSearchString] = useState("");
 
@@ -37,17 +37,34 @@ const Navbar = ({search_stuff}) => {
   };
 
   const goToUploadedItems = () => {
-    navigate("/uploadeditems"); 
+    navigate("/uploadeditems");
   };
 
   const handleSearch = (e) => {
     e.preventDefault();
-    axios.post("https://elan.iith-ac.in:8082/search", { query: searchString }).then((res) => {
-      setProducts(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+    if (searchString.trim() === "") {
+      axios.get("https://elan.iith-ac.in:8082/get_products")
+        .then((res) => {
+          setProducts(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      axios.post("https://elan.iith-ac.in:8082/search", { query: searchString })
+        .then((res) => {
+          setProducts(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch(e);
+    }
   };
 
   return (
@@ -60,6 +77,7 @@ const Navbar = ({search_stuff}) => {
           placeholder="Search for items"
           value={searchString}
           onChange={(e) => setSearchString(e.target.value)}
+          onKeyPress={handleKeyPress} // Bind handleKeyPress function to onKeyPress event
           endAdornment={
             <InputAdornment position="end">
               <SearchIcon
@@ -71,7 +89,7 @@ const Navbar = ({search_stuff}) => {
         />
       </div>
       <FavoriteBorderIcon className="favoriteicon" onClick={goToWishlist} />
-      <StorefrontIcon className="uploadedicon" onClick={goToUploadedItems}/>
+      <StorefrontIcon className="uploadedicon" onClick={goToUploadedItems} />
       <button className="navbar-button" onClick={goToSellPage} >
         SELL
       </button>
@@ -88,4 +106,3 @@ const Navbar = ({search_stuff}) => {
 };
 
 export default Navbar;
-
