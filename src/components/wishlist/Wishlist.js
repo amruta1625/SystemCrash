@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext} from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Wishlist.css';
-// import Navbar from '../profile/Navbar/navbar';
 import axios from "axios";
 import AuthContext from "../../context/AuthProvider";
 
@@ -8,6 +8,7 @@ const Wishlist = () => {
 
   const [wishlist, setWishlist] = useState([]);
   const { authCreds } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -30,7 +31,11 @@ const Wishlist = () => {
           <div className="wishlist-container"> */}
             <div className="wishlist-products">
               {wishlist.map((product) => (
-                <div key={product.product_id} className="wishlist-product">
+                <div key={product.product_id} 
+                className="wishlist-product"
+                onClick={() => navigate(`/productview/${product.product_id}`)}
+                style={{ cursor: 'pointer' }}
+                >
                   <div className="wishlist-photo">
                     <img src={product.productImage} alt={product.title} />
                   </div>
