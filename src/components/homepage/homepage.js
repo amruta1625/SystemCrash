@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Navbar from "./navigationbar"; // Adjust the path accordingly
 import "./homepage.css";
 import axios from "axios";
@@ -16,6 +16,8 @@ const Home = () => {
   //   "product_image": row[5]
   // } ⁠
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     axios
       .get("https://elan.iith-ac.in:8082/get_products")
@@ -31,25 +33,27 @@ const Home = () => {
   return (
     <div className="homepage">
       <div className="background">
-        <Navbar search_stuff= {{products, setProducts}}/>
+        <Navbar search_stuff={{ products, setProducts }} />
         <div className="recommendations-section">
           <h1 className="recommendation">Recent Recommendations</h1>
         </div>
-
+  
         <div className="products-section">
           <h2 className="products-heading">Featured Products</h2>
           <div className="products-container">
             {products.map((product) => (
-              <div key={product.product_id} className="product">
-                <Link to={`/productview/${product.product_id}`}>
+              <div
+                key={product.product_id}
+                className="product"
+                onClick={() => navigate(`/productview/${product.product_id}`)}
+                style={{ cursor: 'pointer' }} // Optionally change cursor to pointer for visual indication
+              >
                 <img
-                  src={product.product_image} // modify the image url
+                  src={product.product_image}
                   alt={product.product_title}
                   className="product-image"
                 />
-                </Link>
                 <h3>{product.product_title}</h3>
-                {/* <p>{product.description}</p> */}
                 <p>Price: Rs.{product.sell_price}</p>
                 <p>Seller Name: {product.seller_name}</p>
                 <p>Seller Email: {product.seller_email}</p>
@@ -60,6 +64,6 @@ const Home = () => {
       </div>
     </div>
   );
-};
+ }
 
-export default Home;
+  export default Home;

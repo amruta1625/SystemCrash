@@ -12,7 +12,7 @@ export default function Navbar(props) {
       <i className="fas fa-bars"></i>
     </label>
    <div className='logopic'>
-   {/* <img className="logo" src={logotradethrill} alt="TradeThrill" /> */}
+   <img className="logo" src={logotradethrill} alt="TradeThrill" />
    </div>
      
     <label className="logo">TradeThrill</label>
