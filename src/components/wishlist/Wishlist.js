@@ -13,6 +13,7 @@ const Wishlist = () => {
   useEffect(() => {
     axios
       .get(`https://elan.iith-ac.in:8082/get_wishlist/${authCreds.user_id}`)
+      // .get(`http://127.0.0.1:8000/get_wishlist/${authCreds.user_id}`)
       .then((res) => {
         setWishlist(res.data);
       })

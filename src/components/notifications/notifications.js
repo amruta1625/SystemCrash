@@ -128,6 +128,7 @@ const Notifications = () => {
   useEffect(() => {
     axios
       .get(`https://elan.iith-ac.in:8082/get_notifications/${authCreds.user_id}`)
+      // .get(`http://127.0.0.1:8000/get_notifications/${authCreds.user_id}`)
       .then((response) => {
         setNotifications(response.data);
       })
@@ -144,6 +145,7 @@ const Notifications = () => {
         buyer_id: notification.from_id,
       };
       axios.post("https://elan.iith-ac.in:8082/notify_request", data)
+      // axios.post("http://127.0.0.1:8000/notify_request", data)
         .then((response) => {
           console.log(response);
           // Update notification to show as accepted
@@ -169,6 +171,7 @@ const Notifications = () => {
         buyer_id: notification.from_id,
       };
       axios.post("https://elan.iith-ac.in:8082/notify_decline", data)
+      // axios.post("http://127.0.0.1:8000/notify_decline", data)
         .then((response) => {
           console.log(response);
           // Remove declined notification

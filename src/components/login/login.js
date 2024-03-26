@@ -37,7 +37,8 @@ const Login = () => {
   // const loginAction = () => {
   //   if (user.user_id && user.hashed_password) {
   //     axios
-  //       .post("https://elan.iith-ac.in:8082/login", user)
+  //       // .post("https://elan.iith-ac.in:8082/login", user)
+  //       .post("http://127.0.0.1:8000/login", user)
   //       .then((res) => {
   //         if (res.data.message === "success") {
   //           setAuthCreds({
@@ -96,6 +97,7 @@ const Login = () => {
     if (user.user_id && user.hashed_password) {
       axios
         .post("https://elan.iith-ac.in:8082/login", user)
+        // .post("http://127.0.0.1:8000/login", user)
         .then((res) => {
           // console.log("Response data:", res.data);
           if (res.data.message === "success") {

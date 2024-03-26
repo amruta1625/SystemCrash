@@ -21,6 +21,7 @@ const Home = () => {
   useEffect(() => {
     axios
       .get("https://elan.iith-ac.in:8082/get_products")
+      // .get("http://127.0.0.1:8000/get_products")
       .then((response) => {
         setProducts(response.data);
         // console.log(response.data);
