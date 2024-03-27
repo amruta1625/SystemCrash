@@ -120,6 +120,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import axios from "axios";
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import MenuIcon from '@mui/icons-material/Menu';
+import { Tooltip } from "@mui/material";
 
 const Navbar = ({ search_stuff }) => {
   const { products, setProducts } = search_stuff;
@@ -191,19 +192,27 @@ const Navbar = ({ search_stuff }) => {
       </div>
       <div className={`navigation-items ${isMobileMenuOpen ? 'hidden' : ''}`}>
         {/* Render navigation items here */}
+        <Tooltip title="Wishlist" placement="bottom">
         <FavoriteBorderIcon className="favoriteicon" onClick={() => handleMenuItemClick("/wishlist")} />
+        </Tooltip>
+        <Tooltip title="Uploaded Items" placement="bottom">
         <StorefrontIcon className="uploadedicon" onClick={() => handleMenuItemClick("/uploadeditems")} />
+        </Tooltip>
         <button className="navbar-button" onClick={() => handleMenuItemClick("/sellpage")} >
           SELL
         </button>
         <button className="navbar-button" onClick={() => handleMenuItemClick("/chatpage")}>
           CHAT
         </button>
+        <Tooltip title="Notifications" placement="bottom">
         <NotificationsIcon
           className="notificationicon"
           onClick={() => handleMenuItemClick("/notify")}
         />
+        </Tooltip>
+        <Tooltip title="Profile" placement="bottom">
         <ProfileIcon className="profileicon" onClick={() => handleMenuItemClick("/profilepage")} />
+        </Tooltip>
       </div>
     </div>
   );
