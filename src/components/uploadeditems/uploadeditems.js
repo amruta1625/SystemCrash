@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // Import useHistory hook for navigation
 import "./uploadeditems.css"; // Import the CSS file
 import AuthContext from "../../context/AuthProvider";
 
 const UploadedItems = () => {
-
   const [uploadedItems, setUploadedItems] = useState([]);
   const { authCreds } = useContext(AuthContext);
+  const navigate = useNavigate(); // Initialize useHistory hook
 
   useEffect(() => {
     axios
@@ -21,8 +22,8 @@ const UploadedItems = () => {
 
   // Function to handle edit button click
   const handleEdit = (itemId) => {
-    // Implement your edit logic here
-    console.log("Edit item with ID:", itemId);
+    console.log("Navigating to edit page with itemId:", itemId);
+    navigate(`/sellpage/${itemId}`);
   };
 
   return (

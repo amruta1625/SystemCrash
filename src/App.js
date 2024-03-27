@@ -35,6 +35,8 @@ const App = () => {
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/sellpage" element={<SellPage />} />
 
+          <Route path="/sellpage/:itemId" element={<SellPage />} />
+
           <Route path="/otp" element={<Otp/>} />
 
           <Route path='/profilepage' element= {<ProfilePage/>}/>

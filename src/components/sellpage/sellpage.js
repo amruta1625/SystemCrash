@@ -1,12 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./sellpage.css";
 import AuthContext from "../../context/AuthProvider";
 import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom"; // Import useHistory hook for navigation
 
 const SellPage = () => {
   const { authCreds, setAuthCreds } = useContext(AuthContext);
   const [pid, setPid] = useState(0);
-  const [selectedPhoto, setSelectedPhoto] = useState(null)
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [data, setData] = useState({
     seller_id: authCreds.user_id,
     sell_price: 0,
@@ -16,6 +17,32 @@ const SellPage = () => {
     description: "",
     tags: "",
   });
+  const navigate = useNavigate(); 
+  const { itemId } = useParams(); 
+
+  useEffect(() => {
+    if (itemId) {
+      axios
+        .get(`https://elan.iith-ac.in:8082/get_item_details/${itemId}`)
+        .then((res) => {
+          const itemDetails = res.data;
+          setData({
+            seller_id: itemDetails.seller_id,
+            sell_price: itemDetails.sell_price,
+            cost_price: itemDetails.cost_price,
+            title: itemDetails.title,
+            usage: itemDetails.usage,
+            description: itemDetails.description,
+            tags: itemDetails.tags,
+          });
+          // If you have an image URL stored in your backend, you can set selectedPhoto as well
+          // setSelectedPhoto(itemDetails.imageUrl);
+        })
+        .catch((error) => {
+          console.error("Error fetching item details:", error);
+        });
+    }
+  }, [itemId]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -44,16 +71,17 @@ const SellPage = () => {
       .then((response) => {
         console.log(response.data);
         setPid(response.data.pid);
+        // Navigate to the edit page with the itemId as a URL parameter
+        navigate(`/sellpage/${response.data.pid}`);
       })
       .catch((error) => {
         console.log(error);
       });
 
-
     const dataToSend = {
-      "pid" : pid,
-      "Image": selectedPhoto
-    }
+      pid: pid,
+      Image: selectedPhoto,
+    };
 
     try {
       console.log("Data to send:", dataToSend);
@@ -66,8 +94,7 @@ const SellPage = () => {
           },
         }
       );
-      console.log("Marja bc")
-
+      console.log("Marja bc");
     } catch (error) {
       console.error("Error uploading product:", error);
     }
@@ -92,7 +119,7 @@ const SellPage = () => {
                 <label htmlFor="Image">Select Photo</label>
                 {selectedPhoto && (
                   <img
-                    src={data.Image}
+                    src={selectedPhoto}
                     alt="Uploaded"
                     style={{ maxWidth: "300px" }}
                   />
@@ -106,6 +133,7 @@ const SellPage = () => {
                 type="text"
                 name="title"
                 placeholder="Enter the title"
+                value={data.title}
                 onChange={handleInputChange}
               />
             </div>
@@ -113,7 +141,11 @@ const SellPage = () => {
             <div className="sell-section">
               <h2>CATEGORY</h2>
               <div className="category-selection">
-                <select name="tags" onChange={handleInputChange}>
+                <select
+                  name="tags"
+                  value={data.tags}
+                  onChange={handleInputChange}
+                >
                   <option value="">Select Category</option>
                   <option value="Electronics">Electronics</option>
                   <option value="Cycle">Cycle</option>
@@ -131,6 +163,7 @@ const SellPage = () => {
               <textarea
                 name="description"
                 placeholder="Give the detailed information and details of the product"
+                value={data.description}
                 onChange={handleInputChange}
               ></textarea>
             </div>
@@ -141,16 +174,18 @@ const SellPage = () => {
                 type="number"
                 name="sell_price"
                 placeholder="Enter the price"
+                value={data.sell_price}
                 onChange={handleInputChange}
               />
             </div>
 
             <div className="sell-section">
-              <h2>COST PRICE</h2>
+            <h2>COST PRICE</h2>
               <input
                 type="number"
                 name="cost_price"
                 placeholder="Enter the price"
+                value={data.cost_price}
                 onChange={handleInputChange}
               />
             </div>
@@ -161,6 +196,7 @@ const SellPage = () => {
                 type="number"
                 name="usage"
                 placeholder="Enter number of months"
+                value={data.usage}
                 onChange={handleInputChange}
               />
             </div>

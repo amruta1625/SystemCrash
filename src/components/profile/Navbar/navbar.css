@@ -15,27 +15,27 @@ nav{
   width: 94vw;
   border-radius: 80px;
 }
-.logopic{
-  margin-left: 3vw;
+
+.logopic {
+  margin-left: 1vw;
   margin-right: 0;
-  display: inline-block;
-  width:3vw;
-  margin-top: 20px;
-  margin-bottom: 0;
-  height: 50%;
-  /* background-image: url(/public/images/logo.png); */
-  background-size: contain;
-  border-radius: 50%;
-  background-color: black;
+  width: 120px; /* Increase the width */
+  height: 10vh; /* Increase the height */
+  background-size: contain; /* Adjust background size if needed */
+  
 }
+
+
 label.logo{
   color: white;
   font-size: 35px;
-  line-height: 80px;
-  padding: 0 70px;
+  /* line-height: 80px;  */
+  padding: 0 10px;
   font-weight: bold;
-  position: relative;
-  bottom:8px;
+  font-family: cursive;
+  position:relative;
+  bottom:22px;
+  color: #7c4b0c;
 }
 nav ul{
   float: right;
