@@ -24,7 +24,7 @@ const Home = () => {
       // .get("http://127.0.0.1:8000/get_products")
       .then((response) => {
         setProducts(response.data);
-        // console.log(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -38,7 +38,7 @@ const Home = () => {
         <div className="recommendations-section">
           <h1 className="recommendation">Recent Recommendations</h1>
         </div>
-  
+
         <div className="products-section">
           <h2 className="products-heading">Featured Products</h2>
           <div className="products-container">
@@ -47,10 +47,10 @@ const Home = () => {
                 key={product.product_id}
                 className="product"
                 onClick={() => navigate(`/productview/${product.product_id}`)}
-                style={{ cursor: 'pointer' }} // Optionally change cursor to pointer for visual indication
+                style={{ cursor: "pointer" }} // Optionally change cursor to pointer for visual indication
               >
                 <img
-                  src={product.product_image}
+                  src={`data:image/png;base64,${product.product_image}`}
                   alt={product.product_title}
                   className="product-image"
                 />
@@ -65,6 +65,6 @@ const Home = () => {
       </div>
     </div>
   );
- }
+};
 
-  export default Home;
+export default Home;
