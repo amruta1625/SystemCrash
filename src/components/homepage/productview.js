@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './productview.css';
 import AuthContext from "../../context/AuthProvider";
 import axios from "axios";
@@ -7,7 +7,7 @@ import axios from "axios";
 const ProductViewPage = () => {
   const { product_id } = useParams(); // Get the product_id from the URL params
 
-
+  const navigate = useNavigate();
   const [product, setProduct] = useState([]);
   const { authCreds } = useContext(AuthContext);
 
@@ -58,6 +58,10 @@ const ProductViewPage = () => {
     setIsReportDisabled(true);
   };
 
+  const chatWithSeller = () => {
+    navigate(`/chat/${product.seller_id}`); // Navigate to the chat page with seller's ID
+  };
+
   const report = () => {
     let data  = {
       product_id: 0,
@@ -104,7 +108,9 @@ const ProductViewPage = () => {
           {reportButtonText}
         </button> */}
         <button>Request</button>
-        <button>Chat with Seller</button>
+        <button onClick={chatWithSeller}> {/* Call chatWithSeller function */}
+          Chat with Seller
+        </button>
       </div>
     </div>
   );
