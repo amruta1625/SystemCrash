@@ -140,7 +140,8 @@ const Navbar = ({ search_stuff }) => {
     e.preventDefault();
     if (searchString.trim() === "") {
       axios.get("https://elan.iith-ac.in:8082/get_products")
-        .then((res) => {
+      // axios.get("http://127.0.0.1:8000/get_products")
+      .then((res) => {
           setProducts(res.data);
         })
         .catch((err) => {
@@ -148,6 +149,7 @@ const Navbar = ({ search_stuff }) => {
         });
     } else {
       axios.post("https://elan.iith-ac.in:8082/search", { query: searchString })
+      // axios.post("http://127.0.0.1:8000/search", { query: searchString })
         .then((res) => {
           setProducts(res.data);
         })

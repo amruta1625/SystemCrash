@@ -11,6 +11,7 @@ const Transactions = () => {
   useEffect(() => {
     axios
       .get(`https://elan.iith-ac.in:8082/get_transactions/${authCreds.user_id}`)
+      // .get(`http://127.0.0.1:8000/get_transactions/${authCreds.user_id}`)
       .then((res) => {
         setTransactions(res.data);
       })

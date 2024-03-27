@@ -16,6 +16,7 @@ const SellPage = () => {
     usage: 0,
     description: "",
     tags: "",
+    // image: null,
   });
   const navigate = useNavigate(); 
   const { itemId } = useParams(); 
@@ -55,33 +56,42 @@ const SellPage = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
 
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setSelectedPhoto(reader.result);
-    };
+    // const reader = new FileReader();
+    // reader.readAsDataURL(file);
+    // reader.onloadend = () => {
+      setSelectedPhoto(file);
+    // };
   };
-
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // send the preliminary data
+    const formData = new FormData();
+    formData.append("file", selectedPhoto);
+    formData.append("data", JSON.stringify(data));
+    const formDataEntries = formData.entries();
+for (let entry of formDataEntries) {
+  console.log(entry);
+}
     axios
-      .post("https://elan.iith-ac.in:8082/sellproduct", data)
+      // .post("http://127.0.0.1:8000/sellproduct", formData, {
+      .post("https://elan.iith-ac.in:8082/sellproduct", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Set content type
+        },
+      })
       .then((response) => {
         console.log(response.data);
         setPid(response.data.pid);
-        // Navigate to the edit page with the itemId as a URL parameter
-        navigate(`/sellpage/${response.data.pid}`);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
 
+
     const dataToSend = {
-      pid: pid,
-      Image: selectedPhoto,
-    };
+      "pid" : pid,
+      "Image": selectedPhoto
+    }
 
     try {
       console.log("Data to send:", dataToSend);
@@ -94,7 +104,8 @@ const SellPage = () => {
           },
         }
       );
-      console.log("Marja bc");
+      console.log("Marja bc")
+
     } catch (error) {
       console.error("Error uploading product:", error);
     }
@@ -111,15 +122,15 @@ const SellPage = () => {
               <div className="upload-photo">
                 <input
                   type="file"
-                  id="Image"
-                  name="Image"
+                  id="file"
+                  name="file"
                   accept="image/*"
                   onChange={handleFileChange}
                 />
-                <label htmlFor="Image">Select Photo</label>
+                <label htmlFor="file">Select Photo</label>
                 {selectedPhoto && (
                   <img
-                    src={selectedPhoto}
+                    src={data.Image}
                     alt="Uploaded"
                     style={{ maxWidth: "300px" }}
                   />

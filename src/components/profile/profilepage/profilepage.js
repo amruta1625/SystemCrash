@@ -33,6 +33,7 @@ export default function ProfilePage() {
       }
 
       const response = await axios.post("https://elan.iith-ac.in:8082/edit_profile", formData, {
+      // const response = await axios.post("http://127.0.0.1:8000/edit_profile", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

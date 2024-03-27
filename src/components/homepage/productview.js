@@ -14,6 +14,7 @@ const ProductViewPage = () => {
   useEffect(() => {
     axios
       .get(`https://elan.iith-ac.in:8082/get_specific_product/${product_id}`)
+      // .get(`http://127.0.0.1:8000/get_specific_product/${product_id}`)
       .then((res) => {
         setProduct(res.data);
       })
@@ -43,6 +44,7 @@ const ProductViewPage = () => {
     }
     console.log(data)
     axios.post("https://elan.iith-ac.in:8082/wishlist", data)
+    // axios.post("http://127.0.0.1:8000/wishlist", data)
       .then((response) => {
         console.log(response.data);
       })
@@ -67,6 +69,7 @@ const ProductViewPage = () => {
     }
     console.log(data)
     axios.post("https://elan.iith-ac.in:8082/report", data)
+    // axios.post("http://127.0.0.1:8000/report", data)
       .then((response) => {
         console.log(response.data);
       })
