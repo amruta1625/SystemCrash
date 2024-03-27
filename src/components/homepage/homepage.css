@@ -48,8 +48,9 @@ body {
 }
 
 .product img {
-  max-width: 100%;
-  height: auto;
+  width: 99%;
+  height: 70%;
+  object-fit: cover;
   border-radius: 4px;
 }
 
