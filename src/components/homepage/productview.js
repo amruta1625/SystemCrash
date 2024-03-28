@@ -106,7 +106,12 @@ const ProductViewPage = () => {
   return (
     <div className="product-view-page">
       <div className="product-details">
-        <img src={product.imageUrl} alt={product.title} />
+        
+        <img
+                  src={`data:image/png;base64,${product.product_image}`}
+                  alt={product.product_title}
+                  className="product-image"
+                />
         <h1>{product.title}</h1>
         <p>{product.description}</p>
         <p>Sell Price: Rs.{product.sell_price}</p>
@@ -131,7 +136,7 @@ const ProductViewPage = () => {
         <button onClick={() => notif_request()}>
           Request to buy
         </button>
-        <button>Chat with Seller</button>
+        <button onClick={chatWithSeller}>Chat with Seller</button>
       </div>
     </div>
   );

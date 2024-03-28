@@ -11,7 +11,7 @@ function ChatPage() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    const newWs = new WebSocket(`ws://localhost:8000/chat/${userId}`); // Connect to chat with the seller
+    const newWs = new WebSocket(`wss://elan.iith-ac.in:8082/chat/${userId}`); // Connect to chat with the seller
     newWs.onopen = () => {
       console.log('WebSocket connected');
     };
