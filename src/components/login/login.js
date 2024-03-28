@@ -33,64 +33,6 @@ const Login = () => {
     e.preventDefault();
     loginAction();
   };
-
-  // const loginAction = () => {
-  //   if (user.user_id && user.hashed_password) {
-  //     axios
-  //       // .post("https://elan.iith-ac.in:8082/login", user)
-  //       .post("http://127.0.0.1:8000/login", user)
-  //       .then((res) => {
-  //         if (res.data.message === "success") {
-  //           setAuthCreds({
-  //             ...authCreds,
-  //             "user_id": res.data.user_id,
-  //             "name": res.data.name,
-  //             "email": res.data.email,
-  //             "active": res.data.verified,
-  //             "notification": res.data.notifications,
-  //           });
-  //           console.log(authCreds);
-  //           // console.log("hello");
-  //           setIsLoggedIn(true);
-  //           authCreds.active ? navigate("/home") : navigate("/otp");
-  //         } 
-  //         else {
-  //           alert("Invalid Credentials");
-  //         }
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }
-  // };
-
-  // const loginAction = () => {
-  //   if (user.user_id && user.hashed_password) {
-  //     axios
-  //       .post("https://elan.iith-ac.in:8082/login", user)
-  //       .then((res) => {
-  //         console.log("Response data:", res.data);
-  //         if (res.data.message === "success") {
-  //           setAuthCreds(prevAuthCreds => ({
-  //             ...prevAuthCreds,
-  //             user_id: res.data.user_id,
-  //             name: res.data.name,
-  //             email: res.data.email,
-  //             active: res.data.verified,
-  //             notification: res.data.notifications,
-  //           }));
-  //           console.log("Updated authCreds:", authCreds);
-  //           setIsLoggedIn(true);
-  //           authCreds.active ? navigate("/home") : navigate("/otp");
-  //         } else {
-  //           alert("Invalid Credentials");
-  //         }
-  //       })
-  //       .catch((err) => {
-  //         console.log("Error:", err);
-  //       });
-  //   }
-  // };
   
 
   const loginAction = () => {
@@ -108,7 +50,9 @@ const Login = () => {
               email: res.data.email,
               active: res.data.verified,
               notification: res.data.notifications,
+              profile_pic: res.data.photo
             }));
+            console.log(res.data)
             setIsLoggedIn(true);
             if (res.data.verified) {
               navigate("/home");

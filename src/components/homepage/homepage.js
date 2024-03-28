@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./navigationbar"; // Adjust the path accordingly
 import "./homepage.css";
 import axios from "axios";
+import AuthContext from "../../context/AuthProvider";
 
 const Home = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   // this is the backend schema for each product
   // ⁠ product = {
@@ -15,8 +17,11 @@ const Home = () => {
   //   "seller_email": row[4],
   //   "product_image": row[5]
   // } ⁠
+  const { authCreds, setAuthCreds, setIsLoggedIn } =
+    useContext(AuthContext);
 
-  const navigate = useNavigate();
+
+
 
   useEffect(() => {
     axios
@@ -24,12 +29,16 @@ const Home = () => {
       // .get("http://127.0.0.1:8000/get_products")
       .then((response) => {
         setProducts(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
+
+  if(authCreds.user_id == 0){
+    navigate('/login');
+    return null;
+  }
 
   return (
     <div className="homepage">
