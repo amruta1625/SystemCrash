@@ -77,6 +77,27 @@ const ProductViewPage = () => {
         console.log(error);
       });
   }
+  const notif_request = () => {
+    let data  = {
+      product_id: 0,
+      buyer_id: 0,
+      // seller_id: 0,
+    }
+    data = {
+      pid: parseInt(product_id),
+      buyer_id: parseInt(authCreds.user_id),
+      // seller_id: parseInt(seller_id),
+    }
+    console.log(data)
+    axios.post("https://elan.iith-ac.in:8082/notify_request", data)
+    // axios.post("http://127.0.0.1:8000/notify_request", data)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   return (
     <div className="product-view-page">
@@ -103,7 +124,9 @@ const ProductViewPage = () => {
         {/* <button onClick={reportUser} disabled={isReportDisabled}>
           {reportButtonText}
         </button> */}
-        <button>Request</button>
+        <button onClick={() => notif_request()}>
+          Request to buy
+        </button>
         <button>Chat with Seller</button>
       </div>
     </div>

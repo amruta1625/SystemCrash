@@ -144,8 +144,8 @@ const Notifications = () => {
         seller_id: authCreds.user_id,
         buyer_id: notification.from_id,
       };
-      axios.post("https://elan.iith-ac.in:8082/notify_request", data)
-      // axios.post("http://127.0.0.1:8000/notify_request", data)
+      axios.post("https://elan.iith-ac.in:8082/notify_accept", data)
+      // axios.post("http://127.0.0.1:8000/notify_accept", data)
         .then((response) => {
           console.log(response);
           // Update notification to show as accepted
@@ -170,8 +170,8 @@ const Notifications = () => {
         seller_id: authCreds.user_id,
         buyer_id: notification.from_id,
       };
-      axios.post("https://elan.iith-ac.in:8082/notify_decline", data)
-      // axios.post("http://127.0.0.1:8000/notify_decline", data)
+      axios.post("https://elan.iith-ac.in:8082/notify_reject", data)
+      // axios.post("http://127.0.0.1:8000/notify_reject", data)
         .then((response) => {
           console.log(response);
           // Remove declined notification
