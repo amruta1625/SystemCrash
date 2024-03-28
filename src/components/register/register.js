@@ -99,8 +99,17 @@ const Register = () => {
       navigate("/otp", { state: { user_id: user_id } });
     })
 
+    // .catch((error) => {
+    //   console.error("Error registering user:", error);
+    //   setStage("not yet submitted");
     .catch((error) => {
-      console.error("Error registering user:", error);
+      if (error.response.status === 400 && error.response.data.detail === "User already registered") {
+          // setError({ ...error, rollnoUsed: true });
+          alert("User already registered. Please proceed to login.");
+          navigate("/login");
+      } else {
+          console.error("Error registering user:", error);
+      }
       setStage("not yet submitted");
     });
 

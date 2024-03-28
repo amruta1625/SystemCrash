@@ -1,40 +1,99 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Navbar from '../Navbar/navbar';
+import { useNavigate } from "react-router-dom";
 import "./changepassword.css"; 
 import AuthContext from '../../../context/AuthProvider';
 
 const ChangePassword = () => {
+  const navigate = useNavigate();
+
   const {authCreds, setAuthCreds} = useContext(AuthContext);
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState('');
   const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
+  // const [error, setError] = useState('');
 
+  const [user, setUser] = useState({
+    user_id: authCreds.user_id,
+    new_password: '',
+    confirm_password: '',
+    // otp: '',
+  });
 
-  const handleSendOTP = async () => {
+  const [error, setError] = useState({
+    rollnoEmpty: false,
+    newPasswordEmpty: false,
+    confirmPasswordEmpty: false,
+    otpEmpty: false,
+    passwordsMatch: true,
+  });
+
+  const [step, setStep] = useState(1);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUser((prevUser) => ({
+      ...prevUser,
+      [name]: value,
+    }));
+
+    setError((prevError) => ({
+      ...prevError,
+      passwordsMatch: true,
+    }));
+  };
+
+  const handleSendOTP = async (e) => {
+    e.preventDefault();
     try {
-
-      const response = await axios.post('your-send-otp-api-endpoint', {  });
-      setMessage(response.data.message);
-      setOtpSent(true);
-      setError('');
-    } catch (error) {
-      setMessage('');
-      setError('Error sending OTP. Please try again.');
+      const response = await axios.post('https://elan.iith-ac.in:8082/forgotpassword', user);
+      // const response = await axios.post('http://127.0.0.1:8000/forgotpassword', user);
+      console.log(response.data); 
+      setStep(2); 
+    } 
+    catch (error) {
+      console.error(error); // Handle error
     }
   };
 
-  const handleVerifyOTP = async () => {
+  const handleVerifyOTP = async (e) => {
+    e.preventDefault();
     try {
-      const response = await axios.post('your-verify-otp-api-endpoint', {  otp });
-      setMessage(response.data.message);
-      setError('');
+      const response = await axios.post('https://elan.iith-ac.in:8082/newotp', user);
+      // const response = await axios.post('http://127.0.0.1:8000/newotp', user);
+      console.log(response.data); 
+      alert("OTP verified");
+      navigate("/home");
     } catch (error) {
-      setMessage('');
-      setError('Invalid OTP. Please try again.');
+      console.error(error); 
+      alert("Invalid OTP");
+      navigate("/changepassword");
     }
   };
+  // const handleSendOTP = async () => {
+  //   try {
+
+  //     const response = await axios.post('https://elan.iith-ac.in:8082/forgotpassword', {  });
+  //     setMessage(response.data.message);
+  //     setOtpSent(true);
+  //     setError('');
+  //   } catch (error) {
+  //     setMessage('');
+  //     setError('Error sending OTP. Please try again.');
+  //   }
+  // };
+
+  // const handleVerifyOTP = async () => {
+  //   try {
+  //     const response = await axios.post('https://elan.iith-ac.in:8082/newotp', { });
+  //     setMessage(response.data.message);
+  //     setError('');
+  //   } catch (error) {
+  //     setMessage('');
+  //     setError('Invalid OTP. Please try again.');
+  //   }
+  // };
 
   return (
     <>
@@ -42,7 +101,7 @@ const ChangePassword = () => {
       <div className="container">
         <div className="xyz forgot-password-container">
           <h2>Change Password</h2>
-          {message && <p className="message">{message}</p>}
+          {/* {message && <p className="message">{message}</p>}
           {error && <p className="error">{error}</p>}
           {!otpSent ? (
             <div>
@@ -64,7 +123,76 @@ const ChangePassword = () => {
               />
               <button onClick={handleVerifyOTP}>Verify OTP</button>
             </div>
-          )}
+          )} */}
+          {step === 1 && (
+          <form onSubmit={handleSendOTP}>
+            <div className="form-group">
+              <p>User ID:</p>
+              <input
+                type="number"
+                name="user_id"
+                value={authCreds.user_id}
+                readOnly
+                // onChange={handleChange}
+                // className={`form-control ${error.rollnoEmpty ? 'error' : ''}`}
+                // placeholder="Enter Roll Number"
+              />
+              {/* {error.rollnoEmpty && <p className="error-message">Roll Number is required</p>} */}
+            </div>
+
+            <div className="form-group">
+              <p>New Password:</p>
+              <input
+                type="password"
+                name="new_password"
+                value={user.new_password}
+                onChange={handleChange}
+                className={`form-control ${error.newPasswordEmpty || !error.passwordsMatch ? 'error' : ''}`}
+                placeholder="Enter new password"
+              />
+              {error.newPasswordEmpty && <p className="error-message">New Password is required</p>}
+            </div>
+
+            <div className="form-group">
+              <p>Confirm Password:</p>
+              <input
+                type="password"
+                name="confirm_password"
+                value={user.confirm_password}
+                onChange={handleChange}
+                className={`form-control ${error.confirmPasswordEmpty || !error.passwordsMatch ? 'error' : ''}`}
+                placeholder="Confirm new password"
+              />
+              {error.confirmPasswordEmpty && <p className="error-message">Confirm Password is required</p>}
+              {!error.confirmPasswordEmpty && !error.passwordsMatch && <p className="error-message">Passwords don't match</p>}
+            </div>
+
+            <div className="button-container">
+              <button type="submit" className="submit">Send OTP</button>
+            </div>
+          </form>
+        )}
+
+        {step === 2 && (
+          <form onSubmit={handleVerifyOTP}>
+            <div className="form-group">
+              <p>Enter OTP:</p>
+              <input
+                type="text"
+                name="otp"
+                value={user.otp}
+                onChange={handleChange}
+                className={`form-control ${error.otpEmpty ? 'error' : ''}`}
+                placeholder="Enter OTP"
+              />
+              {error.otpEmpty && <p className="error-message">OTP is required</p>}
+            </div>
+
+            <div className="button-container">
+              <button type="submit" className="submit">Verify OTP</button>
+            </div>
+          </form>
+        )}
         </div>
       </div>
     </>

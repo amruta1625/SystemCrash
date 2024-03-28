@@ -54,11 +54,15 @@ const Otp = () => {
               User ID :
             </label>
             <input
-              type="text"
+              type="number"
               placeholder="Enter User ID"
               name="user_id"
               id="user_id"
               onChange={(e) => handleChange(e)}
+              // type="number"
+              // name="user_id"
+              // value={packet.user_id}
+              // readOnly
             />
           </div>
           <div className="input-field">

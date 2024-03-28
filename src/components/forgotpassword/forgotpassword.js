@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import forgotpasswordpage from './forgotpasswordpage.png';
+import { useNavigate } from "react-router-dom";
 import logotradethrill from '../../logotradethrill.svg';
 import './forgotpassword.css';
 import axios from 'axios'; // Import Axios for making HTTP requests
 
 const ForgotPassword = () => {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState({
     user_id: 0,
     new_password: '',
@@ -54,8 +57,12 @@ const ForgotPassword = () => {
       const response = await axios.post('https://elan.iith-ac.in:8082/newotp', user);
       // const response = await axios.post('http://127.0.0.1:8000/newotp', user);
       console.log(response.data); 
+      alert("OTP verified");
+      navigate("/login");
     } catch (error) {
       console.error(error); 
+      alert("Invalid OTP");
+      navigate("/forgotpassword");
     }
   };
 
