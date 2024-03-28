@@ -1,8 +1,9 @@
-// frontend/src/ChatPage.js
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import './chatpage.css';
 
 function ChatPage() {
+  const { userId } = useParams(); // Get the seller's ID from the URL params
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [ws, setWs] = useState(null);
@@ -10,8 +11,7 @@ function ChatPage() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    const newWs = new WebSocket('ws://localhost:8000/chat');
-
+    const newWs = new WebSocket(`ws://localhost:8000/chat/${userId}`); // Connect to chat with the seller
     newWs.onopen = () => {
       console.log('WebSocket connected');
     };
@@ -30,7 +30,9 @@ function ChatPage() {
     return () => {
       newWs.close();
     };
-  }, [messages]);
+  }, [messages, userId]);
+
+  
 
   const sendMessage = () => {
     if (ws && inputMessage.trim() !== '') {

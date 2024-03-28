@@ -39,16 +39,19 @@ const Register = () => {
     }));
 
 
-    // if (name === "email") {
-    //   // const emailRegex = /^\S+@\S+\.\S+$/;
-    //   const emailRegex = /^$|^[a-z0-9.]+@[a-z0-9]+\.iitk\.ac\.in$|^[a-z0-9.]+@iitk\.ac\.in$/;
-    //   setError((prevError) => ({
-    //     ...prevError,
-    //     emailEmpty: false,
-    //     emailInvalid: !emailRegex.test(value)
-    //   }));
-    // }
+    if (name === "email") {
+      // const emailRegex = /^\S+@\S+\.\S+$/;
+      const emailRegex = /^$|^[a-z0-9.]+@[a-z0-9]+\.gmail\.com$|^[a-z0-9.]+@gmail\.com$/;
+      setError((prevError) => ({
+        ...prevError,
+        emailEmpty: false,
+        emailInvalid: !emailRegex.test(value)
+      }));
+    }
   };
+
+  
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
