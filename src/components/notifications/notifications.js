@@ -191,10 +191,12 @@ const Notifications = () => {
       case 0:
         return "requested to buy";
       case 1:
-        return "sold";
+        return "sold the product";
       case 2:
         return "rejected to sell";
       case 3:
+        return "bought the product";
+      case 4:
         return "messaged you";
       default:
         return "";
@@ -211,6 +213,7 @@ const Notifications = () => {
             <div className="action">
               {renderNotificationType(notification.type)}: {notification.matter}
             </div>
+            <div classname="product_title">{notification.product_title}</div>
             <div className="action">{notification.time}</div>
             {notification.type === 0 && (
               <div>
