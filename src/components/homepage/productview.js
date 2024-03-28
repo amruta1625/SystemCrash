@@ -112,13 +112,14 @@ const ProductViewPage = () => {
                   alt={product.product_title}
                   className="product-image"
                 />
-        <h1>{product.title}</h1>
-        <p>{product.description}</p>
+        
+      </div>
+      <div className="seller-details">
+      <h1>{product.title}</h1>
+        <p>Description: {product.description}</p>
         <p>Sell Price: Rs.{product.sell_price}</p>
         <p>Cost Price: Rs.{product.cost_price}</p>
         <p>Usage: {product.usage} months</p>
-      </div>
-      <div className="seller-details">
         <h2>Seller Information</h2>
         <p>Seller Name: {product.seller_name}</p>
         <p>Seller Email: {product.seller_email}</p>
