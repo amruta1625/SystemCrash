@@ -9,7 +9,7 @@ const Wishlist = () => {
   const [wishlist, setWishlist] = useState([]);
   const { authCreds } = useContext(AuthContext);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     // Ensure user is authenticated
     if (authCreds.user_id === 0) {
@@ -29,6 +29,18 @@ const Wishlist = () => {
       });
   }, [authCreds.user_id]);
 
+  const removeFromWishlist = async (productId) => {
+    try {
+      await axios.post('https://elan.iith-ac.in:8082/remove_wishlist', {
+        product_id: productId,
+        buyer_id: authCreds.user_id
+      });
+      // Remove the item from the wishlist in the frontend
+      setWishlist(wishlist.filter(item => item.product_id !== productId));
+    } catch (error) {
+      console.error("Error removing item from wishlist:", error);
+    }
+  };
 
   return (
     <>
@@ -39,7 +51,7 @@ const Wishlist = () => {
           <div className="wishlist-container"> */}
             <div className="wishlist-products">
               {wishlist.map((product) => (
-                <div key={product.product_id} 
+                <div key={product.product_id}   
                 className="wishlist-product"
                 onClick={() => navigate(`/productview/${product.product_id}`)}
                 style={{ cursor: 'pointer' }}
@@ -54,6 +66,12 @@ const Wishlist = () => {
                     <p className="cost-price">Cost Price: {product.cost_price}</p>
                     <p className="usage">Usage: {product.usage} months</p>
                     <p className="product-description">Description: {product.description}</p>
+                    <button onClick={(e) => {
+                      e.stopPropagation(); // Stop event propagation
+                      removeFromWishlist(product.product_id);
+                      }}>
+                      Remove from Wishlist
+                    </button>
                   </div>
                 </div>
               ))}
