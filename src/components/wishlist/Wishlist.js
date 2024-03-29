@@ -56,9 +56,9 @@ const Wishlist = () => {
                 onClick={() => navigate(`/productview/${product.product_id}`)}
                 style={{ cursor: 'pointer' }}
                 >
-                  <div className="wishlist-photo"> 
+                  {/* <div className="wishlist-photo"> 
                     <img src={product.productImage} alt={product.title}/>
-                  </div> 
+                  </div>  */}
                   <div className="wishlist-details">
                     <p className="product-name">{product.title}</p>
                     <p className="seller-name">Seller Name: {product.name}</p>
