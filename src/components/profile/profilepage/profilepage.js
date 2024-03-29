@@ -36,30 +36,35 @@ export default function ProfilePage() {
   const handleSaveClick = async (e) => {
     try {
       e.preventDefault();
-      const formData = new FormData();
-      formData.append("data", JSON.stringify(newUserData));
-      if (newProfilePic) {
-        formData.append("file", newProfilePic);
+      if (isEditing && newProfilePic){
+        const formData = new FormData();
+        formData.append("data", JSON.stringify(newUserData));
+        if (newProfilePic) {
+          formData.append("file", newProfilePic);
+        }
+
+        const response = await axios.post("https://elan.iith-ac.in:8082/edit_profile", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        console.log(response);
+      } else {
+        const updatedUserData = {
+          user_id: newUserData.user_id,
+          name: newUserData.name
+        };
+
+        const response = await axios.post("https://elan.iith-ac.in:8082/edit_name", updatedUserData);
+        console.log(response);
       }
-      // const formDataEntries = formData.entries();
-      // for (let entry of formDataEntries) {
-      //   console.log(entry);
-      // }
-
-      const response = await axios.post("https://elan.iith-ac.in:8082/edit_profile", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      console.log(response);
-      // console.log(user);
 
       const updatedUser = {
         user_id: newUserData.user_id, 
-        hashed_password: newUserData.hashed_password    //authcreds hashed_password would work
+        hashed_password: newUserData.hashed_password 
       };
-      // console.log(updatedUser)
+
       axios
         .post("https://elan.iith-ac.in:8082/login", updatedUser)
         .then((res) => {
