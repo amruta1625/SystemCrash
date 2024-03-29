@@ -87,6 +87,7 @@ export default function ProfilePage() {
         .catch((err) => {
           console.log("Error:", err);
         });
+        setIsEditing(false);
     } catch (error) {
       console.error("Error saving data:", error);
     }
@@ -103,7 +104,8 @@ export default function ProfilePage() {
   return (
     <>
       <Navbar />
-      <div className="container">
+      <div className="profile-containers">
+      <div class="profile-container">
         <section className="profile-section">
           <div className="matter">
             <div className="xyz">
@@ -146,7 +148,7 @@ export default function ProfilePage() {
                     </div>
                   </div>
                   <div className="btn">
-                    <button type="submit" onClick={(e) => handleSaveClick(e)}>
+                    <button type="submit" onClick={(e) => handleSaveClick(e)} className="button">
                       Save
                     </button>
                   </div>
@@ -164,13 +166,14 @@ export default function ProfilePage() {
             </div>
             <div className="btn right-align">
               {!isEditing && (
-                <button type="button" onClick={handleEditClick}>
+                <button type="button" onClick={handleEditClick} className="button">
                   Edit Profile
                 </button>
               )}
             </div>
           </div>
         </section>
+        </div>
       </div>
     </>
   );
