@@ -2,10 +2,19 @@ import React, { useState, useEffect, useContext } from "react";
 import "./notifications.css"; // Make sure to import your stylesheet
 import axios from "axios";
 import AuthContext from "../../context/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const Notifications = () => {
+  const navigate = useNavigate();
   const [notifications, setNotifications] = useState([]);
   const { authCreds } = useContext(AuthContext);
+
+  useEffect(() => {
+    // Ensure user is authenticated
+    if (authCreds.user_id === 0) {
+      navigate('/');
+    }
+  }, [authCreds.user_id, navigate]);
 
   useEffect(() => {
     axios

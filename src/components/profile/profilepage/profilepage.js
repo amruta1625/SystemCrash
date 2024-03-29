@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "./profilepage.css";
 import Navbar from "../Navbar/navbar";
 import axios from "axios";
@@ -14,6 +14,12 @@ export default function ProfilePage() {
     user_id: "",
     hashed_password: "",
   });
+
+  useEffect(() => {
+    if (authCreds.user_id === 0) {
+      navigate('/');
+    }
+  }, [authCreds.user_id, navigate]);
 
   const [newUserData, setNewUserData] = useState({
     name: authCreds.name,

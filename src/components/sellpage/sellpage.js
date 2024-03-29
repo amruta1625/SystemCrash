@@ -2,8 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import "./sellpage.css";
 import AuthContext from "../../context/AuthProvider";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom"; // Import useHistory hook for navigation
-
+import { useNavigate, useParams } from "react-router-dom"; 
 const SellPage = () => {
   const { authCreds, setAuthCreds } = useContext(AuthContext);
   const [pid, setPid] = useState(0);
@@ -20,6 +19,14 @@ const SellPage = () => {
   });
   const navigate = useNavigate(); 
   const { itemId } = useParams(); 
+
+  useEffect(() => {
+    // Check if user is not authenticated, then navigate to the login page
+    if (authCreds.user_id === 0) {
+      navigate('/');
+    }
+  }, [authCreds.user_id, navigate]);
+
 
   useEffect(() => {
     if (itemId) {
@@ -55,12 +62,7 @@ const SellPage = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-
-    // const reader = new FileReader();
-    // reader.readAsDataURL(file);
-    // reader.onloadend = () => {
       setSelectedPhoto(file);
-    // };
   };
  
   const handleSubmit = async (e) => {
@@ -68,15 +70,12 @@ const SellPage = () => {
     const formData = new FormData();
     formData.append("file", selectedPhoto);
     formData.append("data", JSON.stringify(data));
-//     const formDataEntries = formData.entries();
-// for (let entry of formDataEntries) {
-//   console.log(entry);
-// }
+
     axios
       // .post("http://127.0.0.1:8000/sellproduct", formData, {
       .post("https://elan.iith-ac.in:8082/sellproduct", formData, {
         headers: {
-          "Content-Type": "multipart/form-data", // Set content type
+          "Content-Type": "multipart/form-data", 
         },
       })
       .then((response) => {

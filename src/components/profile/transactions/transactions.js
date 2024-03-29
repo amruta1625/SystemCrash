@@ -3,12 +3,17 @@ import "./transactions.css";
 import Navbar from "../Navbar/navbar";
 import axios from "axios";
 import AuthContext from "../../../context/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const Transactions = () => {
   const [transactions, setTransactions] = useState([]);
   const { authCreds } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (authCreds.user_id === 0) {
+      navigate('/');
+    }else
     axios
       .get(`https://elan.iith-ac.in:8082/get_transactions/${authCreds.user_id}`)
       // .get(`http://127.0.0.1:8000/get_transactions/${authCreds.user_id}`)
