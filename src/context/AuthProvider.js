@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }) => {
     profile_pic: "",
     // add the notifications
     notifications: [],
+    hashed_password: "",
   });
 
   return (

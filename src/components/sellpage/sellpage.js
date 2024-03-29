@@ -68,10 +68,10 @@ const SellPage = () => {
     const formData = new FormData();
     formData.append("file", selectedPhoto);
     formData.append("data", JSON.stringify(data));
-    const formDataEntries = formData.entries();
-for (let entry of formDataEntries) {
-  console.log(entry);
-}
+//     const formDataEntries = formData.entries();
+// for (let entry of formDataEntries) {
+//   console.log(entry);
+// }
     axios
       // .post("http://127.0.0.1:8000/sellproduct", formData, {
       .post("https://elan.iith-ac.in:8082/sellproduct", formData, {

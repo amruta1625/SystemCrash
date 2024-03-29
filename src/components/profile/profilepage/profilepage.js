@@ -20,6 +20,7 @@ export default function ProfilePage() {
     user_id: authCreds.user_id,
     email: authCreds.email,
     profile_pic: authCreds.profile_pic,
+    hashed_password: authCreds.hashed_password
   });
   const [newProfilePic, setNewProfilePic] = useState(null);
 
@@ -40,10 +41,10 @@ export default function ProfilePage() {
       if (newProfilePic) {
         formData.append("file", newProfilePic);
       }
-      const formDataEntries = formData.entries();
-      for (let entry of formDataEntries) {
-        console.log(entry);
-      }
+      // const formDataEntries = formData.entries();
+      // for (let entry of formDataEntries) {
+      //   console.log(entry);
+      // }
 
       const response = await axios.post("https://elan.iith-ac.in:8082/edit_profile", formData, {
         headers: {
@@ -52,9 +53,15 @@ export default function ProfilePage() {
       });
 
       console.log(response);
+      // console.log(user);
 
+      const updatedUser = {
+        user_id: newUserData.user_id, 
+        hashed_password: newUserData.hashed_password    //authcreds hashed_password would work
+      };
+      // console.log(updatedUser)
       axios
-        .post("https://elan.iith-ac.in:8082/login", user)
+        .post("https://elan.iith-ac.in:8082/login", updatedUser)
         .then((res) => {
           if (res.data.message === "success") {
             setAuthCreds(prevAuthCreds => ({
@@ -64,7 +71,8 @@ export default function ProfilePage() {
               email: res.data.email,
               active: res.data.verified,
               notification: res.data.notifications,
-              profile_pic: res.data.photo
+              profile_pic: res.data.photo,
+              hashed_password: res.data.hashed_password
             }));
             setIsLoggedIn(true);
           } else {

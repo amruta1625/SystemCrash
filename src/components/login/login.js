@@ -50,9 +50,10 @@ const Login = () => {
               email: res.data.email,
               active: res.data.verified,
               notification: res.data.notifications,
-              profile_pic: res.data.photo
+              profile_pic: res.data.photo,
+              hashed_password: res.data.hashed_password
             }));
-            console.log(res.data)
+            // console.log(res.data)
             setIsLoggedIn(true);
             if (res.data.verified) {
               navigate("/home");
