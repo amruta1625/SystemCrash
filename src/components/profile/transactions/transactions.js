@@ -36,8 +36,8 @@ const Transactions = () => {
                     <p className="item-description">
                       Description: {transaction.description}
                     </p>
-                    <p className="item-cost">{transaction.cost}</p>
-                    <p className="item-id">{transaction.buyer_id}</p>
+                    <p className="item-cost">Sell Price: {transaction.cost}</p>
+                    <p className="item-id">Buyer Name: {transaction.name}</p>
                   </div>
                 </div>
               ))}
@@ -52,8 +52,8 @@ const Transactions = () => {
                     <p className="item-description">
                       Description: {transaction.description}
                     </p>
-                    <p className="item-cost">{transaction.cost}</p>
-                    <p className="item-id">{transaction.seller_id}</p>
+                    <p className="item-cost">Sell Price: {transaction.cost}</p>
+                    <p className="item-id">Seller Name: {transaction.name}</p>
                   </div>
                 </div>
               ))}
