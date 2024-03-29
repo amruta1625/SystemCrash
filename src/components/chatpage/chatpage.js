@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from 'axios'; // Import Axios for making HTTP requests
 import './chatpage.css';
 
 function ChatPage() {
@@ -11,7 +12,11 @@ function ChatPage() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    const newWs = new WebSocket(`wss://elan.iith-ac.in:8082/chat/${userId}`); // Connect to chat with the seller
+    // Fetch users based on the current user ID
+    fetchUsers(userId);
+
+    // WebSocket connection logic remains unchanged
+    const newWs = new WebSocket(`wss://elan.iith-ac.in:8082/chat/${userId}`);
     newWs.onopen = () => {
       console.log('WebSocket connected');
     };
@@ -30,9 +35,16 @@ function ChatPage() {
     return () => {
       newWs.close();
     };
-  }, [messages, userId]);
+  }, [userId]); // Only fetch users when userId changes (component mounts)
 
-  
+  const fetchUsers = async (userId) => {
+    try {
+      const response = await axios.get(`https://elan.iith-ac.in:8082/users/${userId}`); // Fetch users list based on the current user ID
+      setUsers(response.data); // Update the users state with the fetched users list
+    } catch (error) {
+      console.error('Failed to fetch users:', error.message);
+    }
+  };
 
   const sendMessage = () => {
     if (ws && inputMessage.trim() !== '') {

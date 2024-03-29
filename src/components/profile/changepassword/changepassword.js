@@ -99,7 +99,7 @@ const ChangePassword = () => {
     <>
       <Navbar />
       <div className="container">
-        <div className="xyz forgot-password-container">
+        <div className="xyz-forgot-password-container">
           <h2>Change Password</h2>
           {/* {message && <p className="message">{message}</p>}
           {error && <p className="error">{error}</p>}
