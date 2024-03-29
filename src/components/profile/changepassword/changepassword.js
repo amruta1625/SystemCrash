@@ -31,6 +31,14 @@ const ChangePassword = () => {
 
   const [step, setStep] = useState(1);
 
+  useEffect(() => {
+    // Ensure user is authenticated
+    if (authCreds.user_id === 0) {
+      navigate('/');
+    }
+  }, [authCreds.user_id, navigate]);
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser((prevUser) => ({

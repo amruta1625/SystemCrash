@@ -9,6 +9,13 @@ const Wishlist = () => {
   const [wishlist, setWishlist] = useState([]);
   const { authCreds } = useContext(AuthContext);
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    // Ensure user is authenticated
+    if (authCreds.user_id === 0) {
+      navigate('/');
+    }
+  }, [authCreds.user_id, navigate]);
 
   useEffect(() => {
     axios

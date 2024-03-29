@@ -10,6 +10,13 @@ const UploadedItems = () => {
   const navigate = useNavigate(); // Initialize useHistory hook
 
   useEffect(() => {
+    // Ensure user is authenticated
+    if (authCreds.user_id === 0) {
+      navigate('/');
+    }
+  }, [authCreds.user_id, navigate]);
+
+  useEffect(() => {
     axios
       .get(`https://elan.iith-ac.in:8082/on_sale/${authCreds.user_id}`)
       // .get(`http://127.0.0.1:8000/on_sale/${authCreds.user_id}`)

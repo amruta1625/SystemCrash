@@ -12,6 +12,13 @@ const ProductViewPage = () => {
   const { authCreds } = useContext(AuthContext);
 
   useEffect(() => {
+    // Ensure user is authenticated
+    if (authCreds.user_id === 0) {
+      navigate('/');
+    }
+  }, [authCreds.user_id, navigate]);
+
+  useEffect(() => {
     axios
       .get(`https://elan.iith-ac.in:8082/get_specific_product/${product_id}`)
       // .get(`http://127.0.0.1:8000/get_specific_product/${product_id}`)

@@ -21,7 +21,12 @@ const Home = () => {
     useContext(AuthContext);
 
 
-
+  useEffect(() => {
+    // Check if user is not authenticated, then navigate to the login page
+    if (authCreds.user_id === 0) {
+      navigate('/');
+    }
+  }, [authCreds.user_id, navigate]);
 
   useEffect(() => {
     axios
@@ -35,10 +40,10 @@ const Home = () => {
       });
   }, []);
 
-  if(authCreds.user_id == 0){
-    navigate('/login');
-    return null;
-  }
+  // if(authCreds.user_id == 0){
+  //   navigate('/login');
+  //   return null;
+  // }
 
   return (
     <div className="homepage">
