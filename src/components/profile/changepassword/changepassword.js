@@ -106,7 +106,7 @@ const ChangePassword = () => {
   return (
     <>
       <Navbar />
-      <div className="container">
+      <div className="change-container">
         <div className="xyz-forgot-password-container">
           <h2>Change Password</h2>
           {/* {message && <p className="message">{message}</p>}
