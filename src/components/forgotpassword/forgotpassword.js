@@ -3,7 +3,8 @@ import forgotpasswordpage from './forgotpasswordpage.png';
 import { useNavigate } from "react-router-dom";
 import logotradethrill from '../../logotradethrill.svg';
 import './forgotpassword.css';
-import axios from 'axios'; // Import Axios for making HTTP requests
+import axios from 'axios'; 
+import bcrypt from 'bcryptjs';
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -41,7 +42,30 @@ const ForgotPassword = () => {
   const handleSendOTP = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://elan.iith-ac.in:8082/forgotpassword', user);
+
+      if (user.new_password !== user.confirm_password) {
+        setError((prevError) => ({
+          ...prevError,
+          passwordsMatch: false,
+        }));
+        return;
+      }
+
+      const hashedPassword = await bcrypt.hash(user.new_password, 10);
+
+      // Update the user object with the hashed password
+      // setUser((prevUser) => ({
+      //   ...prevUser,
+      //   new_password: hashedPassword,
+      // }));
+
+      const userData = {
+        user_id: user.user_id,
+        new_password: hashedPassword,
+      };
+
+      // const response = await axios.post('https://elan.iith-ac.in:8082/forgotpassword', user);
+      const response = await axios.post('https://elan.iith-ac.in:8082/forgotpassword', userData);
       // const response = await axios.post('http://127.0.0.1:8000/forgotpassword', user);
       console.log(response.data); 
       setStep(2); 

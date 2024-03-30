@@ -6,6 +6,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AuthContext from '../../context/AuthProvider';
 
+import bcrypt from 'bcryptjs';
+
 const Login = () => {
   const navigate = useNavigate();
   const { authCreds, setAuthCreds, setIsLoggedIn } =
@@ -35,30 +37,73 @@ const Login = () => {
   };
   
 
+  // const loginAction = () => {
+  //   if (user.user_id && user.hashed_password) {
+  //     axios
+  //       .post("https://elan.iith-ac.in:8082/login", user)
+  //       // .post("http://127.0.0.1:8000/login", user)
+  //       .then((res) => {
+  //         // console.log("Response data:", res.data);
+  //         if (res.data.message === "success") {
+  //           const match = await bcrypt.compare(user.hashed_password, res.data.hashed_password);
+  //         if (match){
+  //           setAuthCreds(prevAuthCreds => ({
+  //             ...prevAuthCreds,
+  //             user_id: res.data.user_id,
+  //             name: res.data.name,
+  //             email: res.data.email,
+  //             active: res.data.verified,
+  //             notification: res.data.notifications,
+  //             profile_pic: res.data.photo,
+  //             hashed_password: res.data.hashed_password
+  //           }));
+  //           // console.log(res.data)
+  //           setIsLoggedIn(true);
+  //           if (res.data.verified) {
+  //             navigate("/home");
+  //           } else {
+  //             navigate("/otp");
+  //           }
+  //         } else {
+  //           alert("Invalid Credentials");
+  //         }
+  //        else {
+  //         alert("Invalid Credentials");
+  //       }
+  //       })
+  //       .catch((err) => {
+  //         console.log("Error:", err);
+  //       });
+  //   }
+  // };
+  
   const loginAction = () => {
     if (user.user_id && user.hashed_password) {
       axios
         .post("https://elan.iith-ac.in:8082/login", user)
-        // .post("http://127.0.0.1:8000/login", user)
-        .then((res) => {
-          // console.log("Response data:", res.data);
+        .then(async (res) => {
           if (res.data.message === "success") {
-            setAuthCreds(prevAuthCreds => ({
-              ...prevAuthCreds,
-              user_id: res.data.user_id,
-              name: res.data.name,
-              email: res.data.email,
-              active: res.data.verified,
-              notification: res.data.notifications,
-              profile_pic: res.data.photo,
-              hashed_password: res.data.hashed_password
-            }));
-            // console.log(res.data)
-            setIsLoggedIn(true);
-            if (res.data.verified) {
-              navigate("/home");
+            // Compare entered password with hashed password from response
+            const match = await bcrypt.compare(user.hashed_password, res.data.hashed_password);
+            if (match) {
+              setAuthCreds(prevAuthCreds => ({
+                ...prevAuthCreds,
+                user_id: res.data.user_id,
+                name: res.data.name,
+                email: res.data.email,
+                active: res.data.verified,
+                notification: res.data.notifications,
+                profile_pic: res.data.photo,
+                hashed_password: res.data.hashed_password
+              }));
+              setIsLoggedIn(true);
+              if (res.data.verified) {
+                navigate("/home");
+              } else {
+                navigate("/otp");
+              }
             } else {
-              navigate("/otp");
+              alert("Invalid Credentials");
             }
           } else {
             alert("Invalid Credentials");
@@ -70,7 +115,6 @@ const Login = () => {
     }
   };
   
-
   return (
     <div className="login">
       <div className="backgroundimg">

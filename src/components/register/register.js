@@ -5,6 +5,8 @@ import './register.css';
 import logotradethrill from '../../logotradethrill.svg';
 import { Link, useNavigate } from 'react-router-dom';
 
+import bcrypt from 'bcryptjs';
+
 const Register = () => {
 
   const navigate = useNavigate()
@@ -53,12 +55,24 @@ const Register = () => {
   
   
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    register();
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(user.hashed_password, 10);
+    // const confirmPassword = await bcrypt.hash(user.confirm_password, 10);
+
+    // Update the user object with the hashed password
+    setUser((prevUser) => ({
+      ...prevUser,
+      hashed_password: hashedPassword,
+      // confirm_password: confirmPassword,
+    }));
+
+    register(hashedPassword);
   };
 
-  const register = () => {
+  const register = (hashedPassword) => {
     const { name, user_id, email, hashed_password, confirm_password } = user;
 
     let emptyKeys = {};
@@ -75,36 +89,25 @@ const Register = () => {
       setError({ ...error, passwordDoesntMatch: true });
       return;
     }
+    // console.log(hashed_password)
+    // console.log(hashedPassword)
     
+
     setStage("pending");
     axios.post("https://elan.iith-ac.in:8082/register", {
     // axios.post("http://127.0.0.1:8000/register", {
       name,
       user_id,
       email,
-      hashed_password,
-      confirm_password
+      hashed_password: hashedPassword,
+      // confirm_password: confirmPassword
     })
-    // .then((res) => {
-    //   if (res.data.message === "A user already registered with the same Roll Number") {
-    //     setError({ ...error, rollnoUsed: true });
-    //     setStage("not yet submitted");
-    //   } else if (res.data.message === "Successfully Registered, Please login now.") {
-    //     setStage("completed")
-    //     navigate("/otp")
-    //   }
-    // })
     .then(() => {
-      // Navigate to the OTP page using user ID as state
       navigate("/otp", { state: { user_id: user_id } });
     })
 
-    // .catch((error) => {
-    //   console.error("Error registering user:", error);
-    //   setStage("not yet submitted");
     .catch((error) => {
-      if (error.response.status === 400 && error.response.data.detail === "User already registered") {
-          // setError({ ...error, rollnoUsed: true });
+      if (error.response && error.response.status === 400 && error.response.data.detail === "User already registered") {
           alert("User already registered. Please proceed to login.");
           navigate("/login");
       } else {
