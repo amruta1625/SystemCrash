@@ -14,21 +14,21 @@ nav {
   height: 80px;
   width: 94vw;
   border-radius: 80px;
+  position: relative;
 }
 
 .logopic {
   margin-left: 1vw;
   margin-right: 0;
-  width: 120px; /* Increase the width */
-  height: 10vh; /* Increase the height */
-  background-size: contain; /* Adjust background size if needed */
+  width: 120px;
+  height: 10vh;
+  background-size: contain;
   cursor: pointer;
 }
 
 label.logo {
   color: white;
   font-size: 35px;
-  /* line-height: 80px;  */
   padding: 0 10px;
   font-weight: bold;
   font-family: cursive;
@@ -79,6 +79,35 @@ a:hover {
   display: none;
 }
 
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(246, 243, 243, 0.1);
+  border-radius: 4px;
+  z-index: 1000;
+  display: none;
+  width: 50%; /* Decrease width by 50% */
+  height: 50%; /* Decrease height by 50% */
+}
+
+.dropdown-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-menu li {
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dropdown-menu li:hover {
+  background-color: #f7f1f1;
+}
+
 @media (max-width: 1136px) {
   label.logo {
     font-size: 30px;
@@ -97,11 +126,11 @@ a:hover {
     display: none;
     flex-direction: column;
     position: fixed;
-    width: 100%;
+    width: 30%;
     height: 100vh;
-    background: #2c3e50;
+    background: #141925;
     top: 80px;
-    left: 0;
+    right: 0;
     text-align: center;
     transition: all 0.5s;
   }
