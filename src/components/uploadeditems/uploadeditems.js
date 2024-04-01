@@ -46,7 +46,7 @@ const UploadedItems = () => {
 
   return (
     <div className="uploaded-items-container">
-      <h2 className="heading">Items Uploaded by You</h2>
+      <h2 className="heading">Products on Sale by You</h2>
       <div className="item-list">
         {uploadedItems.map((item) => (
           <div key={item.product_id} className="uploaded-item">
