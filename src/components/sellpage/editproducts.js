@@ -13,8 +13,7 @@ const EditProducts = () => {
     title: "",
     usage: 0,
     description: "",
-    // tags: "",
-    product_image: ""
+    tags: ""
   });
   const { authCreds } = useContext(AuthContext);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
@@ -36,7 +35,7 @@ const EditProducts = () => {
           title: res.data.title,
           usage: res.data.usage,
           description: res.data.description,
-          // tags: res.data.tags,
+          tags: res.data.tags,
         });
         if (res.data.product_image) {
           setExistingPhoto(res.data.product_image);
@@ -136,7 +135,7 @@ const EditProducts = () => {
               />
             </div>
 
-            {/* <div className="sell-section">
+            <div className="sell-section">
               <h2>CATEGORY</h2>
               <div className="category-selection">
                 <select
@@ -154,7 +153,7 @@ const EditProducts = () => {
                   <option value="Others">Others</option>
                 </select>
               </div>
-            </div> */}
+            </div>
 
             <div className="sell-section">
               <h2>PRODUCT DESCRIPTION</h2>

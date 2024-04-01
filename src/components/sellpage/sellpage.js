@@ -21,7 +21,6 @@ const SellPage = () => {
     // image: null,
   });
 
-  // State variables to track negative number errors for each input field
   const [sellPriceError, setSellPriceError] = useState(false);
   const [costPriceError, setCostPriceError] = useState(false);
   const [usageError, setUsageError] = useState(false);
@@ -45,7 +44,6 @@ const SellPage = () => {
         break;
     }
   
-    // Update the data state if the entered value is valid
     if (floatValue >= 0) {
       setData({
         ...data,
@@ -63,27 +61,24 @@ const SellPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Client-side validation to check if any required field is left empty
     if (!data.title || !data.tags || !data.description || !selectedPhoto) {
       alert("Please fill in all required fields.");
-      return; // Exit early, do not proceed with form submission
+      return; 
     }
 
-    // Check if any of the price fields have negative values
     if (data.sell_price < 0) {
       alert("Sell price cannot be negative.");
-      return; // Exit early, do not proceed with form submission
+      return; 
     }
   
     if (data.cost_price < 0) {
       alert("Cost price cannot be negative.");
-      return; // Exit early, do not proceed with form submission
+      return; 
     }
   
-    // Check if usage is negative
     if (data.usage < 0) {
       alert("Usage cannot be negative.");
-      return; // Exit early, do not proceed with form submission
+      return; 
     }
   
     const formData = new FormData();
