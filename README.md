@@ -22,3 +22,7 @@ This project is made as part of our course project - CS253 - Software Developmen
 * Navigate to the main directory "tradethrill"
 * Now run the command `npm start` inorder to run the frontend server
 * The frontend server would run in the  http://localhost:3000.
+* Backend github repo : https://github.com/nrithika/tradethrillbackend.git
+* The project has been hosted on this website https://tradethrill.netlify.app
+
+
