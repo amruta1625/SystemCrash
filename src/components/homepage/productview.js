@@ -55,6 +55,7 @@ const ProductViewPage = () => {
     axios.post("https://elan.iith-ac.in:8082/wishlist", data)
       .then((response) => {
         setIsAddedToWishlist(true); // Set to true after successfully adding to wishlist
+        navigate('/wishlist');
       })
       .catch((error) => {
         if(error.response && error.response.status === 400 && error.response.data.detail === "Product already exists"){

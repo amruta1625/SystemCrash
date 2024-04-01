@@ -79,7 +79,7 @@ a:hover {
   display: none;
 }
 
-.dropdown-menu {
+.dropdown-menu-navbar {
   position: absolute;
   top: 100%;
   right: 0;
@@ -92,19 +92,19 @@ a:hover {
   height: 50%; /* Decrease height by 50% */
 }
 
-.dropdown-menu ul {
+.dropdown-menu-navbar ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.dropdown-menu li {
+.dropdown-menu-navbar li {
   padding: 10px 20px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
-.dropdown-menu li:hover {
+.dropdown-menu-navbar li:hover {
   background-color: #f7f1f1;
 }
 

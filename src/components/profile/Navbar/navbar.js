@@ -74,7 +74,7 @@ export default function Navbar(props) {
       </nav>
 
       {menuOpen && (
-        <div className="dropdown-menu">
+        <div className="dropdown-menu-navbar">
           <ul>
             <li onClick={() => handleMenuItemClick("/profilepage")}>View Profile</li>
             <li onClick={() => handleMenuItemClick("/transactions")}>Transactions</li>
