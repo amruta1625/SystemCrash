@@ -13,10 +13,12 @@ const EditProducts = () => {
     title: "",
     usage: 0,
     description: "",
-    tags: ""
+    // tags: "",
+    product_image: ""
   });
   const { authCreds } = useContext(AuthContext);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [existingPhoto, setExistingPhoto] = useState(null);
 
   useEffect(() => {
     if (!authCreds.user_id) {
@@ -34,8 +36,11 @@ const EditProducts = () => {
           title: res.data.title,
           usage: res.data.usage,
           description: res.data.description,
-          tags: res.data.tags,
+          // tags: res.data.tags,
         });
+        if (res.data.product_image) {
+          setExistingPhoto(res.data.product_image);
+        }
       })
       .catch((error) => {
         console.error("Error fetching product:", error);
@@ -109,9 +114,10 @@ const EditProducts = () => {
                   onChange={handleFileChange}
                 />
                 <label htmlFor="file">Select Photo</label>
-                {selectedPhoto && (
+                {(selectedPhoto || existingPhoto) && (
                   <img
-                    src={URL.createObjectURL(selectedPhoto)}
+                    // src={URL.createObjectURL(selectedPhoto)}
+                    src={selectedPhoto ? URL.createObjectURL(selectedPhoto) : `data:image/png;base64,${existingPhoto}`}
                     alt="Uploaded"
                     style={{ maxWidth: "300px" }}
                   />
@@ -130,7 +136,7 @@ const EditProducts = () => {
               />
             </div>
 
-            <div className="sell-section">
+            {/* <div className="sell-section">
               <h2>CATEGORY</h2>
               <div className="category-selection">
                 <select
@@ -148,7 +154,7 @@ const EditProducts = () => {
                   <option value="Others">Others</option>
                 </select>
               </div>
-            </div>
+            </div> */}
 
             <div className="sell-section">
               <h2>PRODUCT DESCRIPTION</h2>
