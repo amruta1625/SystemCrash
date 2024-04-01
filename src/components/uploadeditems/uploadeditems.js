@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import useHistory hook for navigation
-import "./uploadeditems.css"; // Import the CSS file
+import { useNavigate } from "react-router-dom"; 
+import "./uploadeditems.css"; 
 import AuthContext from "../../context/AuthProvider";
 
 const UploadedItems = () => {
   const [uploadedItems, setUploadedItems] = useState([]);
   const { authCreds } = useContext(AuthContext);
-  const navigate = useNavigate(); // Initialize useHistory hook
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     // Ensure user is authenticated
@@ -28,11 +28,10 @@ const UploadedItems = () => {
       });
   }, [authCreds.user_id]);
 
-  // Function to handle edit button click
-  const handleEdit = (itemId) => {
-    console.log("Navigating to edit page with itemId:", itemId);
-    navigate(`/sellpage/${itemId}`);
-  };
+  const handleEdit = (product_id) => {
+    console.log("Navigating to edit page with itemId:", product_id);
+    navigate(`/editproducts/${product_id}`);
+  }
 
   return (
     <div className="uploaded-items-container">
@@ -46,8 +45,7 @@ const UploadedItems = () => {
             <p>Cost Price: {item.cost_price}</p>
             <p>Usage: {item.usage} months</p>
             <p>Number of people interested: {item.nf_interests}</p>
-            <p></p>
-            {/* Edit button */}
+            <p>Tags: #{item.tags}</p>
             <button onClick={() => handleEdit(item.product_id)}>Edit</button>
           </div>
         ))}

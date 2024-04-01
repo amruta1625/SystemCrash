@@ -1,22 +1,89 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./sellpage.css";
 import AuthContext from "../../context/AuthProvider";
 import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 
-const SellPage = () => {
-  const { authCreds, setAuthCreds } = useContext(AuthContext);
-  const [pid, setPid] = useState(0);
-  const [selectedPhoto, setSelectedPhoto] = useState(null)
+const EditProducts = () => {
+  const { product_id } = useParams(); 
+  const navigate = useNavigate();
+//   const [data, setData] = useState([]);
   const [data, setData] = useState({
-    seller_id: authCreds.user_id,
     sell_price: 0,
     cost_price: 0,
     title: "",
     usage: 0,
     description: "",
-    tags: "",
-    // image: null,
+    tags: ""
   });
+  const { authCreds } = useContext(AuthContext);
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
+//   const [data, setData] = useState({
+//     sell_price: 0,
+//     cost_price: 0,
+//     title: "",
+//     usage: 0,
+//     description: "",
+//     tags: ""
+//   });
+
+  useEffect(() => {
+    if (!authCreds.user_id) {
+      navigate('/');
+    }
+  }, [authCreds.user_id, navigate]);
+
+  console.log(product_id);
+
+//   useEffect(() => {
+//     if (product_id) {
+//       axios
+//         .get(`https://elan.iith-ac.in:8082/get_specific_product/${product_id}`)
+//         .then((res) => {
+//           const product_details = res.data;
+//           setData({
+//             sell_price: product_details.sell_price,
+//             cost_price: product_details.cost_price,
+//             title: product_details.title,
+//             usage: product_details.usage,
+//             description: product_details.description,
+//             tags: product_details.tags
+//           });
+//         })
+//         .catch((error) => {
+//           console.error("Error fetching item details:", error);
+//         });
+//     }
+//   }, [product_id]);
+
+  useEffect(() => {
+    axios
+      .get(`https://elan.iith-ac.in:8082/get_specific_product/${product_id}`)
+      // .get(`http://127.0.0.1:8000/get_specific_product/${product_id}`)
+      .then((res) => {
+        // setData(res.data);
+        // const data = {
+        //     sell_price: res.data.sell_price,
+        //     cost_price: res.data.cost_price,
+        //     title: res.data.title,
+        //     usage: res.data.usage,
+        //     description: res.data.description,
+        //     tags: res.data.tags,
+        // }
+        setData({
+          sell_price: res.data.sell_price,
+          cost_price: res.data.cost_price,
+          title: res.data.title,
+          usage: res.data.usage,
+          description: res.data.description,
+          tags: res.data.tags,
+
+        });
+      })
+      .catch((error) => {
+        console.error("Error fetching product:", error);
+      });
+  }, [product_id]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -28,35 +95,52 @@ const SellPage = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-      setSelectedPhoto(file);
+    setSelectedPhoto(file);
   };
- 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("file", selectedPhoto);
-    formData.append("data", JSON.stringify(data));
-    axios
-      // .post("http://127.0.0.1:8000/sellproduct", formData, {
-      .post("https://elan.iith-ac.in:8082/sellproduct", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data", // Set content type
-        },
-      })
-      .then((response) => {
+
+    // Check if a new photo is selected
+    if (selectedPhoto) {
+      const formData = new FormData();
+      formData.append("file", selectedPhoto);
+    //   formData.append("data", JSON.stringify(data));
+      formData.append("data", JSON.stringify({...data, product_id: product_id})); 
+
+
+      try {
+        const response = await axios.post("https://elan.iith-ac.in:8082/edit_products", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data", 
+          },
+        });
+
         console.log(response.data);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error(error);
-      });
+      }
+    } else {
+      // No new photo selected, send only product details
+      try {
+        const updatedData = {...data, product_id: product_id};
+        const response = await axios.post("https://elan.iith-ac.in:8082/edit_product_details", updatedData);
+        
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
+
+  console.log(data)
 
   return (
     <div className="sellpage">
       <div className="sell-container">
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div className="sell-container">
-            <h1>Product Details</h1>
+            <h1>Edit Product Details</h1>
             <div className="sell-section">
               <h2>UPLOAD PHOTO</h2>
               <div className="upload-photo">
@@ -70,7 +154,6 @@ const SellPage = () => {
                 <label htmlFor="file">Select Photo</label>
                 {selectedPhoto && (
                   <img
-                    // src={data.image}
                     src={URL.createObjectURL(selectedPhoto)}
                     alt="Uploaded"
                     style={{ maxWidth: "300px" }}
@@ -85,6 +168,7 @@ const SellPage = () => {
                 type="text"
                 name="title"
                 placeholder="Enter the title"
+                value={data.title}
                 onChange={handleInputChange}
               />
             </div>
@@ -92,7 +176,11 @@ const SellPage = () => {
             <div className="sell-section">
               <h2>CATEGORY</h2>
               <div className="category-selection">
-                <select name="tags" onChange={handleInputChange}>
+                <select
+                  name="tags"
+                  value={data.tags}
+                  onChange={handleInputChange}
+                >
                   <option value="">Select Category</option>
                   <option value="Electronics">Electronics</option>
                   <option value="Cycle">Cycle</option>
@@ -110,6 +198,7 @@ const SellPage = () => {
               <textarea
                 name="description"
                 placeholder="Give the detailed information and details of the product"
+                value={data.description}
                 onChange={handleInputChange}
               ></textarea>
             </div>
@@ -120,6 +209,7 @@ const SellPage = () => {
                 type="number"
                 name="sell_price"
                 placeholder="Enter the price"
+                value={data.sell_price}
                 onChange={handleInputChange}
               />
             </div>
@@ -130,6 +220,7 @@ const SellPage = () => {
                 type="number"
                 name="cost_price"
                 placeholder="Enter the price"
+                value={data.cost_price}
                 onChange={handleInputChange}
               />
             </div>
@@ -140,13 +231,14 @@ const SellPage = () => {
                 type="number"
                 name="usage"
                 placeholder="Enter number of months"
+                value={data.usage}
                 onChange={handleInputChange}
               />
             </div>
 
             <div className="sell-section">
               <button type="submit" className="submit-button">
-                SUBMIT
+                SAVE
               </button>
             </div>
           </div>
@@ -156,4 +248,4 @@ const SellPage = () => {
   );
 };
 
-export default SellPage;
+export default EditProducts;

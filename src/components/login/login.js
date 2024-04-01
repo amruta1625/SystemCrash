@@ -35,57 +35,20 @@ const Login = () => {
     e.preventDefault();
     loginAction();
   };
-  
 
-  // const loginAction = () => {
-  //   if (user.user_id && user.hashed_password) {
-  //     axios
-  //       .post("https://elan.iith-ac.in:8082/login", user)
-  //       // .post("http://127.0.0.1:8000/login", user)
-  //       .then((res) => {
-  //         // console.log("Response data:", res.data);
-  //         if (res.data.message === "success") {
-  //           const match = await bcrypt.compare(user.hashed_password, res.data.hashed_password);
-  //         if (match){
-  //           setAuthCreds(prevAuthCreds => ({
-  //             ...prevAuthCreds,
-  //             user_id: res.data.user_id,
-  //             name: res.data.name,
-  //             email: res.data.email,
-  //             active: res.data.verified,
-  //             notification: res.data.notifications,
-  //             profile_pic: res.data.photo,
-  //             hashed_password: res.data.hashed_password
-  //           }));
-  //           // console.log(res.data)
-  //           setIsLoggedIn(true);
-  //           if (res.data.verified) {
-  //             navigate("/home");
-  //           } else {
-  //             navigate("/otp");
-  //           }
-  //         } else {
-  //           alert("Invalid Credentials");
-  //         }
-  //        else {
-  //         alert("Invalid Credentials");
-  //       }
-  //       })
-  //       .catch((err) => {
-  //         console.log("Error:", err);
-  //       });
-  //   }
-  // };
-  
-  const loginAction = () => {
+  const loginAction = async () => {
     if (user.user_id && user.hashed_password) {
+      const real_hashed_password = await bcrypt.hash(user.hashed_password, 10);
+      const data = {
+        ...user,
+        "hashed_password": real_hashed_password 
+      }
+      console.log(data)
+      console.log(real_hashed_password)
       axios
-        .post("https://elan.iith-ac.in:8082/login", user)
+        .post("https://elan.iith-ac.in:8082/login", data)
         .then(async (res) => {
-          if (res.data.message === "success") {
-            // Compare entered password with hashed password from response
-            const match = await bcrypt.compare(user.hashed_password, res.data.hashed_password);
-            if (match) {
+          if (res.data.message === "success" && bcrypt.compareSync(user.hashed_password, res.data.hashed_password)) {
               setAuthCreds(prevAuthCreds => ({
                 ...prevAuthCreds,
                 user_id: res.data.user_id,
@@ -102,10 +65,9 @@ const Login = () => {
               } else {
                 navigate("/otp");
               }
-            } else {
-              alert("Invalid Credentials");
-            }
           } else {
+            console.log(user.hashed_password);
+            console.log(res.data.hashed_password);
             alert("Invalid Credentials");
           }
         })
@@ -149,7 +111,6 @@ const Login = () => {
             <input
               type="password"
               name="hashed_password"
-              value={user.hashed_password}
               onChange={handleChange}
               className={`form-control ${error.passwordEmpty ? "error" : ""}`}
               placeholder="Enter Password"

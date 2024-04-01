@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 
 import AuthContext from "../../../context/AuthProvider";
 
+import bcrypt from 'bcryptjs';
+
 export default function ProfilePage() {
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
@@ -66,15 +68,22 @@ export default function ProfilePage() {
         console.log(response);
       }
 
+      // const real_hashed_password = await bcrypt.hash(user.hashed_password, 10);
+
       const updatedUser = {
         user_id: newUserData.user_id, 
         hashed_password: newUserData.hashed_password 
+        // hashed_password: real_hashed_password
       };
 
+      
       axios
         .post("https://elan.iith-ac.in:8082/login", updatedUser)
         .then((res) => {
-          if (res.data.message === "success") {
+          const a = bcrypt.compareSync(newUserData.hashed_password, res.data.hashed_password);
+      console.log(a);
+
+          if (res.data.message === "success" && bcrypt.compareSync(newUserData.hashed_password, res.data.hashed_password)) {
             setAuthCreds(prevAuthCreds => ({
               ...prevAuthCreds,
               user_id: res.data.user_id,

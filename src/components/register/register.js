@@ -59,10 +59,8 @@ const Register = () => {
     e.preventDefault();
 
     // Hash the password
-    const hashedPassword = await bcrypt.hash(user.hashed_password, 10);
-    // const confirmPassword = await bcrypt.hash(user.confirm_password, 10);
-
-    // Update the user object with the hashed password
+    // const hashedPassword = await bcrypt.hash(user.hashed_password, 10);
+    const hashedPassword = user.hashed_password
     setUser((prevUser) => ({
       ...prevUser,
       hashed_password: hashedPassword,
@@ -72,7 +70,7 @@ const Register = () => {
     register(hashedPassword);
   };
 
-  const register = (hashedPassword) => {
+  const register = async (hashedPassword) => {
     const { name, user_id, email, hashed_password, confirm_password } = user;
 
     let emptyKeys = {};
@@ -94,14 +92,12 @@ const Register = () => {
     
 
     setStage("pending");
-    axios.post("https://elan.iith-ac.in:8082/register", {
-    // axios.post("http://127.0.0.1:8000/register", {
-      name,
-      user_id,
-      email,
-      hashed_password: hashedPassword,
-      // confirm_password: confirmPassword
-    })
+    const real_hashed_password = await bcrypt.hash(user.hashed_password, 10);
+    const data = {
+      ...user,
+      hashed_password: real_hashed_password
+    }
+    axios.post("https://elan.iith-ac.in:8082/register", data)
     .then(() => {
       navigate("/otp", { state: { user_id: user_id } });
     })

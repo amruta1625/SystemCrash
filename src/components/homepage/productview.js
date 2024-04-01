@@ -115,10 +115,10 @@ const ProductViewPage = () => {
       <div className="product-details">
         
         <img
-                  src={`data:image/png;base64,${product.product_image}`}
-                  alt={product.product_title}
-                  className="product-image"
-                />
+          src={`data:image/png;base64,${product.product_image}`}
+          alt={product.product_title}
+          className="product-image"
+        />
         
       </div>
       <div className="seller-details">

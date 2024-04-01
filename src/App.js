@@ -15,6 +15,7 @@ import ChatPage from './components/chatpage/chatpage';
 import ProductViewPage from './components/homepage/productview';
 import Wishlist from './components/wishlist/Wishlist';
 import UploadedItems from './components/uploadeditems/uploadeditems';
+import EditProducts from './components/sellpage/editproducts';
 
 
 import Otp from './components/otp/Otp';
@@ -35,7 +36,7 @@ const App = () => {
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/sellpage" element={<SellPage />} />
 
-          <Route path="/sellpage/:itemId" element={<SellPage />} />
+          <Route path="/editproducts/:product_id" element={<EditProducts />} />
 
           <Route path="/chat/:userId" element={<ChatPage />} />
           

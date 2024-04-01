@@ -23,7 +23,7 @@ const Transactions = () => {
       .catch((error) => {
         console.error("Error fetching transactions:", error);
       });
-  }, [authCreds.user_id]); // Ensure useEffect runs whenever authCreds.user_id changes
+  }, [authCreds.user_id]);
 
   return (
     <>
