@@ -104,8 +104,8 @@
   height: 12vh;
   width: 100%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative; /* Add relative positioning */
 }
-
 /* Logo styling */
 .navbar-logo {
   width: 8%;
@@ -198,17 +198,54 @@
 
 
 .menu-toggle {
+  position: relative;
   display: none; 
 }
 
-
-@media (max-width: 780px) {
+@media (max-width: 766px) {
   .menu-toggle {
     color: #fff;
-    display: block; 
+    display: block;
+    cursor: pointer;
   }
 
-  .navigation-items{
+  .navigation-items {
     display: none;
   }
+}
+
+.menu-toggle:hover .dropdown-menu {
+  display: block;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #120404;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  z-index: 1000;
+  display: none;
+  overflow-y: auto; /* Add overflow for vertical scrolling */
+  max-height: calc(100vh - 12vh); /* Calculate max height to overflow below navbar */
+  width: 150px; /* Adjust width as needed */
+}
+
+.dropdown-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-menu li {
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+
+.dropdown-menu li:hover {
+  background-color: #2b36ce;
 }
