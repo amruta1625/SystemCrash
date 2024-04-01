@@ -132,6 +132,14 @@ const Navbar = ({ search_stuff }) => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const goToHome = () => {
+    try {
+      navigate('/home');
+    } catch (error) {
+      console.error('Error navigating to home:', error);
+    }
+  };
+
   const handleMenuItemClick = (route) => {
     setIsMobileMenuOpen(false);
     navigate(route);
@@ -168,8 +176,8 @@ const Navbar = ({ search_stuff }) => {
 
   return (
     <div className="navbar">
-      <img src={logotradethrill} alt="logo" className="navbar-logo" />
-      <div className="navbar-logo-name">TradeThrill</div>
+      <img src={logotradethrill} alt="logo" className="navbar-logo" onClick={goToHome}/>
+      <div className="navbar-logo-name" onClick={goToHome}>TradeThrill</div>
       <div className="search-container">
         <InputBase
           className="searchbar"

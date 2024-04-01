@@ -111,6 +111,7 @@
   width: 8%;
   height: 100%;
   margin-right: 10px;
+  cursor: pointer;
 }
 
 .navbar-logo-name {
@@ -119,6 +120,7 @@
   font-family: cursive;
   color: #fce6d1;
   margin-right: 10px;
+  cursor: pointer;
 }
 
 /* Search bar styling */

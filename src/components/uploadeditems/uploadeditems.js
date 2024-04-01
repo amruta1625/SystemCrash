@@ -57,8 +57,8 @@ const UploadedItems = () => {
             <p>Usage: {item.usage} months</p>
             <p>Number of people interested: {item.nf_interests}</p>
             <p>Tags: #{item.tags}</p>
-            <button onClick={() => handleEdit(item.product_id)}>Edit</button>
-            <button onClick={() => handleRemove(item.product_id)}>Remove Product</button>
+            <button className="edit" onClick={() => handleEdit(item.product_id)}>Edit</button>
+            <button className="remove" onClick={() => handleRemove(item.product_id)}>Remove Product</button>
           </div>
         ))}
       </div>
