@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./sellpage.css";
 import AuthContext from "../../context/AuthProvider";
 import axios from "axios";
@@ -20,6 +20,13 @@ const SellPage = () => {
     tags: "",
     // image: null,
   });
+
+  useEffect(() => {
+    // Ensure user is authenticated
+    if (authCreds.user_id === 0) {
+      navigate('/');
+    }
+  }, [authCreds.user_id, navigate]);
 
   const [sellPriceError, setSellPriceError] = useState(false);
   const [costPriceError, setCostPriceError] = useState(false);
