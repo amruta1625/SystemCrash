@@ -46,7 +46,7 @@ const Login = () => {
       console.log(data)
       console.log(real_hashed_password)
       axios
-        .post("https://elan.iith-ac.in:8082/login", data)
+        .get(`https://elan.iith-ac.in:8082/login/${user.user_id}`)
         .then(async (res) => {
           if (res.data.message === "success" && bcrypt.compareSync(user.hashed_password, res.data.hashed_password)) {
               setAuthCreds(prevAuthCreds => ({

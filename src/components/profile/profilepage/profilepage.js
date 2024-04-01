@@ -72,18 +72,19 @@ export default function ProfilePage() {
 
       const updatedUser = {
         user_id: newUserData.user_id, 
-        hashed_password: newUserData.hashed_password 
+        // hashed_password: newUserData.hashed_password 
         // hashed_password: real_hashed_password
       };
 
       
       axios
-        .post("https://elan.iith-ac.in:8082/login", updatedUser)
+        // .post("https://elan.iith-ac.in:8082/login", updatedUser)
+        .get(`https://elan.iith-ac.in:8082/login/${newUserData.user_id}`)
         .then((res) => {
-          const a = bcrypt.compareSync(newUserData.hashed_password, res.data.hashed_password);
-      console.log(a);
+          // const a = bcrypt.compareSync(newUserData.hashed_password, res.data.hashed_password);
+      // console.log(a);
 
-          if (res.data.message === "success" && bcrypt.compareSync(newUserData.hashed_password, res.data.hashed_password)) {
+          if (res.data.message === "success" ) {
             setAuthCreds(prevAuthCreds => ({
               ...prevAuthCreds,
               user_id: res.data.user_id,
