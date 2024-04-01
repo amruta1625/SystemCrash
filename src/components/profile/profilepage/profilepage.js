@@ -139,11 +139,24 @@ export default function ProfilePage() {
                       />
                     </div>
                   )}
-                  <img
+                  {isEditing && newProfilePic ? (
+                    <img
+                      src={URL.createObjectURL(newProfilePic)}
+                      alt="New Profile Pic"
+                      className="user-image"
+                    />
+                  ) : (
+                    <img
+                      src={`data:image/png;base64,${authCreds.profile_pic}`}
+                      alt={authCreds.profile_pic}
+                      className="user-image"
+                    />
+                  )}
+                  {/* <img
                     src={`data:image/png;base64,${authCreds.profile_pic}`}
                     alt={authCreds.profile_pic}
                     className="user-image"
-                  />
+                  /> */}
                 </div>
               </div>
               {isEditing ? (
