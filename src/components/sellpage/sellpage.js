@@ -43,6 +43,8 @@ const SellPage = () => {
       default:
         break;
     }
+
+    
   
     // if (floatValue >= 0) {
     //   setData({
@@ -70,28 +72,10 @@ const SellPage = () => {
       return;
     }
 
-    // if(!selectedPhoto){
-    //   alert("Please upload image.") 
-    // }
-    // if (!data.title || !data.tags || !data.description || !selectedPhoto) {
-    //   alert("Please fill in all required fields.");
-    //   return; 
-    // }
-
-    // if (data.sell_price < 0) {
-    //   alert("Sell price cannot be negative.");
-    //   return; 
-    // }
-  
-    // if (data.cost_price < 0) {
-    //   alert("Cost price cannot be negative.");
-    //   return; 
-    // }
-  
-    // if (data.usage < 0) {
-    //   alert("Usage cannot be negative.");
-    //   return; 
-    // }
+    if (data.sell_price < 0 || data.cost_price < 0 || data.usage < 0) {
+      alert("Price and usage cannot be negative.");
+      return; // Exit early, do not proceed with form submission
+    }
   
     const formData = new FormData();
     formData.append("file", selectedPhoto);
