@@ -7,7 +7,6 @@ import { useNavigate, useParams } from "react-router-dom";
 const EditProducts = () => {
   const { product_id } = useParams(); 
   const navigate = useNavigate();
-//   const [data, setData] = useState([]);
   const [data, setData] = useState({
     sell_price: 0,
     cost_price: 0,
@@ -18,14 +17,6 @@ const EditProducts = () => {
   });
   const { authCreds } = useContext(AuthContext);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
-//   const [data, setData] = useState({
-//     sell_price: 0,
-//     cost_price: 0,
-//     title: "",
-//     usage: 0,
-//     description: "",
-//     tags: ""
-//   });
 
   useEffect(() => {
     if (!authCreds.user_id) {
@@ -33,43 +24,10 @@ const EditProducts = () => {
     }
   }, [authCreds.user_id, navigate]);
 
-  console.log(product_id);
-
-//   useEffect(() => {
-//     if (product_id) {
-//       axios
-//         .get(`https://elan.iith-ac.in:8082/get_specific_product/${product_id}`)
-//         .then((res) => {
-//           const product_details = res.data;
-//           setData({
-//             sell_price: product_details.sell_price,
-//             cost_price: product_details.cost_price,
-//             title: product_details.title,
-//             usage: product_details.usage,
-//             description: product_details.description,
-//             tags: product_details.tags
-//           });
-//         })
-//         .catch((error) => {
-//           console.error("Error fetching item details:", error);
-//         });
-//     }
-//   }, [product_id]);
-
   useEffect(() => {
     axios
       .get(`https://elan.iith-ac.in:8082/get_specific_product/${product_id}`)
-      // .get(`http://127.0.0.1:8000/get_specific_product/${product_id}`)
       .then((res) => {
-        // setData(res.data);
-        // const data = {
-        //     sell_price: res.data.sell_price,
-        //     cost_price: res.data.cost_price,
-        //     title: res.data.title,
-        //     usage: res.data.usage,
-        //     description: res.data.description,
-        //     tags: res.data.tags,
-        // }
         setData({
           sell_price: res.data.sell_price,
           cost_price: res.data.cost_price,
@@ -77,7 +35,6 @@ const EditProducts = () => {
           usage: res.data.usage,
           description: res.data.description,
           tags: res.data.tags,
-
         });
       })
       .catch((error) => {
@@ -105,9 +62,7 @@ const EditProducts = () => {
     if (selectedPhoto) {
       const formData = new FormData();
       formData.append("file", selectedPhoto);
-    //   formData.append("data", JSON.stringify(data));
-      formData.append("data", JSON.stringify({...data, product_id: product_id})); 
-
+      formData.append("data", JSON.stringify({...data, product_id: product_id}));
 
       try {
         const response = await axios.post("https://elan.iith-ac.in:8082/edit_products", formData, {
@@ -117,6 +72,8 @@ const EditProducts = () => {
         });
 
         console.log(response.data);
+        window.alert("Product details saved successfully!");
+        navigate('/uploadeditems');
       } catch (error) {
         console.error(error);
       }
@@ -127,13 +84,13 @@ const EditProducts = () => {
         const response = await axios.post("https://elan.iith-ac.in:8082/edit_product_details", updatedData);
         
         console.log(response.data);
+        window.alert("Product details saved successfully!");
+        navigate('/uploadeditems');
       } catch (error) {
         console.error(error);
       }
     }
   };
-
-  console.log(data)
 
   return (
     <div className="sellpage">

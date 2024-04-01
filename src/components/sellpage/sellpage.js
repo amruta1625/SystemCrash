@@ -9,7 +9,7 @@ const SellPage = () => {
   const { authCreds, setAuthCreds } = useContext(AuthContext);
   const [pid, setPid] = useState(0);
   const [selectedPhoto, setSelectedPhoto] = useState(null)
-  const navigate =useNavigate();
+  const navigate = useNavigate();
   const [data, setData] = useState({
     seller_id: authCreds.user_id,
     sell_price: 0,
@@ -21,21 +21,71 @@ const SellPage = () => {
     // image: null,
   });
 
+  // State variables to track negative number errors for each input field
+  const [sellPriceError, setSellPriceError] = useState(false);
+  const [costPriceError, setCostPriceError] = useState(false);
+  const [usageError, setUsageError] = useState(false);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setData({
-      ...data,
-      [name]: value,
-    });
+    const floatValue = parseFloat(value);
+  
+    // Determine which input field triggered the change and update the corresponding error state
+    switch (name) {
+      case "sell_price":
+        setSellPriceError(floatValue < 0);
+        break;
+      case "cost_price":
+        setCostPriceError(floatValue < 0);
+        break;
+      case "usage":
+        setUsageError(floatValue < 0);
+        break;
+      default:
+        break;
+    }
+  
+    // Update the data state if the entered value is valid
+    if (floatValue >= 0) {
+      setData({
+        ...data,
+        [name]: value,
+      });
+    }
   };
+  
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-      setSelectedPhoto(file);
+    setSelectedPhoto(file);
   };
- 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Client-side validation to check if any required field is left empty
+    if (!data.title || !data.tags || !data.description || !selectedPhoto) {
+      alert("Please fill in all required fields.");
+      return; // Exit early, do not proceed with form submission
+    }
+
+    // Check if any of the price fields have negative values
+    if (data.sell_price < 0) {
+      alert("Sell price cannot be negative.");
+      return; // Exit early, do not proceed with form submission
+    }
+  
+    if (data.cost_price < 0) {
+      alert("Cost price cannot be negative.");
+      return; // Exit early, do not proceed with form submission
+    }
+  
+    // Check if usage is negative
+    if (data.usage < 0) {
+      alert("Usage cannot be negative.");
+      return; // Exit early, do not proceed with form submission
+    }
+  
     const formData = new FormData();
     formData.append("file", selectedPhoto);
     formData.append("data", JSON.stringify(data));
@@ -62,7 +112,8 @@ const SellPage = () => {
     }
   };
   
-
+  
+  
   return (
     <div className="sellpage">
       <div className="sell-container">
@@ -78,11 +129,11 @@ const SellPage = () => {
                   name="file"
                   accept="image/*"
                   onChange={handleFileChange}
+                  required // Make photo upload required
                 />
                 <label htmlFor="file">Select Photo</label>
                 {selectedPhoto && (
                   <img
-                    // src={data.image}
                     src={URL.createObjectURL(selectedPhoto)}
                     alt="Uploaded"
                     style={{ maxWidth: "300px" }}
@@ -98,13 +149,14 @@ const SellPage = () => {
                 name="title"
                 placeholder="Enter the title"
                 onChange={handleInputChange}
+                required // Make title required
               />
             </div>
 
             <div className="sell-section">
               <h2>CATEGORY</h2>
               <div className="category-selection">
-                <select name="tags" onChange={handleInputChange}>
+                <select name="tags" onChange={handleInputChange} required> {/* Make category required */}
                   <option value="">Select Category</option>
                   <option value="Electronics">Electronics</option>
                   <option value="Cycle">Cycle</option>
@@ -123,6 +175,7 @@ const SellPage = () => {
                 name="description"
                 placeholder="Give the detailed information and details of the product"
                 onChange={handleInputChange}
+                required // Make description required
               ></textarea>
             </div>
 
@@ -133,17 +186,21 @@ const SellPage = () => {
                 name="sell_price"
                 placeholder="Enter the price"
                 onChange={handleInputChange}
+                required // Make sell price required
               />
+              {sellPriceError && <p className="error-message">Enter a valid price</p>}
             </div>
 
             <div className="sell-section">
-              <h2>COST PRICE</h2>
+             <h2>COST PRICE</h2>
               <input
-                type="number"
-                name="cost_price"
-                placeholder="Enter the price"
-                onChange={handleInputChange}
+               type="number"
+               name="cost_price"
+               placeholder="Enter the price"
+               onChange={handleInputChange}
+               required // Make cost price required
               />
+              {costPriceError && <p className="error-message">Enter a valid price</p>}
             </div>
 
             <div className="sell-section">
@@ -153,7 +210,9 @@ const SellPage = () => {
                 name="usage"
                 placeholder="Enter number of months"
                 onChange={handleInputChange}
+                required // Make usage required
               />
+              {usageError && <p className="error-message">Enter a valid usage</p>}
             </div>
 
             <div className="sell-section">
