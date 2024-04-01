@@ -203,7 +203,7 @@ const Navbar = ({ search_stuff }) => {
         <Tooltip title="Wishlist" placement="bottom">
         <FavoriteBorderIcon className="favoriteicon" onClick={() => handleMenuItemClick("/wishlist")} />
         </Tooltip>
-        <Tooltip title="Uploaded Items" placement="bottom">
+        <Tooltip title="Products on Sale" placement="bottom">
         <StorefrontIcon className="uploadedicon" onClick={() => handleMenuItemClick("/uploadeditems")} />
         </Tooltip>
         <button className="navbar-button" onClick={() => handleMenuItemClick("/sellpage")} >
