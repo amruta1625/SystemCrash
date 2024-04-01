@@ -3,10 +3,13 @@ import "./sellpage.css";
 import AuthContext from "../../context/AuthProvider";
 import axios from "axios";
 
+import { useNavigate } from "react-router-dom";
+
 const SellPage = () => {
   const { authCreds, setAuthCreds } = useContext(AuthContext);
   const [pid, setPid] = useState(0);
   const [selectedPhoto, setSelectedPhoto] = useState(null)
+  const navigate =useNavigate();
   const [data, setData] = useState({
     seller_id: authCreds.user_id,
     sell_price: 0,
@@ -36,20 +39,29 @@ const SellPage = () => {
     const formData = new FormData();
     formData.append("file", selectedPhoto);
     formData.append("data", JSON.stringify(data));
-    axios
-      // .post("http://127.0.0.1:8000/sellproduct", formData, {
-      .post("https://elan.iith-ac.in:8082/sellproduct", formData, {
+  
+    try {
+      const response = await axios.post("https://elan.iith-ac.in:8082/sellproduct", formData, {
         headers: {
-          "Content-Type": "multipart/form-data", // Set content type
+          "Content-Type": "multipart/form-data",
         },
-      })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
       });
+  
+      console.log(response.data); // Logging response data for debugging purposes
+  
+      // Display an alert message when product is uploaded successfully
+      alert("Product uploaded successfully!");
+      navigate("/home");
+      // Reset form data or navigate to another page if needed
+      // Example: setData({ ...initialData });
+  
+    } catch (error) {
+      console.error("Error uploading product:", error);
+      // Display an alert message for error if needed
+      // Example: alert("Error uploading product: " + error.message);
+    }
   };
+  
 
   return (
     <div className="sellpage">
