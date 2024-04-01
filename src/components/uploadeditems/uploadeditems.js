@@ -10,7 +10,7 @@ const UploadedItems = () => {
   const navigate = useNavigate(); 
 
   useEffect(() => {
-    // Ensure user is authenticated
+    // Ensure user is authenticated   
     if (authCreds.user_id === 0) {
       navigate('/');
     }
@@ -33,6 +33,17 @@ const UploadedItems = () => {
     navigate(`/editproducts/${product_id}`);
   }
 
+  const handleRemove = async (product_id) => {
+    try {
+      await axios.delete(`https://elan.iith-ac.in:8082/remove_product/${product_id}`);
+      // Refresh uploaded items after successful removal
+      const updatedItems = uploadedItems.filter(item => item.product_id !== product_id);
+      setUploadedItems(updatedItems);
+    } catch (error) {
+      console.error("Error removing product:", error);
+    }
+  };
+
   return (
     <div className="uploaded-items-container">
       <h2 className="heading">Items Uploaded by You</h2>
@@ -47,6 +58,7 @@ const UploadedItems = () => {
             <p>Number of people interested: {item.nf_interests}</p>
             <p>Tags: #{item.tags}</p>
             <button onClick={() => handleEdit(item.product_id)}>Edit</button>
+            <button onClick={() => handleRemove(item.product_id)}>Remove Product</button>
           </div>
         ))}
       </div>
