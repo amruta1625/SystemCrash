@@ -106,6 +106,8 @@ const Register = () => {
       if (error.response && error.response.status === 400 && error.response.data.detail === "User already registered") {
           alert("User already registered. Please proceed to login.");
           navigate("/login");
+      }else if (error.response && error.response.status === 403 && error.response.data.detail === "User access restricted due to reports"){
+          alert("You've been reported")
       } else {
           console.error("Error registering user:", error);
       }

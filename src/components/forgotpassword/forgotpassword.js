@@ -71,6 +71,13 @@ const ForgotPassword = () => {
       setStep(2); 
     } 
     catch (error) {
+      if(error.response && error.response.status === 404 && error.response.data.detail === "User not found"){
+        alert("You've not registered.")
+      } else if(error.response && error.response.status === 403 && error.response.data.detail === "User access restricted due to reports"){
+        alert("You've been reported")
+      } else if(error.response && error.response.status === 400 && error.response.data.detail === "User is not verified"){
+        alert("Your account is not verified")
+      }
       console.error(error); // Handle error
     }
   };
@@ -107,9 +114,9 @@ const ForgotPassword = () => {
             <div className="form-group">
               <p>Enter Roll Number:</p>
               <input
-                type="text"
+                type="number"
                 name="user_id"
-                value={user.user_id}
+                // value={user.user_id}
                 onChange={handleChange}
                 className={`form-control ${error.rollnoEmpty ? 'error' : ''}`}
                 placeholder="Enter Roll Number"

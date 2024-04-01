@@ -71,8 +71,13 @@ const Login = () => {
             alert("Invalid Credentials");
           }
         })
-        .catch((err) => {
-          console.log("Error:", err);
+        .catch((error) => {
+          if (error.response && error.response.status === 403 && error.response.data.detail === "User access restricted due to reports"){
+            alert("You've been reported")
+          } else if(error.response && error.response.status === 403 && error.response.data.detail === "User is not verified"){
+            alert("Your account is not verified")
+          } 
+          console.log("Error:", error);
         });
     }
   };

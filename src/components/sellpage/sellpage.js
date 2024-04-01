@@ -44,12 +44,16 @@ const SellPage = () => {
         break;
     }
   
-    if (floatValue >= 0) {
-      setData({
-        ...data,
-        [name]: value,
-      });
-    }
+    // if (floatValue >= 0) {
+    //   setData({
+    //     ...data,
+    //     [name]: value,
+    //   });
+    // }
+    setData({
+      ...data,
+      [name]: value,
+    });
   };
   
 
@@ -61,25 +65,33 @@ const SellPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!data.title || !data.tags || !data.description || !selectedPhoto) {
-      alert("Please fill in all required fields.");
-      return; 
+    if (!selectedPhoto) {
+      alert("Please upload a photo.");
+      return;
     }
 
-    if (data.sell_price < 0) {
-      alert("Sell price cannot be negative.");
-      return; 
-    }
+    // if(!selectedPhoto){
+    //   alert("Please upload image.") 
+    // }
+    // if (!data.title || !data.tags || !data.description || !selectedPhoto) {
+    //   alert("Please fill in all required fields.");
+    //   return; 
+    // }
+
+    // if (data.sell_price < 0) {
+    //   alert("Sell price cannot be negative.");
+    //   return; 
+    // }
   
-    if (data.cost_price < 0) {
-      alert("Cost price cannot be negative.");
-      return; 
-    }
+    // if (data.cost_price < 0) {
+    //   alert("Cost price cannot be negative.");
+    //   return; 
+    // }
   
-    if (data.usage < 0) {
-      alert("Usage cannot be negative.");
-      return; 
-    }
+    // if (data.usage < 0) {
+    //   alert("Usage cannot be negative.");
+    //   return; 
+    // }
   
     const formData = new FormData();
     formData.append("file", selectedPhoto);
@@ -124,7 +136,7 @@ const SellPage = () => {
                   name="file"
                   accept="image/*"
                   onChange={handleFileChange}
-                  required // Make photo upload required
+                  // required // Make photo upload required
                 />
                 <label htmlFor="file">Select Photo</label>
                 {selectedPhoto && (
