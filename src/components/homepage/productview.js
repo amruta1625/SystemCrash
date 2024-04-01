@@ -21,7 +21,6 @@ const ProductViewPage = () => {
   useEffect(() => {
     axios
       .get(`https://elan.iith-ac.in:8082/get_specific_product/${product_id}`)
-      // .get(`http://127.0.0.1:8000/get_specific_product/${product_id}`)
       .then((res) => {
         setProduct(res.data);
       })
@@ -33,27 +32,29 @@ const ProductViewPage = () => {
   const [isWishlist, setIsWishlist] = useState(false);
   const [reportButtonText, setReportButtonText] = useState('Report User');
   const [isReportDisabled, setIsReportDisabled] = useState(false);
+  const [isAddedToWishlist, setIsAddedToWishlist] = useState(false); // New state
+  const [isRequested, setIsRequested] = useState(false); // New state
+
+  useEffect(() => {
+    // Check if product is in wishlist
+    // Here you can implement the logic to check if the product is in the user's wishlist
+    // For simplicity, let's assume it's already added to the wishlist
+    // You can replace this logic with your actual implementation
+    setIsAddedToWishlist(false); // Set to true if product is in wishlist
+  }, [product, authCreds]);
 
   const toggleWishlist = () => {
     setIsWishlist((prevState) => !prevState);
   };
 
-
-
   const addToWishlist = () => {
     let data  = {
-      product_id: 0,
-      buyer_id: 0,
-    }
-    data = {
       product_id: parseInt(product_id),
       buyer_id: parseInt(authCreds.user_id),
     }
-    console.log(data)
     axios.post("https://elan.iith-ac.in:8082/wishlist", data)
-    // axios.post("http://127.0.0.1:8000/wishlist", data)
       .then((response) => {
-        console.log(response.data);
+        setIsAddedToWishlist(true); // Set to true after successfully adding to wishlist
       })
       .catch((error) => {
         console.log(error);
@@ -71,38 +72,28 @@ const ProductViewPage = () => {
 
   const report = () => {
     let data  = {
-      product_id: 0,
-      reporter_id: 0,
-    }
-    data = {
       product_id: parseInt(product_id),
       reporter_id: parseInt(authCreds.user_id),
     }
-    console.log(data)
     axios.post("https://elan.iith-ac.in:8082/report", data)
-    // axios.post("http://127.0.0.1:8000/report", data)
       .then((response) => {
+        setReportButtonText('Reported'); // Update button text to "Reported"
+        setIsReportDisabled(true); // Disable the button
         console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
   }
+
   const notif_request = () => {
     let data  = {
-      product_id: 0,
-      buyer_id: 0,
-      // seller_id: 0,
-    }
-    data = {
       pid: parseInt(product_id),
       buyer_id: parseInt(authCreds.user_id),
-      // seller_id: parseInt(seller_id),
     }
-    console.log(data)
     axios.post("https://elan.iith-ac.in:8082/notify_request", data)
-    // axios.post("http://127.0.0.1:8000/notify_request", data)
       .then((response) => {
+        setIsRequested(true); // Set to true after successfully sending request
         console.log(response.data);
       })
       .catch((error) => {
@@ -113,16 +104,14 @@ const ProductViewPage = () => {
   return (
     <div className="product-view-page">
       <div className="product-details">
-        
         <img
-                  src={`data:image/png;base64,${product.product_image}`}
-                  alt={product.product_title}
-                  className="product-image"
-                />
-        
+          src={`data:image/png;base64,${product.product_image}`}
+          alt={product.product_title}
+          className="product-image"
+        />
       </div>
       <div className="seller-details">
-      <h1>{product.title}</h1>
+        <h1>{product.title}</h1>
         <p>Description: {product.description}</p>
         <p>Sell Price: Rs.{product.sell_price}</p>
         <p>Cost Price: Rs.{product.cost_price}</p>
@@ -132,17 +121,14 @@ const ProductViewPage = () => {
         <p>Seller Email: {product.seller_email}</p>
       </div>
       <div className="actions">
-        <button onClick={() => addToWishlist()}>
-          Add to Wishlist
+        <button onClick={() => addToWishlist()} disabled={isAddedToWishlist}>
+          {isAddedToWishlist ? "Added to Wishlist" : "Add to Wishlist"}
         </button>
-        <button onClick={() => report()}>
-          Report User
-        </button>
-        {/* <button onClick={reportUser} disabled={isReportDisabled}>
+        <button onClick={() => report()} disabled={isReportDisabled}>
           {reportButtonText}
-        </button> */}
-        <button onClick={() => notif_request()}>
-          Request to buy
+        </button>
+        <button onClick={() => notif_request()} disabled={isRequested}>
+          {isRequested ? "Requested" : "Request to buy"}
         </button>
         <button onClick={chatWithSeller}>Chat with Seller</button>
       </div>

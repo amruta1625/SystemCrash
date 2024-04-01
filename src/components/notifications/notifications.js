@@ -80,15 +80,15 @@ const Notifications = () => {
   const renderNotificationType = (type) => {
     switch (type) {
       case 0:
-        return "requested to buy";
+        return "requested to buy ";
       case 1:
-        return "sold the product";
+        return "sold the product ";
       case 2:
-        return "rejected to sell";
+        return "rejected to sell ";
       case 3:
-        return "bought the product";
+        return "bought the product ";
       case 4:
-        return "messaged you";
+        return "messaged you ";
       default:
         return "";
     }
@@ -100,12 +100,13 @@ const Notifications = () => {
       <div className="notifications-container">
         {notifications.map((notification) => (
           <div key={notification.id} className="notification">
-            <div className="user">{notification.from_name}</div>
+            {/* <div className="user">{notification.from_name}</div>
             <div className="action">
               {renderNotificationType(notification.type)}: {notification.matter}
             </div>
-            <div classname="product_title">{notification.product_title}</div>
-            <div className="action">{notification.time}</div>
+            <div classname="product_title">{notification.product_title}</div> */}
+            <div className="main_notification"> {`${notification.from_name} ${renderNotificationType(notification.type)}: ${notification.product_title}`}</div>
+            
             {notification.type === 0 && (
               <div>
                 {notification.accepted ? (
@@ -118,6 +119,7 @@ const Notifications = () => {
                 )}
               </div>
             )}
+            <div className="action">{notification.time}</div>
           </div>
         ))}
       </div>
@@ -125,27 +127,4 @@ const Notifications = () => {
   );
 };
 
-export default Notifications;
-
-
-
-
-
-//add the matter of the notification
-//now its displaying type of notification 0,1,2,3
-//0 request to buy.... matter is buyer_name(buyer_id = ...) requested to buy your <product_title>
-// 1 accepted to sell... matter is seller_name(seller_id = ...) sold <product_title> to you
-// 2 rejected to sell... matter is seller_name(seller_id = ...) rejected to sell <product_title>
-// 3 you sold the product... matter is buyer_name(buyer_id = ...) bought the product <product_title>
-// 3 someone messaged... matter is user_name(user_id) messaged you regarding <product_title>
-
-//also we need to fetch the product title from pid and show that in matter
-
-
-//make accept, decline functions to work 
-//and when you click on accept, the product should go into transactions and the notification of type 1 goes to buyer
-//when you click on decline, notification disappears for seller and notification of type 2 goes to buyer
-
-
-
-//and make decline button red
+export default Notifications; 

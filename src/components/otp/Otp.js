@@ -51,11 +51,11 @@ const Otp = () => {
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="input-field">
             <label htmlFor="user_id" className="label">
-              User ID :
+              Roll Number :
             </label>
             <input
               type="number"
-              placeholder="Enter User ID"
+              placeholder="Enter Roll Number"
               name="user_id"
               id="user_id"
               onChange={(e) => handleChange(e)}
