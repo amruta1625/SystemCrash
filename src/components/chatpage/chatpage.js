@@ -73,6 +73,7 @@ function ChatPage() {
 
   return (
     <div className="chat-page-container">
+      <p className="center-statement">*Our team is currently fine-tuning this feature, ironing out any existing bugs. Once the debugging process is complete, we'll ensure its smooth operation. In the meantime, users can reach out to sellers using the email addresses provided in the product listings. We apologize for any inconvenience caused and appreciate your patience.</p>
       <div className="user-list">
         <h2>Users</h2>
         <ul>
@@ -106,8 +107,8 @@ function ChatPage() {
           <button onClick={sendMessage}>Send</button>
         </div>
       </div>
+      {/* <p>Work is still under process</p>  */}
     </div>
   );
 }
-
 export default ChatPage;

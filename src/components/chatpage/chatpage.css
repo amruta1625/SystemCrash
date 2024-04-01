@@ -1,9 +1,10 @@
 /* frontend/src/ChatPage.css */
+
 .chat-page-container {
   display: flex;
   height: 100vh;
   font-family: Arial, sans-serif;
-  position: relative; /* Position relative for absolute positioning of input box */
+  position: relative; /* Position relative for absolute positioning */
   background-color: #f0f0f4; /* Set background color */
 }
 
@@ -40,7 +41,7 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  position: relative; /* Position relative for absolute positioning of input box */
+  position: relative; /* Position relative for absolute positioning */
 }
 
 .chat-page-container .conversation h2 {
@@ -105,4 +106,13 @@
 
 .chat-page-container button:hover {
   background-color: #0b6e5d;
+}
+
+.center-statement {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  color: #552b2b; /* Adjust color as needed */
 }
