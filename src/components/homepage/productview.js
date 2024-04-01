@@ -57,6 +57,12 @@ const ProductViewPage = () => {
         setIsAddedToWishlist(true); // Set to true after successfully adding to wishlist
       })
       .catch((error) => {
+        if(error.response && error.response.status === 400 && error.response.data.detail === "Product already exists"){
+          alert("You've already added this to wishlist")
+        }
+        if(error.response && error.response.status === 400 && error.response.data.detail === "You cannot add your own product to your wishlist"){
+          alert("You cannot add your own product to your wishlist")
+        }
         console.log(error);
       });
   };
@@ -82,6 +88,12 @@ const ProductViewPage = () => {
         console.log(response.data);
       })
       .catch((error) => {
+        if(error.response && error.response.status === 400 && error.response.data.detail === "Reporter and reported user cannot be the same"){
+          alert("You cannot report youself")
+        }
+        if(error.response && error.response.status === 400 && error.response.data.detail === "User has already been reported by this reporter"){
+          alert("You've already reported this user")
+        }
         console.log(error);
       });
   }
