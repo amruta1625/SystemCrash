@@ -95,8 +95,8 @@ const ChangePassword = () => {
       const response = await axios.post('https://elan.iith-ac.in:8082/newotp', user);
       // const response = await axios.post('http://127.0.0.1:8000/newotp', user);
       console.log(response.data); 
-      alert("OTP verified");
-      navigate("/home");
+      alert("OTP verified. Please proceed to login with your new password");
+      navigate("/");
     } catch (error) {
       console.error(error); 
       alert("Invalid OTP");
