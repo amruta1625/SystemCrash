@@ -170,7 +170,7 @@ const Register = () => {
                   name="email"
                   value={user.email}
                   onChange={handleChange}
-                  placeholder="Enter Your Email"
+                  placeholder="abc@gmail.com"
                   className={`inputName ${error.emailEmpty || error.emailInvalid ? "error" : ""}`}
                 />
                 {error.emailEmpty && <p className="error-message">Email is required</p>}
