@@ -44,6 +44,12 @@ export default function ProfilePage() {
   const handleSaveClick = async (e) => {
     try {
       e.preventDefault();
+
+      if (isEditing && !newUserData.name.trim()) {
+        alert("Name cannot be empty");
+        return;
+      }
+
       if (isEditing && newProfilePic){
         const formData = new FormData();
         formData.append("data", JSON.stringify(newUserData));
