@@ -40,6 +40,14 @@ const Register = () => {
       [name]: value,
     }));
 
+    if (name === "user_id") {
+      setError((prevError) => ({
+        ...prevError,
+        rollnoEmpty: false,
+        rollnoInvalid: isNaN(value) || value <= 0, 
+        rollnoUsed: false, 
+      }));
+    }
 
     if (name === "email") {
       // const emailRegex = /^\S+@\S+\.\S+$/;
