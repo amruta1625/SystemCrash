@@ -79,7 +79,7 @@ const ChangePassword = () => {
       };
 
       // const response = await axios.post('https://elan.iith-ac.in:8082/forgotpassword', user);
-      const response = await axios.post('https://elan.iith-ac.in:8082/forgotpassword', userData);
+      const response = await axios.post('https://tradethrill.jitik.online:8000/forgotpassword', userData);
       // const response = await axios.post('http://127.0.0.1:8000/forgotpassword', user);
       console.log(response.data); 
       setStep(2); 
@@ -92,7 +92,7 @@ const ChangePassword = () => {
   const handleVerifyOTP = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://elan.iith-ac.in:8082/newotp', user);
+      const response = await axios.post('https://tradethrill.jitik.online:8000/newotp', user);
       // const response = await axios.post('http://127.0.0.1:8000/newotp', user);
       console.log(response.data); 
       alert("OTP verified. Please proceed to login with your new password");

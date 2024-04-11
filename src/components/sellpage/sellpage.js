@@ -89,7 +89,7 @@ const SellPage = () => {
     formData.append("data", JSON.stringify(data));
   
     try {
-      const response = await axios.post("https://elan.iith-ac.in:8082/sellproduct", formData, {
+      const response = await axios.post("https://tradethrill.jitik.online:8000/sellproduct", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

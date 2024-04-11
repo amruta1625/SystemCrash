@@ -105,7 +105,8 @@ const Register = () => {
       ...user,
       hashed_password: real_hashed_password
     }
-    axios.post("https://elan.iith-ac.in:8082/register", data)
+    console.log(data)
+    axios.post("https://tradethrill.jitik.online:8000/register", data)
     .then(() => {
       navigate("/otp", { state: { user_id: user_id } });
     })

@@ -42,7 +42,7 @@ const Navbar = ({ search_stuff }) => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchString.trim() === "") {
-      axios.get("https://elan.iith-ac.in:8082/get_products")
+      axios.get("https://tradethrill.jitik.online:8000/get_products")
       .then((res) => {
           setProducts(res.data);
         })
@@ -50,7 +50,7 @@ const Navbar = ({ search_stuff }) => {
           console.log(err);
         });
     } else {
-      axios.post("https://elan.iith-ac.in:8082/search", { query: searchString })
+      axios.post("https://tradethrill.jitik.online:8000/search", { query: searchString })
         .then((res) => {
           setProducts(res.data);
         })

@@ -18,7 +18,7 @@ const Notifications = () => {
 
   useEffect(() => {
     axios
-      .get(`https://elan.iith-ac.in:8082/get_notifications/${authCreds.user_id}`)
+      .get(`https://tradethrill.jitik.online:8000/get_notifications/${authCreds.user_id}`)
       // .get(`http://127.0.0.1:8000/get_notifications/${authCreds.user_id}`)
       .then((response) => {
         setNotifications(response.data);
@@ -35,7 +35,7 @@ const Notifications = () => {
         seller_id: authCreds.user_id,
         buyer_id: notification.from_id,
       };
-      axios.post("https://elan.iith-ac.in:8082/notify_accept", data)
+      axios.post("https://tradethrill.jitik.online:8000/notify_accept", data)
       // axios.post("http://127.0.0.1:8000/notify_accept", data)
         .then((response) => {
           console.log(response);
@@ -61,7 +61,7 @@ const Notifications = () => {
         seller_id: authCreds.user_id,
         buyer_id: notification.from_id,
       };
-      axios.post("https://elan.iith-ac.in:8082/notify_reject", data)
+      axios.post("https://tradethrill.jitik.online:8000/notify_reject", data)
       // axios.post("http://127.0.0.1:8000/notify_reject", data)
         .then((response) => {
           console.log(response);

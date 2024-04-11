@@ -27,7 +27,7 @@ const EditProducts = () => {
 
   useEffect(() => {
     axios
-      .get(`https://elan.iith-ac.in:8082/get_specific_product/${product_id}`)
+      .get(`https://tradethrill.jitik.online:8000/get_specific_product/${product_id}`)
       .then((res) => {
         setData({
           sell_price: res.data.sell_price,
@@ -69,7 +69,7 @@ const EditProducts = () => {
       formData.append("data", JSON.stringify({...data, product_id: product_id}));
 
       try {
-        const response = await axios.post("https://elan.iith-ac.in:8082/edit_products", formData, {
+        const response = await axios.post("https://tradethrill.jitik.online:8000/edit_products", formData, {
           headers: {
             "Content-Type": "multipart/form-data", 
           },
@@ -85,7 +85,7 @@ const EditProducts = () => {
       // No new photo selected, send only product details
       try {
         const updatedData = {...data, product_id: product_id};
-        const response = await axios.post("https://elan.iith-ac.in:8082/edit_product_details", updatedData);
+        const response = await axios.post("https://tradethrill.jitik.online:8000/edit_product_details", updatedData);
         
         console.log(response.data);
         window.alert("Product details saved successfully!");

@@ -20,7 +20,7 @@ const ProductViewPage = () => {
 
   useEffect(() => {
     axios
-      .get(`https://elan.iith-ac.in:8082/get_specific_product/${product_id}`)
+      .get(`https://tradethrill.jitik.online:8000/get_specific_product/${product_id}`)
       .then((res) => {
         setProduct(res.data);
       })
@@ -52,7 +52,7 @@ const ProductViewPage = () => {
       product_id: parseInt(product_id),
       buyer_id: parseInt(authCreds.user_id),
     }
-    axios.post("https://elan.iith-ac.in:8082/wishlist", data)
+    axios.post("https://tradethrill.jitik.online:8000/wishlist", data)
       .then((response) => {
         setIsAddedToWishlist(true); // Set to true after successfully adding to wishlist
         navigate('/wishlist');
@@ -82,7 +82,7 @@ const ProductViewPage = () => {
       product_id: parseInt(product_id),
       reporter_id: parseInt(authCreds.user_id),
     }
-    axios.post("https://elan.iith-ac.in:8082/report", data)
+    axios.post("https://tradethrill.jitik.online:8000/report", data)
       .then((response) => {
         setReportButtonText('Reported'); // Update button text to "Reported"
         setIsReportDisabled(true); // Disable the button
@@ -104,7 +104,7 @@ const ProductViewPage = () => {
       pid: parseInt(product_id),
       buyer_id: parseInt(authCreds.user_id),
     }
-    axios.post("https://elan.iith-ac.in:8082/notify_request", data)
+    axios.post("https://tradethrill.jitik.online:8000/notify_request", data)
       .then((response) => {
         setIsRequested(true); // Set to true after successfully sending request
         console.log(response.data);

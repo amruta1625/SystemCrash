@@ -39,7 +39,7 @@ function ChatPage() {
 
   const fetchUsers = async (userId) => {
     try {
-      const response = await axios.get(`https://elan.iith-ac.in:8082/users/${userId}`); // Fetch users list based on the current user ID
+      const response = await axios.get(`https://tradethrill.jitik.online:8000/users/${userId}`); // Fetch users list based on the current user ID
       setUsers(response.data); // Update the users state with the fetched users list
     } catch (error) {
       console.error('Failed to fetch users:', error.message);

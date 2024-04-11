@@ -18,7 +18,7 @@ const UploadedItems = () => {
 
   useEffect(() => {
     axios
-      .get(`https://elan.iith-ac.in:8082/on_sale/${authCreds.user_id}`)
+      .get(`https://tradethrill.jitik.online:8000/on_sale/${authCreds.user_id}`)
       // .get(`http://127.0.0.1:8000/on_sale/${authCreds.user_id}`)
       .then((res) => {
         setUploadedItems(res.data);
@@ -35,7 +35,7 @@ const UploadedItems = () => {
 
   const handleRemove = async (product_id) => {
     try {
-      await axios.delete(`https://elan.iith-ac.in:8082/remove_product/${product_id}`);
+      await axios.delete(`https://tradethrill.jitik.online:8000/remove_product/${product_id}`);
       // Refresh uploaded items after successful removal
       const updatedItems = uploadedItems.filter(item => item.product_id !== product_id);
       setUploadedItems(updatedItems);

@@ -15,7 +15,7 @@ const Transactions = () => {
       navigate('/');
     }else
     axios
-      .get(`https://elan.iith-ac.in:8082/get_transactions/${authCreds.user_id}`)
+      .get(`https://tradethrill.jitik.online:8000/get_transactions/${authCreds.user_id}`)
       // .get(`http://127.0.0.1:8000/get_transactions/${authCreds.user_id}`)
       .then((res) => {
         setTransactions(res.data);

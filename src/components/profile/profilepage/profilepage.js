@@ -57,7 +57,7 @@ export default function ProfilePage() {
           formData.append("file", newProfilePic);
         }
 
-        const response = await axios.post("https://elan.iith-ac.in:8082/edit_profile", formData, {
+        const response = await axios.post("https://tradethrill.jitik.online:8000/edit_profile", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -70,7 +70,7 @@ export default function ProfilePage() {
           name: newUserData.name
         };
 
-        const response = await axios.post("https://elan.iith-ac.in:8082/edit_name", updatedUserData);
+        const response = await axios.post("https://tradethrill.jitik.online:8000/edit_name", updatedUserData);
         console.log(response);
       }
 
@@ -85,7 +85,7 @@ export default function ProfilePage() {
       
       axios
         // .post("https://elan.iith-ac.in:8082/login", updatedUser)
-        .get(`https://elan.iith-ac.in:8082/login/${newUserData.user_id}`)
+        .get(`https://tradethrill.jitik.online:8000/login/${newUserData.user_id}`)
         .then((res) => {
           // const a = bcrypt.compareSync(newUserData.hashed_password, res.data.hashed_password);
       // console.log(a);

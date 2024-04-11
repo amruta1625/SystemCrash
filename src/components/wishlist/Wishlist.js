@@ -19,7 +19,7 @@ const Wishlist = () => {
 
   useEffect(() => {
     axios
-      .get(`https://elan.iith-ac.in:8082/get_wishlist/${authCreds.user_id}`)
+      .get(`https://tradethrill.jitik.online:8000/get_wishlist/${authCreds.user_id}`)
       // .get(`http://127.0.0.1:8000/get_wishlist/${authCreds.user_id}`)
       .then((res) => {
         setWishlist(res.data);
@@ -31,7 +31,7 @@ const Wishlist = () => {
 
   const removeFromWishlist = async (productId) => {
     try {
-      await axios.post('https://elan.iith-ac.in:8082/remove_wishlist', {
+      await axios.post('https://tradethrill.jitik.online:8000/remove_wishlist', {
         product_id: productId,
         buyer_id: authCreds.user_id
       });
