@@ -16,7 +16,7 @@ function ChatPage() {
     fetchUsers(userId);
 
     // WebSocket connection logic remains unchanged
-    const newWs = new WebSocket(`wss://elan.iith-ac.in:8082/chat/${userId}`);
+    const newWs = new WebSocket(`wss://tradethrill.jitik.online:8000/chat/${userId}`);
     newWs.onopen = () => {
       console.log('WebSocket connected');
     };
