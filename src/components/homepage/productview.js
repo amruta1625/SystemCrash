@@ -110,6 +110,9 @@ const ProductViewPage = () => {
         console.log(response.data);
       })
       .catch((error) => {
+        if(error.response && error.response.status === 400 && error.response.data.detail === "You cannot request your own product"){
+          alert("You cannot request your own product")
+        }
         console.log(error);
       });
   }
