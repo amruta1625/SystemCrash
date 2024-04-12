@@ -19,7 +19,7 @@ const Notifications = () => {
   useEffect(() => {
     axios
       .get(`https://tradethrill.jitik.online:8000/get_notifications/${authCreds.user_id}`)
-      // .get(`http://127.0.0.1:8000/get_notifications/${authCreds.user_id}`)
+      // .get(http://127.0.0.1:8000/get_notifications/${authCreds.user_id})
       .then((response) => {
         setNotifications(response.data);
       })
@@ -98,7 +98,7 @@ const Notifications = () => {
     <div className="notifications">
       <h1 className="notifications-heading">Notifications</h1>
       <div className="notifications-container">
-        {notifications.map((notification) => (
+        {notifications.slice().reverse().map((notification) => (
           <div key={notification.id} className="notification">
             {/* <div className="user">{notification.from_name}</div>
             <div className="action">
@@ -127,4 +127,4 @@ const Notifications = () => {
   );
 };
 
-export default Notifications; 
+export default Notifications;
