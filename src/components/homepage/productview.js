@@ -34,14 +34,30 @@ const ProductViewPage = () => {
   const [isReportDisabled, setIsReportDisabled] = useState(false);
   const [isAddedToWishlist, setIsAddedToWishlist] = useState(false); // New state
   const [isRequested, setIsRequested] = useState(false); // New state
+  const [requestCount, setRequestCount] = useState(0);
+
+  // useEffect(() => {
+  //   // Check if product is in wishlist
+  //   // Here you can implement the logic to check if the product is in the user's wishlist
+  //   // For simplicity, let's assume it's already added to the wishlist
+  //   // You can replace this logic with your actual implementation
+  //   setIsAddedToWishlist(false); // Set to true if product is in wishlist
+  // }, [product, authCreds]);
 
   useEffect(() => {
-    // Check if product is in wishlist
-    // Here you can implement the logic to check if the product is in the user's wishlist
-    // For simplicity, let's assume it's already added to the wishlist
-    // You can replace this logic with your actual implementation
-    setIsAddedToWishlist(false); // Set to true if product is in wishlist
-  }, [product, authCreds]);
+    // Fetch request count when product changes
+    if (authCreds.user_id !== 0 && product_id) {
+      console.log(authCreds.user_id);
+      console.log(product_id);
+      axios.get(`https://tradethrill.jitik.online:8000/request_count/${product_id}/${authCreds.user_id}`)
+        .then((res) => {
+          setRequestCount(res.data.count);
+        })
+        .catch((error) => {
+          console.error("Error fetching request count:", error);
+        });
+    }
+  }, [product_id, authCreds]);
 
   const toggleWishlist = () => {
     setIsWishlist((prevState) => !prevState);
@@ -100,6 +116,14 @@ const ProductViewPage = () => {
   }
 
   const notif_request = () => {
+    if (requestCount >= 3) {
+      alert("You've already requested this product 3 times.");
+      return;
+    }
+    if (requestCount == 1 || requestCount == 2 ) {
+      const confirmRequest = window.confirm("You've already requested this product. Do you want to request again?");
+      if (!confirmRequest) return;
+    }
     let data  = {
       pid: parseInt(product_id),
       buyer_id: parseInt(authCreds.user_id),
@@ -107,6 +131,7 @@ const ProductViewPage = () => {
     axios.post("https://tradethrill.jitik.online:8000/notify_request", data)
       .then((response) => {
         setIsRequested(true); // Set to true after successfully sending request
+        setRequestCount(prevCount => prevCount + 1);
         console.log(response.data);
       })
       .catch((error) => {
