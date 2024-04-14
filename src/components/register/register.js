@@ -75,6 +75,10 @@ const Register = () => {
       // confirm_password: confirmPassword,
     }));
 
+    if (error.rollnoEmpty || error.rollnoInvalid || error.rollnoUsed) {
+      return; // Do not proceed with registration
+    }
+
     register(hashedPassword);
   };
 

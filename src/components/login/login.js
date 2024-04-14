@@ -76,7 +76,9 @@ const Login = () => {
             alert("You've been reported")
           } else if(error.response && error.response.status === 403 && error.response.data.detail === "User is not verified"){
             alert("Your account is not verified")
-          } 
+          } else if(error.response && error.response.status === 404 && error.response.data.detail === "User not found"){
+            alert("You haven't registered")
+          }
           console.log("Error:", error);
         });
     }
